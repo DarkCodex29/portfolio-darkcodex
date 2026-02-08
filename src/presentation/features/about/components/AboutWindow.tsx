@@ -1,107 +1,147 @@
+import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
+import { Mail, Github, Linkedin, MapPin, FileText, User } from 'lucide-react'
+import { PROFILE } from '@/core/constants/profile'
+import { t } from '@/core/constants/translations'
 
 const stats = [
-  { label: 'Years Experience', value: '6+' },
-  { label: 'Apps in Production', value: '10+' },
-  { label: 'Active Users', value: '10K+' },
-  { label: 'GitHub Repos', value: '50+' },
+  { label: t.stats.yearsExperience, value: '6+' },
+  { label: t.stats.appsInProduction, value: '10+' },
+  { label: t.stats.activeUsers, value: '10K+' },
+  { label: t.stats.githubRepos, value: '50+' },
 ]
 
-const AboutContent = () => {
+const sectors = ['Fintech', 'Salud', 'Minería', 'Retail', 'Agroindustrial', 'Farmacéutico', 'Textil', 'Químico']
+
+const AboutContent = memo(() => {
+  const handleDownloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/CV_Gianpierre_Collazos.pdf'
+    link.download = 'CV_Gianpierre_Collazos.pdf'
+    link.click()
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Profile Header */}
-      <div className="flex items-start gap-4">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-3xl">
-          👨‍💻
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
+      <div className="flex items-start" style={{ gap: 'var(--spacing-lg)' }}>
+        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+          <User className="w-10 h-10 text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white">Gianpierre Sair Collazos Mio</h2>
-          <p className="text-purple-400 font-medium">Senior Mobile Engineer | Full Stack Developer</p>
-          <p className="text-gray-400 text-sm mt-1">📍 Chiclayo, Perú</p>
+          <h2 className="text-xl font-bold text-white">{PROFILE.name.full}</h2>
+          <p className="text-purple-400 font-medium">{t.windows.about.role}</p>
+          <p className="text-gray-400 text-sm mt-1 flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5" />
+            {t.windows.about.location}
+          </p>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-4" style={{ gap: 'var(--spacing-md)' }}>
         {stats.map(({ label, value }) => (
-          <div key={label} className="bg-white/5 rounded-lg p-3 text-center">
+          <div
+            key={label}
+            className="bg-white/5 text-center"
+            style={{
+              padding: 'var(--card-padding)',
+              borderRadius: 'var(--card-border-radius)'
+            }}
+          >
             <div className="text-2xl font-bold text-white">{value}</div>
             <div className="text-xs text-gray-400">{label}</div>
           </div>
         ))}
       </div>
 
-      {/* Bio */}
-      <div className="space-y-3 text-gray-300 text-sm leading-relaxed">
+      <div className="text-gray-300 text-sm leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
         <p>
-          Senior Mobile Engineer especializado en <span className="text-purple-400">Flutter</span> y{' '}
-          <span className="text-purple-400">Kotlin</span> con +6 años desarrollando aplicaciones
-          enterprise escalables para sectores críticos.
+          {t.windows.about.bioP1.split('Flutter')[0]}
+          <span className="text-purple-400">Flutter</span>
+          {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
+          <span className="text-purple-400">Kotlin</span>
+          {t.windows.about.bioP1.split('Kotlin')[1]}
         </p>
         <p>
-          Full Stack Developer con expertise en arquitecturas end-to-end:{' '}
+          {t.windows.about.bioP2.split('.NET')[0]}
           <span className="text-blue-400">.NET, NestJS, Angular, React, Laravel</span>.
         </p>
         <p>
-          Experiencia comprobada en <span className="text-green-400">Keola Networks (fintech)</span>,{' '}
+          {t.windows.about.bioP3.split('Keola Networks')[0]}
+          <span className="text-green-400">Keola Networks (fintech)</span>,{' '}
           <span className="text-green-400">Software Engineering LATAM</span>,{' '}
-          <span className="text-green-400">Grupo EBIM</span>, y proyectos enterprise con integración de IA.
+          <span className="text-green-400">Grupo EBIM</span>
+          {t.windows.about.bioP3.split('Grupo EBIM')[1]}
         </p>
       </div>
 
-      {/* Industries */}
       <div>
-        <h3 className="text-sm font-semibold text-white mb-2">Sectores de Experiencia</h3>
-        <div className="flex flex-wrap gap-2">
-          {['Fintech', 'Salud', 'Minería', 'Retail', 'Agroindustrial', 'Farmacéutico', 'Textil', 'Químico'].map(
-            (sector) => (
-              <span
-                key={sector}
-                className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded text-xs"
-              >
-                {sector}
-              </span>
-            )
-          )}
+        <h3 className="text-sm font-semibold text-white" style={{ marginBottom: 'var(--spacing-sm)' }}>
+          {t.windows.about.sectorsTitle}
+        </h3>
+        <div className="flex flex-wrap" style={{ gap: 'var(--spacing-sm)' }}>
+          {sectors.map((sector) => (
+            <span
+              key={sector}
+              className="bg-purple-500/20 text-purple-300 text-xs font-medium"
+              style={{
+                padding: 'var(--badge-padding-y) var(--badge-padding-x)',
+                borderRadius: 'var(--badge-border-radius)'
+              }}
+            >
+              {sector}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Contact Links */}
-      <div className="flex gap-3 pt-2">
+      <div className="flex flex-wrap" style={{ gap: 'var(--spacing-md)', paddingTop: 'var(--spacing-sm)' }}>
         <a
-          href="mailto:gianxs296@gmail.com"
-          className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-white text-sm transition-colors"
+          href={`mailto:${PROFILE.contact.email}`}
+          className="flex items-center bg-purple-500 hover:bg-purple-600 rounded-lg text-white text-sm transition-colors"
+          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
         >
-          ✉️ Email
+          <Mail className="w-4 h-4" />
+          {t.actions.email}
         </a>
         <a
-          href="https://github.com/gianxs296"
+          href={PROFILE.contact.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-sm transition-colors"
+          className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-sm transition-colors"
+          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
         >
-          🔗 GitHub
+          <Github className="w-4 h-4" />
+          GitHub
         </a>
         <a
-          href="https://linkedin.com/in/gianpierre-collazos"
+          href={PROFILE.contact.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm transition-colors"
+          className="flex items-center bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm transition-colors"
+          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
         >
-          💼 LinkedIn
+          <Linkedin className="w-4 h-4" />
+          LinkedIn
         </a>
+        <button
+          onClick={handleDownloadResume}
+          className="flex items-center bg-green-600 hover:bg-green-700 rounded-lg text-white text-sm transition-colors"
+          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
+        >
+          <FileText className="w-4 h-4" />
+          {t.actions.resume}
+        </button>
       </div>
     </div>
   )
-}
+})
+AboutContent.displayName = 'AboutContent'
 
-export const AboutWindow = () => {
-  return (
-    <WindowWrapper windowKey="about" title="About Me" className="w-[550px]">
-      <AboutContent />
-    </WindowWrapper>
-  )
-}
+export const AboutWindow = memo(() => (
+  <WindowWrapper windowKey="about" title={t.windows.about.title} className="w-[580px]">
+    <AboutContent />
+  </WindowWrapper>
+))
+AboutWindow.displayName = 'AboutWindow'
 
 export default AboutWindow

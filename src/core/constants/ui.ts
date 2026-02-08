@@ -1,14 +1,16 @@
+import { t } from './translations'
+
 export const UI_TEXT = {
   hero: {
-    cta: 'Explore My Work',
-    scrollHint: 'Click to explore',
+    cta: t.hero.cta,
+    scrollHint: t.hero.scrollHint,
   },
   navigation: {
-    back: 'Back',
-    home: 'Home',
+    back: t.navigation.back,
+    home: t.navigation.home,
   },
   loading: {
-    default: 'Loading...',
+    default: t.loading.default,
   },
 } as const
 

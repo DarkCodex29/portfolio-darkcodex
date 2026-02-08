@@ -1,147 +1,154 @@
+import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
-import { ExternalLink, Github } from 'lucide-react'
+import { PROJECTS, STATS, type Project } from '@/core/constants/profile'
+import { t } from '@/core/constants/translations'
 
-const projects = [
-  {
-    id: 1,
-    name: 'API SUNAT/RENIEC',
-    description: 'API Enterprise para consultas gubernamentales. 17.8M+ registros procesados.',
-    tech: ['NestJS 11', 'TypeScript', 'Prisma', 'PostgreSQL', 'Redis', 'Docker'],
-    link: 'https://api-reniec-sunat.darkcodex.dev/',
-    github: null,
-    highlight: true,
-  },
-  {
-    id: 2,
-    name: 'EXEOS Wallet',
-    description: 'Wallet Ethereum multiplataforma con +32K LOC. BIP39/BIP44, ERC-20.',
-    tech: ['Flutter 3.32', 'web3dart', 'Drift ORM', 'BLoC', 'Clean Architecture'],
-    link: null,
-    github: null,
-    highlight: true,
-  },
-  {
-    id: 3,
-    name: 'InClub Mobile',
-    description: 'App fintech multiplataforma con 2,456 tests automatizados y 99.5% crash-free.',
-    tech: ['Flutter', 'Cubit/BLoC', 'GoRouter', 'Shorebird', 'Sentry'],
-    link: 'https://play.google.com/store/apps/details?id=com.inclub.app.dev',
-    github: null,
-    highlight: true,
-  },
-  {
-    id: 4,
-    name: 'Pharma Track',
-    description: 'Sistema de trazabilidad farmacéutica con 1K+ descargas en Play Store.',
-    tech: ['Flutter', 'Kotlin', 'Swift', 'Firebase', 'Hive'],
-    link: 'https://play.google.com/store/apps/details?id=pe.inretail.recojo.fp',
-    github: null,
-    highlight: false,
-  },
-  {
-    id: 5,
-    name: 'Sistema Chinalco (SGEM)',
-    description: 'Sistema integral de gestión minera con 99.9% uptime.',
-    tech: ['Flutter', 'GetX', 'GoRouter', 'REST APIs', 'PostgreSQL'],
-    link: null,
-    github: null,
-    highlight: false,
-  },
-  {
-    id: 6,
-    name: 'Web Estimaciones IA',
-    description: 'Sistema de estimaciones de proyectos con Claude AI y GPT.',
-    tech: ['Next.js 15', 'React 19', 'Supabase', 'Anthropic SDK', 'OpenAI SDK'],
-    link: null,
-    github: null,
-    highlight: false,
-  },
-]
+interface ProjectCardProps {
+  project: Project
+}
 
-const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
+const ProjectCard = memo(({ project }: ProjectCardProps) => (
+  <div
+    className="border transition-all duration-200 hover:scale-[1.01] cursor-pointer group"
+    style={{
+      padding: 'var(--card-padding)',
+      borderRadius: 'var(--card-border-radius)',
+      background: `linear-gradient(135deg, ${project.color}10, transparent)`,
+      borderColor: `${project.color}30`,
+    }}
+  >
+    <div className="flex items-start justify-between mb-3">
+      <div className="flex items-center gap-3">
+        <div
+          className="w-3.5 h-3.5 rounded-full"
+          style={{ backgroundColor: project.color }}
+        />
+        <h3 className="font-semibold text-white group-hover:text-white/90">{project.name}</h3>
+      </div>
+      <span className="text-xs text-white/40 font-mono px-2 py-1 bg-white/5 rounded">{project.year}</span>
+    </div>
+
+    <p className="text-white/60 text-sm leading-relaxed pl-6" style={{ marginBottom: 'var(--spacing-lg)' }}>
+      {project.description}
+    </p>
+
+    <div className="flex flex-wrap pl-6" style={{ gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-lg)' }}>
+      {project.techStack.map((tech) => (
+        <span
+          key={tech}
+          className="bg-white/10 text-white/70 text-xs font-medium"
+          style={{
+            padding: 'var(--badge-padding-y) var(--badge-padding-x)',
+            borderRadius: 'var(--badge-border-radius)'
+          }}
+        >
+          {tech}
+        </span>
+      ))}
+    </div>
+
+    <div className="flex flex-wrap pl-6" style={{ gap: 'var(--spacing-sm)' }}>
+      {project.highlights.map((highlight) => (
+        <span
+          key={highlight}
+          className="text-xs font-medium rounded-full"
+          style={{
+            padding: 'var(--badge-padding-y) var(--badge-padding-x)',
+            backgroundColor: `${project.color}20`,
+            color: project.color,
+          }}
+        >
+          {highlight}
+        </span>
+      ))}
+    </div>
+  </div>
+))
+ProjectCard.displayName = 'ProjectCard'
+
+const ProjectsHeader = memo(() => {
+  const appsCount = STATS.find((s) => s.id === 'apps')?.value ?? '10+'
+
   return (
     <div
-      className={`p-4 rounded-lg border transition-colors ${
-        project.highlight
-          ? 'bg-purple-500/10 border-purple-500/30 hover:border-purple-500/50'
-          : 'bg-white/5 border-white/10 hover:border-white/20'
-      }`}
+      className="flex items-center border-b border-white/10 shrink-0"
+      style={{ gap: 'var(--spacing-lg)', paddingBottom: 'var(--window-gap)' }}
     >
-      <div className="flex items-start justify-between mb-2">
-        <h3 className="font-semibold text-white">{project.name}</h3>
-        <div className="flex gap-2">
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <Github className="w-4 h-4" />
-            </a>
-          )}
-        </div>
+      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+        </svg>
       </div>
+      <div>
+        <h2 className="text-lg font-semibold text-white">{t.windows.projects.header}</h2>
+        <p className="text-white/50 text-sm">{appsCount} {t.windows.projects.appsInProduction}</p>
+      </div>
+    </div>
+  )
+})
+ProjectsHeader.displayName = 'ProjectsHeader'
 
-      <p className="text-gray-400 text-sm mb-3">{project.description}</p>
-
-      <div className="flex flex-wrap gap-1">
-        {project.tech.map((t) => (
-          <span
-            key={t}
-            className="px-2 py-0.5 bg-white/10 text-gray-300 rounded text-xs"
+const ProjectsSidebar = memo(() => (
+  <div
+    className="w-48 shrink-0 border-r border-white/10"
+    style={{ paddingRight: 'var(--window-gap)' }}
+  >
+    <p
+      className="text-xs text-white/40 uppercase tracking-wider font-medium"
+      style={{ marginBottom: 'var(--spacing-lg)' }}
+    >
+      {t.windows.projects.sectors}
+    </p>
+    <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
+      {PROJECTS.map((project) => (
+        <li key={project.id}>
+          <button
+            className="w-full text-left rounded-lg text-sm text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center"
+            style={{ padding: 'var(--spacing-sm) var(--spacing-md)', gap: 'var(--spacing-md)' }}
           >
-            {t}
-          </span>
-        ))}
-      </div>
+            <div
+              className="w-2.5 h-2.5 rounded-full"
+              style={{ backgroundColor: project.color }}
+            />
+            {t.sectors[project.sector as keyof typeof t.sectors] || project.sector}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+))
+ProjectsSidebar.displayName = 'ProjectsSidebar'
+
+const ProjectsGrid = memo(() => (
+  <div className="flex-1 overflow-y-auto scrollbar-hide" style={{ paddingLeft: 'var(--spacing-lg)' }}>
+    <div className="grid" style={{ gap: 'var(--card-gap)' }}>
+      {PROJECTS.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
     </div>
-  )
-}
+    <p className="text-white/40 text-xs text-center" style={{ padding: 'var(--window-gap) 0' }}>
+      {t.windows.projects.additionalNDA}
+    </p>
+  </div>
+))
+ProjectsGrid.displayName = 'ProjectsGrid'
 
-const ProjectsContent = () => {
-  return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-        <span className="text-2xl">📁</span>
-        <div>
-          <h2 className="text-lg font-semibold text-white">Projects</h2>
-          <p className="text-gray-400 text-sm">10+ apps en producción</p>
-        </div>
-      </div>
-
-      {/* Projects Grid */}
-      <div className="grid gap-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
-
-      {/* Footer note */}
-      <p className="text-gray-500 text-xs text-center pt-2">
-        + 8 proyectos adicionales bajo NDA
-      </p>
+const ProjectsContent = memo(() => (
+  <div className="h-full flex flex-col" style={{ gap: 'var(--window-gap)' }}>
+    <ProjectsHeader />
+    <div className="flex flex-1 min-h-0" style={{ gap: 'var(--window-gap)' }}>
+      <ProjectsSidebar />
+      <ProjectsGrid />
     </div>
-  )
-}
+  </div>
+))
+ProjectsContent.displayName = 'ProjectsContent'
 
-export const ProjectsWindow = () => {
-  return (
-    <WindowWrapper windowKey="finder" title="Projects — Finder" className="w-[600px] max-h-[80vh]">
-      <ProjectsContent />
-    </WindowWrapper>
-  )
-}
+export const ProjectsWindow = memo(() => (
+  <WindowWrapper windowKey="finder" title={t.windows.projects.title} className="w-[750px] h-[550px]">
+    <ProjectsContent />
+  </WindowWrapper>
+))
+ProjectsWindow.displayName = 'ProjectsWindow'
 
 export default ProjectsWindow

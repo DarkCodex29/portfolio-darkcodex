@@ -10,7 +10,8 @@ import { DesktopView } from '@/presentation/pages/DesktopView'
 import { HeroSection } from '@/presentation/components/sections/HeroSection'
 import { useSceneStore } from '@/application/store/useSceneStore'
 import { CAMERA, PHYSICS, LIGHTS, GL_CONFIG, TRANSITION } from '@/core/constants/scene'
-import { UI_TEXT } from '@/core/constants/ui'
+import { ICONS } from '@/core/constants/ui'
+import { t } from '@/core/constants/translations'
 
 const Loader = memo(() => {
   const { progress } = useProgress()
@@ -51,15 +52,6 @@ const GlowEffects = memo(() => (
 ))
 GlowEffects.displayName = 'GlowEffects'
 
-const ScrollIndicator = memo(() => (
-  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-    <div className="w-6 h-10 border-2 border-text-muted rounded-full flex justify-center p-1">
-      <div className="w-1.5 h-2.5 bg-text-muted rounded-full animate-bounce" />
-    </div>
-    <p className="text-text-muted text-xs tracking-wider uppercase">{UI_TEXT.hero.scrollHint}</p>
-  </div>
-))
-ScrollIndicator.displayName = 'ScrollIndicator'
 
 const BadgeCanvas = memo(() => (
   <Canvas
@@ -152,11 +144,28 @@ function App() {
 
       <section className="absolute left-0 top-0 w-[50%] h-full z-10 pointer-events-auto">
         <SetupCanvas onClick={handleWorkspaceClick} />
-        <ScrollIndicator />
+        <button
+          onClick={handleWorkspaceClick}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 group flex items-center bg-primary-600 hover:bg-primary-500 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/30"
+          style={{ padding: 'var(--spacing-lg) var(--spacing-2xl)', gap: 'var(--spacing-md)' }}
+        >
+          <span className="text-white font-semibold text-lg">{t.hero.cta}</span>
+          <svg
+            viewBox={ICONS.arrow.viewBox}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path d={ICONS.arrow.path} />
+          </svg>
+        </button>
       </section>
 
       <section className="absolute left-[58%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <HeroSection onExplore={handleWorkspaceClick} />
+        <HeroSection />
       </section>
 
       <section className="absolute -right-[15%] top-0 w-[50%] h-full z-30 pointer-events-auto">

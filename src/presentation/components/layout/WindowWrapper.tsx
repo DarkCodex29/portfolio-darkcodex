@@ -28,7 +28,6 @@ export const WindowWrapper = ({
 
   const { isOpen, isMaximized, zIndex } = windowState
 
-  // Open animation
   useEffect(() => {
     const el = ref.current
     if (!el || !isOpen) return
@@ -42,7 +41,6 @@ export const WindowWrapper = ({
     )
   }, [isOpen])
 
-  // Draggable handling
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -65,7 +63,6 @@ export const WindowWrapper = ({
     }
   }, [isOpen, isMaximized, focusWindow, windowKey])
 
-  // Visibility and maximize handling
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
@@ -86,7 +83,7 @@ export const WindowWrapper = ({
       el.style.position = 'absolute'
       el.style.width = ''
       el.style.height = ''
-      el.style.borderRadius = ''
+      el.style.borderRadius = 'var(--window-border-radius)'
     }
   }, [isOpen, isMaximized])
 
@@ -95,15 +92,19 @@ export const WindowWrapper = ({
   return (
     <div
       ref={ref}
-      style={{ zIndex }}
+      style={{
+        zIndex,
+        borderRadius: 'var(--window-border-radius)'
+      }}
       className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        bg-gray-900/95 backdrop-blur-xl rounded-xl border border-white/10
-        shadow-2xl overflow-hidden min-w-[400px] min-h-[300px] ${className}`}
+        bg-gray-900/95 backdrop-blur-xl border border-white/10
+        shadow-2xl overflow-hidden min-w-[400px] flex flex-col ${className}`}
       onClick={() => focusWindow(windowKey)}
     >
-      {/* Window Header */}
-      <div className="window-drag-handle flex items-center justify-between px-4 py-3 bg-gray-800/50 border-b border-white/10">
-        {/* Traffic lights */}
+      <div
+        className="window-drag-handle flex items-center justify-between bg-gray-800/50 border-b border-white/10 shrink-0"
+        style={{ padding: 'var(--window-header-padding-y) var(--window-header-padding-x)' }}
+      >
         <div className="flex items-center gap-2">
           <button
             onClick={(e) => {
@@ -124,16 +125,16 @@ export const WindowWrapper = ({
             className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors"
           />
         </div>
-
-        {/* Title */}
         <h2 className="text-sm font-medium text-white/80">{title}</h2>
-
-        {/* Spacer */}
         <div className="w-14" />
       </div>
 
-      {/* Window Content */}
-      <div className="p-4 overflow-auto max-h-[70vh]">{children}</div>
+      <div
+        className="overflow-auto flex-1"
+        style={{ padding: 'var(--window-padding)' }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

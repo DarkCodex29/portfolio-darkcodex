@@ -17,6 +17,7 @@ interface SceneState {
   goToBadge: () => void
   goToRoom: () => void
   goToDesktop: () => void
+  goToHome: () => void
 }
 
 export const useSceneStore = create<SceneState>()(
@@ -56,6 +57,12 @@ export const useSceneStore = create<SceneState>()(
       set((state) => {
         state.isTransitioning = true
         state.currentView = 'desktop'
+      }),
+
+    goToHome: () =>
+      set((state) => {
+        state.isTransitioning = false
+        state.currentView = 'badge'
       }),
   }))
 )
