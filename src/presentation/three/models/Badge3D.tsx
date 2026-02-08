@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import { extend, useThree, useFrame } from '@react-three/fiber'
-import { useTexture } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import {
   BallCollider,
   CuboidCollider,
@@ -22,9 +22,8 @@ declare module '@react-three/fiber' {
   }
 }
 
-// Preload textures
-useTexture.preload('/models/band.png')
-useTexture.preload('/models/card.png')
+useGLTF.preload('/models/tag.glb')
+useTexture.preload('/models/band-original.jpg')
 
 interface BandProps {
   maxSpeed?: number
@@ -52,8 +51,8 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
     linearDamping: 2,
   }
 
-  const bandTexture = useTexture('/models/band.png')
-  const cardTexture = useTexture('/models/card.png')
+  const { nodes, materials } = useGLTF('/models/tag.glb') as any
+  const bandTexture = useTexture('/models/band-original.jpg')
   const { width, height } = useThree((state) => state.size)
   const [curve] = useState(
     () =>
@@ -70,7 +69,7 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1])
   useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1])
   useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1])
-  useSphericalJoint(j3 as any, card as any, [[0, 0, 0], [0, 1.1, 0]])
+  useSphericalJoint(j3 as any, card as any, [[0, 0, 0], [0, 1.45, 0]])
 
   useEffect(() => {
     if (hovered) {
@@ -139,10 +138,10 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           {...segmentProps}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
-          <CuboidCollider args={[0.82, 1.1, 0.01]} />
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
             scale={2.25}
-            position={[0, -0.9, -0.05]}
+            position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e: any) => (
@@ -157,40 +156,22 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
               )
             )}
           >
-            {/* Card with texture - ratio 864:1184 = 0.73 */}
-            <mesh>
-              <planeGeometry args={[0.73, 1]} />
-              <meshBasicMaterial
-                map={cardTexture}
-                side={THREE.DoubleSide}
-                toneMapped={false}
+            <mesh geometry={nodes.card.geometry}>
+              <meshPhysicalMaterial
+                map={materials.base.map}
+                map-anisotropy={16}
+                clearcoat={1}
+                clearcoatRoughness={0.15}
+                roughness={0.3}
+                metalness={0.5}
               />
             </mesh>
-
-            {/* Metal clip at top of card */}
-            <group position={[0, 0.52, 0]}>
-              <mesh rotation={[Math.PI / 2, 0, 0]}>
-                <cylinderGeometry args={[0.022, 0.022, 0.035, 16]} />
-                <meshStandardMaterial
-                  color="#3a3a4a"
-                  metalness={0.95}
-                  roughness={0.05}
-                />
-              </mesh>
-              <mesh position={[0, 0.025, 0]}>
-                <torusGeometry args={[0.016, 0.005, 8, 24]} />
-                <meshStandardMaterial
-                  color="#4a4a5a"
-                  metalness={0.95}
-                  roughness={0.05}
-                />
-              </mesh>
-            </group>
+            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
       </group>
 
-      {/* Band/Lanyard - exact Vercel settings */}
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
