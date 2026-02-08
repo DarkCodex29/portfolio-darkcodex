@@ -1,8 +1,9 @@
-import { useRef, useEffect, useLayoutEffect, ComponentType } from 'react'
+import { useRef, useEffect, useLayoutEffect } from 'react'
+import type { ComponentType } from 'react'
 import gsap from 'gsap'
-import Draggable from 'gsap/Draggable'
+// @ts-ignore - GSAP types casing issue on macOS
+import { Draggable } from 'gsap/all'
 import { useWindowStore } from '@/application/store/useWindowStore'
-import { X, Minus, Maximize2 } from 'lucide-react'
 
 gsap.registerPlugin(Draggable)
 
@@ -59,7 +60,9 @@ export const WindowWrapper = ({
       activeCursor: 'grabbing',
     })
 
-    return () => instance.kill()
+    return () => {
+      instance.kill()
+    }
   }, [isOpen, isMaximized, focusWindow, windowKey])
 
   // Visibility and maximize handling

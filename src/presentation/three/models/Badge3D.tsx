@@ -1,22 +1,17 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
-import { useThree, useFrame, extend } from '@react-three/fiber'
+import { extend, useThree, useFrame } from '@react-three/fiber'
+import { useTexture } from '@react-three/drei'
 import {
   BallCollider,
   CuboidCollider,
+  Physics,
   RigidBody,
   useRopeJoint,
   useSphericalJoint,
-  RapierRigidBody,
-  RigidBodyProps,
 } from '@react-three/rapier'
+import type { RapierRigidBody, RigidBodyProps } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
-import {
-  useGLTF,
-  useTexture,
-  Text,
-  Image,
-} from '@react-three/drei'
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 
@@ -27,88 +22,16 @@ declare module '@react-three/fiber' {
   }
 }
 
-interface Badge3DProps {
+// Preload textures
+useTexture.preload('/models/band.png')
+useTexture.preload('/models/card.png')
+
+interface BandProps {
   maxSpeed?: number
   minSpeed?: number
-  onCardClick?: () => void
 }
 
-const BadgeContent = () => {
-  return (
-    <group>
-      {/* Background */}
-      <mesh position={[0, 0, 0.01]}>
-        <planeGeometry args={[1.5, 2]} />
-        <meshStandardMaterial color="#1a1a2e" />
-      </mesh>
-
-      {/* Profile Image Placeholder */}
-      <mesh position={[0, 0.4, 0.02]}>
-        <circleGeometry args={[0.35, 32]} />
-        <meshStandardMaterial color="#16213e" />
-      </mesh>
-
-      {/* Name */}
-      <Text
-        position={[0, -0.15, 0.02]}
-        fontSize={0.12}
-        color="#ffffff"
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/Inter-Bold.woff"
-      >
-        GIANPIERRE
-      </Text>
-
-      <Text
-        position={[0, -0.3, 0.02]}
-        fontSize={0.1}
-        color="#ffffff"
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/Inter-Bold.woff"
-      >
-        COLLAZOS MIO
-      </Text>
-
-      {/* Title */}
-      <Text
-        position={[0, -0.5, 0.02]}
-        fontSize={0.06}
-        color="#4fd1c5"
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={1.3}
-        textAlign="center"
-      >
-        Senior Mobile Engineer
-      </Text>
-
-      <Text
-        position={[0, -0.62, 0.02]}
-        fontSize={0.05}
-        color="#a0aec0"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Full Stack Developer
-      </Text>
-
-      {/* DarkCodex branding */}
-      <Text
-        position={[0, -0.85, 0.02]}
-        fontSize={0.07}
-        color="#805ad5"
-        anchorX="center"
-        anchorY="middle"
-      >
-        DARKCODEX
-      </Text>
-    </group>
-  )
-}
-
-export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DProps) => {
+export function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   const band = useRef<THREE.Mesh>(null)
   const fixed = useRef<RapierRigidBody>(null)
   const j1 = useRef<RapierRigidBody>(null)
@@ -116,8 +39,22 @@ export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DPr
   const j3 = useRef<RapierRigidBody>(null)
   const card = useRef<RapierRigidBody>(null)
 
-  const { width, height } = useThree((state) => state.size)
+  const vec = new THREE.Vector3()
+  const ang = new THREE.Vector3()
+  const rot = new THREE.Vector3()
+  const dir = new THREE.Vector3()
 
+  const segmentProps: RigidBodyProps = {
+    type: 'dynamic',
+    canSleep: true,
+    colliders: false,
+    angularDamping: 2,
+    linearDamping: 2,
+  }
+
+  const bandTexture = useTexture('/models/band.png')
+  const cardTexture = useTexture('/models/card.png')
+  const { width, height } = useThree((state) => state.size)
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -127,13 +64,13 @@ export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DPr
         new THREE.Vector3(),
       ])
   )
-
-  const vec = new THREE.Vector3()
-  const ang = new THREE.Vector3()
-  const rot = new THREE.Vector3()
-  const dir = new THREE.Vector3()
   const [dragged, drag] = useState<THREE.Vector3 | false>(false)
   const [hovered, hover] = useState(false)
+
+  useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1])
+  useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1])
+  useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1])
+  useSphericalJoint(j3 as any, card as any, [[0, 0, 0], [0, 1.1, 0]])
 
   useEffect(() => {
     if (hovered) {
@@ -144,23 +81,7 @@ export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DPr
     }
   }, [hovered, dragged])
 
-  const segmentProps: RigidBodyProps = {
-    type: 'dynamic',
-    canSleep: true,
-    colliders: false,
-    angularDamping: 2,
-    linearDamping: 2,
-  }
-
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1])
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1])
-  useSphericalJoint(j3, card, [
-    [0, 0, 0],
-    [0, 1.45, 0],
-  ])
-
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (dragged) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera)
       dir.copy(vec).sub(state.camera.position).normalize()
@@ -172,30 +93,37 @@ export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DPr
         z: vec.z - (dragged as THREE.Vector3).z,
       })
     }
-
-    if (fixed.current && j1.current && j2.current && j3.current && card.current) {
-      curve.points[0].copy(j3.current.translation() as THREE.Vector3)
-      curve.points[1].copy(j2.current.translation() as THREE.Vector3)
-      curve.points[2].copy(j1.current.translation() as THREE.Vector3)
-      curve.points[3].copy(fixed.current.translation() as THREE.Vector3)
-
-      if (band.current) {
-        (band.current.geometry as any).setPoints(curve.getPoints(32))
-      }
-
-      // Tilt the card back towards the screen
-      ang.copy(card.current.angvel() as THREE.Vector3)
-      rot.copy(card.current.rotation() as THREE.Vector3)
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, false)
+    if (fixed.current) {
+      ;[j1, j2].forEach((ref: any) => {
+        if (!ref.current.lerped)
+          ref.current.lerped = new THREE.Vector3().copy(ref.current.translation())
+        const clampedDistance = Math.max(
+          0.1,
+          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+        )
+        ref.current.lerped.lerp(
+          ref.current.translation(),
+          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+        )
+      })
+      curve.points[0].copy(j3.current!.translation() as any)
+      curve.points[1].copy((j2.current as any).lerped)
+      curve.points[2].copy((j1.current as any).lerped)
+      curve.points[3].copy(fixed.current.translation() as any)
+      ;(band.current!.geometry as any).setPoints(curve.getPoints(32))
+      ang.copy(card.current!.angvel() as any)
+      rot.copy(card.current!.rotation() as any)
+      card.current!.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true)
     }
   })
 
   curve.curveType = 'chordal'
+  bandTexture.wrapS = bandTexture.wrapT = THREE.RepeatWrapping
 
   return (
     <>
       <group position={[0, 4, 0]}>
-        <RigidBody ref={fixed} type="fixed" />
+        <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
@@ -206,60 +134,84 @@ export const Badge3D = ({ maxSpeed = 50, minSpeed = 10, onCardClick }: Badge3DPr
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
+          position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <CuboidCollider args={[0.82, 1.1, 0.01]} />
           <group
+            scale={2.25}
+            position={[0, -0.9, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e: any) => {
-              e.target.releasePointerCapture(e.pointerId)
-              drag(false)
-            }}
-            onPointerDown={(e: any) => {
-              e.target.setPointerCapture(e.pointerId)
+            onPointerUp={(e: any) => (
+              e.target.releasePointerCapture(e.pointerId), drag(false)
+            )}
+            onPointerDown={(e: any) => (
+              e.target.setPointerCapture(e.pointerId),
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
-                  .sub(vec.copy(card.current!.translation() as THREE.Vector3))
+                  .sub(vec.copy(card.current!.translation() as any))
               )
-            }}
-            onClick={onCardClick}
+            )}
           >
-            {/* Card mesh */}
+            {/* Card with texture - ratio 864:1184 = 0.73 */}
             <mesh>
-              <boxGeometry args={[1.6, 2.25, 0.05]} />
-              <meshPhysicalMaterial
-                color="#0f0f23"
-                clearcoat={1}
-                clearcoatRoughness={0.15}
-                iridescence={1}
-                iridescenceIOR={1}
-                iridescenceThicknessRange={[0, 2400]}
-                metalness={0.5}
-                roughness={0.3}
+              <planeGeometry args={[0.73, 1]} />
+              <meshBasicMaterial
+                map={cardTexture}
                 side={THREE.DoubleSide}
+                toneMapped={false}
               />
             </mesh>
 
-            {/* Badge content */}
-            <BadgeContent />
+            {/* Metal clip at top of card */}
+            <group position={[0, 0.52, 0]}>
+              <mesh rotation={[Math.PI / 2, 0, 0]}>
+                <cylinderGeometry args={[0.022, 0.022, 0.035, 16]} />
+                <meshStandardMaterial
+                  color="#3a3a4a"
+                  metalness={0.95}
+                  roughness={0.05}
+                />
+              </mesh>
+              <mesh position={[0, 0.025, 0]}>
+                <torusGeometry args={[0.016, 0.005, 8, 24]} />
+                <meshStandardMaterial
+                  color="#4a4a5a"
+                  metalness={0.95}
+                  roughness={0.05}
+                />
+              </mesh>
+            </group>
           </group>
         </RigidBody>
       </group>
 
-      {/* Lanyard */}
+      {/* Band/Lanyard - exact Vercel settings */}
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="#805ad5"
+          color="white"
+          depthTest={false}
           resolution={[width, height]}
+          useMap
+          map={bandTexture}
+          repeat={[-3, 1]}
           lineWidth={1}
         />
       </mesh>
     </>
+  )
+}
+
+export function Badge3D() {
+  return (
+    <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
+      <Band />
+    </Physics>
   )
 }
 

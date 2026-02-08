@@ -6,18 +6,18 @@ interface DockApp {
   id: string
   name: string
   icon: string
-  canOpen: boolean
 }
 
 const dockApps: DockApp[] = [
-  { id: 'finder', name: 'Projects', icon: '📁', canOpen: true },
-  { id: 'terminal', name: 'Skills', icon: '💻', canOpen: true },
-  { id: 'about', name: 'About Me', icon: '👤', canOpen: true },
-  { id: 'safari', name: 'Experience', icon: '🌐', canOpen: true },
-  { id: 'contact', name: 'Contact', icon: '✉️', canOpen: true },
-  { id: 'resume', name: 'Resume', icon: '📄', canOpen: true },
-  { id: 'vscode', name: 'GitHub', icon: '🔗', canOpen: true },
-  { id: 'photos', name: 'Gallery', icon: '🖼️', canOpen: true },
+  { id: 'finder', name: 'Projects', icon: '/images/finder.png' },
+  { id: 'terminal', name: 'Skills', icon: '/images/terminal.png' },
+  { id: 'about', name: 'About Me', icon: '/images/contact.png' },
+  { id: 'safari', name: 'Experience', icon: '/images/safari.png' },
+  { id: 'contact', name: 'Contact', icon: '/images/contact.png' },
+  { id: 'vscode', name: 'VS Code', icon: '/images/code2.png' },
+  { id: 'photos', name: 'Gallery', icon: '/images/photos.png' },
+  { id: 'music', name: 'Music', icon: '/images/music.png' },
+  { id: 'trash', name: 'Trash', icon: '/images/trash.png' },
 ]
 
 export const Dock = () => {
@@ -32,7 +32,6 @@ export const Dock = () => {
 
     const animateIcons = (mouseX: number) => {
       const { left } = dock.getBoundingClientRect()
-
       icons.forEach((icon) => {
         const { left: iconLeft, width } = icon.getBoundingClientRect()
         const center = iconLeft - left + width / 2
@@ -55,12 +54,7 @@ export const Dock = () => {
 
     const resetIcons = () => {
       icons.forEach((icon) => {
-        gsap.to(icon, {
-          scale: 1,
-          y: 0,
-          duration: 0.3,
-          ease: 'power1.out',
-        })
+        gsap.to(icon, { scale: 1, y: 0, duration: 0.3, ease: 'power1.out' })
       })
     }
 
@@ -74,16 +68,9 @@ export const Dock = () => {
   }, [])
 
   const toggleApp = (app: DockApp) => {
-    if (!app.canOpen) return
-
     const win = windows[app.id]
     if (!win) return
-
-    if (win.isOpen) {
-      closeWindow(app.id)
-    } else {
-      openWindow(app.id)
-    }
+    win.isOpen ? closeWindow(app.id) : openWindow(app.id)
   }
 
   return (
@@ -92,19 +79,31 @@ export const Dock = () => {
         ref={dockRef}
         className="flex items-end gap-1 px-3 py-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20"
       >
-        {dockApps.map((app) => (
-          <button
-            key={app.id}
-            type="button"
-            className="dock-icon flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-colors hover:bg-white/10 cursor-pointer"
-            onClick={() => toggleApp(app)}
-            title={app.name}
-          >
-            <span className="text-2xl">{app.icon}</span>
-            {windows[app.id]?.isOpen && (
-              <div className="w-1 h-1 bg-white rounded-full mt-1" />
+        {dockApps.map((app, index) => (
+          <div key={app.id} className="flex items-end">
+            <button
+              type="button"
+              className="dock-icon flex flex-col items-center justify-center cursor-pointer relative group"
+              onClick={() => toggleApp(app)}
+            >
+              <img
+                src={app.icon}
+                alt={app.name}
+                className="w-12 h-12 object-contain drop-shadow-lg"
+                draggable={false}
+              />
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-gray-800/90 backdrop-blur-sm rounded-md text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10">
+                {app.name}
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800/90 rotate-45 border-r border-b border-white/10" />
+              </div>
+              {windows[app.id]?.isOpen && (
+                <div className="absolute -bottom-1 w-1 h-1 bg-white/80 rounded-full" />
+              )}
+            </button>
+            {index === dockApps.length - 2 && (
+              <div className="w-px h-12 bg-white/20 mx-2" />
             )}
-          </button>
+          </div>
         ))}
       </div>
     </div>
