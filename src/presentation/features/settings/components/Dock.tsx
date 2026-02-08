@@ -1,6 +1,7 @@
 import { useRef, useEffect, memo, useCallback } from 'react'
 import gsap from 'gsap'
 import { useWindowStore } from '@/application/store/useWindowStore'
+import { useOSStore } from '@/application/store/useOSStore'
 import { DOCK_APPS, type DockApp } from '@/core/constants/desktop'
 
 const DOCK_ANIMATION = {
@@ -61,9 +62,49 @@ const DockDivider = memo(() => (
 ))
 DockDivider.displayName = 'DockDivider'
 
+const OSToggleButton = memo(({ onClick }: { onClick: () => void }) => (
+  <button
+    type="button"
+    className="dock-icon flex flex-col items-center justify-center cursor-pointer relative group"
+    onClick={onClick}
+    aria-label="Switch to Windows 11"
+  >
+    <div className="flex items-center justify-center" style={{ width: 'var(--macos-dock-icon)', height: 'var(--macos-dock-icon)' }}>
+      <svg
+        className="text-blue-500 drop-shadow-lg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        style={{ width: '36px', height: '36px' }}
+      >
+        <path d="M0 0h11v11H0zM13 0h11v11H13zM0 13h11v11H0zM13 13h11v11H13z"/>
+      </svg>
+    </div>
+    <div
+      className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-800/95 backdrop-blur-md text-white font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl border border-white/10"
+      style={{
+        padding: 'var(--tooltip-padding-y) var(--tooltip-padding-x)',
+        borderRadius: 'var(--tooltip-radius)',
+        fontSize: 'var(--text-sm)',
+      }}
+    >
+      Windows 11
+      <div
+        className="absolute left-1/2 -translate-x-1/2 -bottom-[6px] w-0 h-0"
+        style={{
+          borderLeft: '6px solid transparent',
+          borderRight: '6px solid transparent',
+          borderTop: '6px solid rgb(31 41 55 / 0.95)',
+        }}
+      />
+    </div>
+  </button>
+))
+OSToggleButton.displayName = 'OSToggleButton'
+
 export const Dock = memo(() => {
   const dockRef = useRef<HTMLDivElement>(null)
   const { toggleWindow, windows } = useWindowStore()
+  const { toggleOS } = useOSStore()
 
   useEffect(() => {
     const dock = dockRef.current
@@ -131,7 +172,12 @@ export const Dock = memo(() => {
               isOpen={app.windowId ? (windows[app.windowId]?.isOpen && !windows[app.windowId]?.isMinimized) ?? false : false}
               onToggle={() => toggleApp(app)}
             />
-            {index === DOCK_APPS.length - 2 && <DockDivider />}
+            {index === DOCK_APPS.length - 2 && (
+              <>
+                <DockDivider />
+                <OSToggleButton onClick={toggleOS} />
+              </>
+            )}
           </div>
         ))}
       </div>

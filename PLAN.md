@@ -436,55 +436,79 @@ const skills = {
 
 ## Fases de Desarrollo
 
-### Fase 1: Setup & Arquitectura Base
-- [ ] Inicializar proyecto con Vite + React 19 + TypeScript
-- [ ] Configurar estructura de carpetas (Clean Architecture)
-- [ ] Setup ESLint + Prettier + Husky
-- [ ] Configurar Tailwind CSS 4
-- [ ] Instalar React Three Fiber + Drei
-- [ ] Configurar Zustand stores
-- [ ] Configurar i18next
-- [ ] Setup path aliases (@core, @infrastructure, etc.)
+### Fase 1: Setup & Arquitectura Base ✅ COMPLETADO
+- [x] Inicializar proyecto con Vite + React 19 + TypeScript
+- [x] Configurar estructura de carpetas (Feature-based)
+- [x] Setup ESLint + Prettier
+- [x] Configurar Tailwind CSS 4
+- [x] Instalar React Three Fiber + Drei + Rapier
+- [x] Configurar Zustand stores (theme, scene, window)
+- [x] Setup path aliases (@/, @core, @application, @presentation)
+- [x] Configurar design tokens en CSS
 
-### Fase 2: Escena 3D Base
-- [ ] Seleccionar/crear modelo de habitación en Blender
-- [ ] Implementar Scene component con Canvas
-- [ ] Configurar luces (ambient, directional, point)
-- [ ] Implementar CameraController
-- [ ] Cargar modelo GLB/GLTF
-- [ ] Animación de entrada
+### Fase 2: Escena 3D Base ✅ COMPLETADO
+- [x] Badge 3D con física (Rapier)
+- [x] Gaming Setup 3D (gaming-setup.glb)
+- [x] Implementar Canvas con Suspense + Loading
+- [x] Configurar luces (ambient, directional, point)
+- [x] Cargar modelos GLB/GLTF con useGLTF
+- [x] Animaciones de rotación con useFrame
 
-### Fase 3: Interactividad 3D
-- [ ] Implementar raycasting para clicks
-- [ ] Click en monitor → zoom animado (GSAP)
-- [ ] Transición 3D → contenido 2D
-- [ ] Hover effects en objetos
-- [ ] Responsive camera positions
+### Fase 3: Interactividad 3D ✅ COMPLETADO
+- [x] Click en Gaming Setup → transición a Desktop
+- [x] Transición animada con GSAP (scale + opacity)
+- [x] Hover effects (cursor pointer)
+- [x] Botón CTA 3D integrado en el setup
+- [x] Rotación CSS sincronizada con el modelo 3D
 
-### Fase 4: Contenido del Portfolio
-- [ ] Hero section (overlay sobre 3D)
-- [ ] About section
-- [ ] Skills visualization (barras/radar chart)
-- [ ] Experience timeline
-- [ ] Projects showcase con modales
-- [ ] Achievements con animaciones CountUp
-- [ ] Contact form
+### Fase 4: macOS Desktop UI ✅ COMPLETADO
+- [x] TopBar con reloj en tiempo real
+- [x] Control Center (WiFi, Bluetooth, Brightness, Volume, Dark Mode)
+- [x] Calendar Dropdown con navegación de meses
+- [x] Spotlight Search (Cmd+Space) con navegación por teclado
+- [x] Context Menu (click derecho)
+- [x] Dock animado con indicadores
+- [x] Window system (draggable, maximize, minimize, close)
+- [x] Terminal Window (Skills con categorías)
+- [x] About Window (Perfil + Bio + Stats)
+- [x] Projects Window (Finder-style con proyectos)
+- [x] Contact Window (Información de contacto)
+- [x] Experience Window (Safari-style timeline)
+- [x] Gallery Window (Photos-style con proyectos)
 
-### Fase 5: Features Core
-- [ ] Dark/Light mode con persistencia
-- [ ] i18n (ES/EN) completo
-- [ ] Responsive design (breakpoints)
-- [ ] Loading screen con progreso
-- [ ] Fallback 2D para mobile si necesario
+### Fase 5: Features Core ✅ COMPLETADO
+- [x] Dark/Light mode con persistencia (Zustand)
+- [x] Theme toggle en Control Center y Context Menu
+- [x] Design tokens CSS variables
+- [x] Loading screen con progreso (useProgress)
+- [x] Keyboard shortcuts (Cmd+Space para Spotlight)
+- [x] Responsive design tokens
 
-### Fase 6: Polish & Optimización
+### Fase 6: Windows 11 Mode 🚧 EN PROGRESO
+- [x] OS Toggle Store (useOSStore) con persistencia
+- [x] Windows 11 Desktop View base
+- [x] Taskbar con Start, Search, System Tray, Clock
+- [x] Start Menu con apps grid y recommended section
+- [x] Action Center (equivalente a Control Center)
+- [x] NotificationCenter (calendario + notificaciones)
+- [x] WindowsSearch (equivalente a Spotlight)
+- [x] WindowsContextMenu (click derecho)
+- [x] OS Toggle en Dock (macOS) y Taskbar (Windows 11)
+- [ ] Trasladar Desktop Icons a Windows 11
+- [ ] Trasladar Window components (Terminal, About, Projects, etc.)
+- [ ] Integrar Start Menu con ventanas
+- [ ] Widgets panel lateral
+
+### Fase 7: Polish & Optimización
 - [ ] Performance optimization (LOD, lazy loading)
 - [ ] Compresión de modelos (Draco)
 - [ ] SEO meta tags + Open Graph
 - [ ] Accesibilidad (a11y)
 - [ ] Testing básico
+- [ ] Animaciones mejoradas (Framer Motion)
+- [ ] Micro-interacciones
 
-### Fase 7: Deploy
+### Fase 8: Deploy
 - [ ] Build production
 - [ ] Deploy a Vercel/Netlify
 - [ ] Configurar dominio custom
@@ -567,6 +591,279 @@ const skills = {
 ---
 
 **Última actualización:** Febrero 2026
+
+---
+
+## ESTADO ACTUAL DEL PROYECTO (Feb 2026)
+
+### ✅ Componentes Implementados
+
+#### 1. **3D Scene Components**
+```
+src/presentation/three/models/
+├── Badge3D.tsx          - Carnet 3D con física (Rapier)
+├── GamingSetup.tsx      - Setup de escritorio con rotación animada
+└── CTA Button 3D        - Integrado en Gaming Setup con rotación CSS
+```
+
+**Features:**
+- Física realista con @react-three/rapier
+- Rotación animada con useFrame
+- Click handlers para transiciones
+- CTA button sincronizado con rotación del setup
+
+#### 2. **macOS Desktop UI**
+```
+src/presentation/pages/
+└── DesktopView.tsx      - Escritorio macOS completo
+
+src/presentation/components/desktop/
+├── ControlCenter.tsx    - Panel de control (WiFi, Bluetooth, etc.)
+├── CalendarDropdown.tsx - Calendario con navegación de meses
+├── SpotlightSearch.tsx  - Búsqueda estilo Spotlight (Cmd+Space)
+└── ContextMenu.tsx      - Menú contextual (click derecho)
+
+src/presentation/features/
+├── settings/components/Dock.tsx
+├── skills/components/TerminalWindow.tsx
+├── about/components/AboutWindow.tsx
+├── projects/components/ProjectsWindow.tsx
+├── contact/components/ContactWindow.tsx
+├── experience/components/ExperienceWindow.tsx
+└── gallery/components/GalleryWindow.tsx
+```
+
+**TopBar Features:**
+- Reloj en tiempo real
+- Apple logo
+- Menú de navegación
+- Batería 100%
+- WiFi indicator
+- Spotlight Search button
+- Control Center button (grid icon)
+- Fecha y hora (clickeable → calendario)
+
+**Control Center:**
+- WiFi toggle (azul activo)
+- Bluetooth toggle (azul activo)
+- AirDrop toggle (azul activo)
+- Dark/Light Mode toggle (conectado a theme store)
+- Stage Manager toggle
+- Brightness slider
+- Volume slider
+- Perfil de usuario con avatar
+- Separadores visuales entre secciones
+
+**Calendar Dropdown:**
+- Hora en tiempo real (segundos incluidos)
+- Fecha completa en español
+- Navegación entre meses (← →)
+- Grid de días del mes
+- Highlight del día actual
+- Indicador de eventos
+
+**Spotlight Search:**
+- Búsqueda de apps/archivos
+- Navegación con ↑↓ y Enter
+- Sugerencias cuando vacío
+- Cierre con Esc
+- Keyboard shortcut: **Cmd/Ctrl + Space**
+- Click outside to close
+
+**Context Menu:**
+- Click derecho en escritorio
+- Nueva Carpeta
+- Obtener Información
+- Cambiar Fondo de Escritorio
+- Usar Pilas
+- Ordenar Por
+- Limpiar
+- Mostrar Opciones de Visualización
+- Cambiar Tema (integrado)
+- Shortcuts visuales (⌘, ⇧)
+
+#### 3. **Window System**
+```
+src/application/store/
+├── useWindowStore.ts    - Estado de ventanas (open, minimize, maximize, zIndex)
+├── useThemeStore.ts     - Dark/Light mode con persistencia
+└── useSceneStore.ts     - Navegación entre vistas (home, desktop)
+
+src/presentation/components/layout/
+└── WindowWrapper.tsx    - HOC para ventanas draggables
+```
+
+**Características:**
+- Draggable con GSAP
+- Maximize/Minimize/Close
+- Z-index management (focus)
+- Traffic lights (⚫🟡🟢)
+- Resize handles
+- Double-click title → maximize
+
+#### 4. **Design System**
+```
+src/index.css            - Design tokens centralizados
+
+Tokens implementados:
+--space-1 a --space-12   (4px - 48px)
+--text-xs a --text-5xl   (11px - 48px)
+--icon-xs a --icon-3xl   (12px - 48px)
+--radius-sm a --radius-full
+--color-primary-50 a --color-primary-900
+--duration-fast/normal/slow
+--ease-default/bounce
+```
+
+**Theme Switching:**
+- Dark mode (default)
+- Light mode
+- Persistencia con Zustand + localStorage
+- Transiciones suaves
+- data-theme attribute en HTML
+
+### 📊 Métricas del Proyecto
+
+| Métrica | Valor |
+|---------|-------|
+| Componentes React | 40+ |
+| Stores Zustand | 3 (theme, scene, window) |
+| Ventanas Desktop | 6 |
+| Modales/Dropdowns | 4 |
+| Design Tokens | 80+ |
+| Archivos TypeScript | 50+ |
+
+### 🎨 Assets Actuales
+
+```
+public/
+├── models/
+│   ├── gaming-setup.glb     ✅ Setup de escritorio
+│   ├── hacker-room.glb      ✅ Habitación (futuro)
+│   └── animations/
+├── images/
+│   ├── folder.png
+│   ├── safari.png
+│   ├── finder.png
+│   ├── photos.png
+│   ├── terminal.png
+│   ├── contact.png
+│   ├── txt.png
+│   ├── pdf.png
+│   └── plain.png
+└── icons/
+    ├── github.svg
+    └── linkedin.svg
+```
+
+### 🔄 Flujo de Navegación Actual
+
+```
+┌─────────────────────────────────────────────┐
+│         LANDING PAGE (Hero 3D)              │
+│  ┌────────────┐    ┌──────────────────┐    │
+│  │  Badge 3D  │    │  Gaming Setup 3D │    │
+│  │  (física)  │    │   (rotación)     │    │
+│  └────────────┘    └──────────────────┘    │
+│         │                    │              │
+│         │         ┌──────────┴──────────┐   │
+│         │         │  CTA Button 3D      │   │
+│         │         │  (sincronizado)     │   │
+│         │         └──────────┬──────────┘   │
+│         │                    │              │
+│         └────────────────────┘              │
+│                     │                        │
+│                 Click/Enter                  │
+│                     ↓                        │
+│         GSAP Transition (scale + opacity)   │
+│                     ↓                        │
+├─────────────────────────────────────────────┤
+│            macOS DESKTOP VIEW               │
+│  ┌────────────────────────────────────┐    │
+│  │ TopBar (Clock, Spotlight, CC, Cal) │    │
+│  ├────────────────────────────────────┤    │
+│  │  ← Back   🗂️ Projects  📄 About    │    │
+│  │           🗂️ Resume    🔗 GitHub    │    │
+│  │           🔗 LinkedIn               │    │
+│  ├────────────────────────────────────┤    │
+│  │  💻 Macintosh HD    📂 Experience  │    │
+│  │  💻 Skills          ✉️ Contact     │    │
+│  ├────────────────────────────────────┤    │
+│  │      [ Ventanas Flotantes ]        │    │
+│  │  - Terminal (Skills)               │    │
+│  │  - About (Profile)                 │    │
+│  │  - Finder (Projects)               │    │
+│  │  - Safari (Experience)             │    │
+│  │  - Photos (Gallery)                │    │
+│  │  - Contact (Info)                  │    │
+│  └────────────────────────────────────┘    │
+│  ┌────────────────────────────────────┐    │
+│  │ Dock: 🗂️ 🌐 📸 🗑️                  │    │
+│  └────────────────────────────────────┘    │
+└─────────────────────────────────────────────┘
+```
+
+### 🎯 Windows 11 Mode - Estado Actual
+
+#### ✅ Componentes Creados:
+```
+src/presentation/pages/
+└── Windows11View.tsx      - Desktop completo de Windows 11
+
+src/presentation/components/windows/
+├── ActionCenter.tsx       - Configuración rápida (WiFi, Bluetooth, Brillo, Volumen)
+├── NotificationCenter.tsx - Notificaciones + Calendario integrado
+├── WindowsSearch.tsx      - Búsqueda tipo Windows (Ctrl+Space)
+└── WindowsContextMenu.tsx - Menú contextual click derecho
+
+src/application/store/
+└── useOSStore.ts         - Toggle macOS ↔ Windows 11 con persistencia
+```
+
+#### 🔄 Componentes Integrados:
+- **Taskbar**: Start, Search, OS Toggle (Apple icon), System Tray (WiFi, Volume, Battery), Clock
+- **Start Menu**: Apps grid (12 apps), Recommended section, User profile
+- **Keyboard Shortcuts**: Ctrl/Cmd+Space (Search), Esc (cerrar modales)
+- **OS Toggle**: En Dock (macOS) y Taskbar (Windows 11)
+
+#### 📋 Próximo a Implementar:
+
+#### Features a Implementar:
+1. **Start Menu**
+   - Apps grid con íconos
+   - Búsqueda integrada
+   - Pinned apps
+   - Recommended section
+   - User profile en footer
+
+2. **Taskbar**
+   - Centrado estilo Windows 11
+   - Start button
+   - Search button
+   - Task view
+   - Widgets button
+   - Running apps indicators
+   - System tray (WiFi, Volume, Battery, Clock)
+
+3. **Widgets Panel**
+   - Clima
+   - Calendario
+   - Noticias/Proyectos destacados
+   - Tareas
+
+4. **Snap Layouts**
+   - Arrastrar ventana a bordes
+   - Layouts: 2 cols, 3 cols, grid
+   - Preview de snap zones
+
+5. **OS Toggle**
+   - Button en TopBar/Taskbar
+   - Smooth transition
+   - Persistir preferencia
+
+#### Repos de Referencia:
+- [programming-with-ia/windows-11](https://github.com/programming-with-ia/windows-11)
+- [VrajVyas11/React_Windows_11](https://github.com/VrajVyas11/React_Windows_11)
 
 ---
 

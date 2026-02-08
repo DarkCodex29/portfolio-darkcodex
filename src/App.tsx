@@ -7,8 +7,10 @@ import gsap from 'gsap'
 import { Band } from '@/presentation/three/models/Badge3D'
 import { GamingSetup } from '@/presentation/three/models/GamingSetup'
 import { DesktopView } from '@/presentation/pages/DesktopView'
+import { Windows11View } from '@/presentation/pages/Windows11View'
 import { HeroSection } from '@/presentation/components/sections/HeroSection'
 import { useSceneStore } from '@/application/store/useSceneStore'
+import { useOSStore } from '@/application/store/useOSStore'
 import { CAMERA, PHYSICS, LIGHTS, GL_CONFIG, TRANSITION } from '@/core/constants/scene'
 import { ICONS } from '@/core/constants/ui'
 import { t } from '@/core/constants/translations'
@@ -105,6 +107,7 @@ SetupCanvas.displayName = 'SetupCanvas'
 
 function App() {
   const { currentView, goToDesktop, setTransitioning } = useSceneStore()
+  const { currentOS } = useOSStore()
   const transitionRef = useRef<HTMLDivElement>(null)
   const [showDesktop, setShowDesktop] = useState(false)
 
@@ -134,7 +137,11 @@ function App() {
   }
 
   if (showDesktop || currentView === 'desktop') {
-    return <DesktopView onBack={handleBackFromDesktop} />
+    return currentOS === 'macos' ? (
+      <DesktopView onBack={handleBackFromDesktop} />
+    ) : (
+      <Windows11View onBack={handleBackFromDesktop} />
+    )
   }
 
   return (
