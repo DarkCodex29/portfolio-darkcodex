@@ -1,5 +1,8 @@
 import { t } from './translations'
 
+export const CV_FILENAME = 'CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
+export const CV_PATH = `/${CV_FILENAME}`
+
 export type AvailabilityStatus = 'available' | 'busy' | 'unavailable'
 
 export interface StatItem {
@@ -194,3 +197,107 @@ export const getProjectById = (id: string): Project | undefined =>
 
 export const getProjectsBySector = (sector: Sector): Project[] =>
   PROJECTS.filter((project) => project.sector === sector)
+
+export interface Experience {
+  id: string
+  company: string
+  role: string
+  period: string
+  startDate: string
+  endDate: string | null
+  description: string
+  achievements: string[]
+  techStack: string[]
+  color: string
+  logo?: string
+}
+
+export const EXPERIENCE: Experience[] = [
+  {
+    id: 'keola-networks',
+    company: 'Keola Networks',
+    role: 'Senior Mobile Engineer',
+    period: 'Oct 2024 - Presente',
+    startDate: '2024-10',
+    endDate: null,
+    description: 'Desarrollo de aplicaciones fintech y wallets de criptomonedas con arquitectura enterprise.',
+    achievements: [
+      'Liderazgo técnico en EXEOS Wallet (+32K LOC)',
+      'Arquitectura monorepo con 7 paquetes',
+      'Optimización CI/CD con reducción del 70%',
+      'InClub Backoffice: 2,456 tests automatizados',
+    ],
+    techStack: ['Flutter 3.32', 'BLoC', 'web3dart', 'Melos', 'Shorebird'],
+    color: '#8b5cf6',
+  },
+  {
+    id: 'freelance-senior',
+    company: 'Freelance',
+    role: 'Senior Full Stack Developer',
+    period: 'Ene 2024 - Oct 2024',
+    startDate: '2024-01',
+    endDate: '2024-10',
+    description: 'Consultoría y desarrollo de soluciones enterprise para múltiples sectores.',
+    achievements: [
+      'API SUNAT/RENIEC: 17.8M+ registros procesados',
+      'Sistema SGEM Chinalco: 99.9% uptime',
+      'Sistema Calera: tracking real-time',
+      'Sistema Texfina: gestión textil integral',
+    ],
+    techStack: ['NestJS', 'Flutter', 'Angular', '.NET', 'PostgreSQL'],
+    color: '#22c55e',
+  },
+  {
+    id: 'software-engineering-latam',
+    company: 'Software Engineering LATAM',
+    role: 'Mobile Developer',
+    period: 'Ene 2023 - Dic 2023',
+    startDate: '2023-01',
+    endDate: '2023-12',
+    description: 'Desarrollo mobile y backend para proyectos agroindustriales y mineros.',
+    achievements: [
+      'Sistema Guías Laredo con integración SUNAT',
+      'Facturación electrónica EFACT',
+      'Sistema Speed para gestión documental',
+      'Firma electrónica y workflows',
+    ],
+    techStack: ['Flutter', '.NET Core', 'Angular 16', 'Firebase', 'Prisma'],
+    color: '#f59e0b',
+  },
+  {
+    id: 'grupo-ebim',
+    company: 'Grupo EBIM',
+    role: 'Mobile Developer',
+    period: '2021 - 2023',
+    startDate: '2021-01',
+    endDate: '2023-01',
+    description: 'Desarrollo de aplicaciones móviles para el sector farmacéutico y salud.',
+    achievements: [
+      'Pharma Track: 1K+ descargas, 99.5% crash-free',
+      'Pharma Reception FP: control de calidad',
+      'Arquitectura offline-first',
+      'Integración DataWedge para escáners',
+    ],
+    techStack: ['Flutter', 'Kotlin', 'Swift', 'Firebase', 'Hive'],
+    color: '#ef4444',
+  },
+]
+
+export interface GalleryImage {
+  id: string
+  projectId: string
+  url: string
+  title: string
+  category: 'mobile' | 'web' | 'enterprise'
+}
+
+export const GALLERY: GalleryImage[] = [
+  { id: 'exeos-1', projectId: 'exeos-wallet', url: '/images/gallery/exeos-1.png', title: 'EXEOS Wallet', category: 'mobile' },
+  { id: 'inclub-1', projectId: 'inclub-fintech', url: '/images/gallery/inclub-1.png', title: 'InClub Backoffice', category: 'mobile' },
+  { id: 'chinalco-1', projectId: 'chinalco-mining', url: '/images/gallery/chinalco-1.png', title: 'SGEM Chinalco', category: 'enterprise' },
+  { id: 'calera-1', projectId: 'sistema-calera', url: '/images/gallery/calera-1.png', title: 'Sistema Calera', category: 'web' },
+  { id: 'texfina-1', projectId: 'sistema-texfina', url: '/images/gallery/texfina-1.png', title: 'Sistema Texfina', category: 'web' },
+  { id: 'speed-1', projectId: 'sistema-speed', url: '/images/gallery/speed-1.png', title: 'Sistema Speed', category: 'web' },
+  { id: 'laredo-1', projectId: 'laredo-guias', url: '/images/gallery/laredo-1.png', title: 'Guías Laredo', category: 'mobile' },
+  { id: 'pharma-1', projectId: 'pharma-track', url: '/images/gallery/pharma-1.png', title: 'Pharma Track', category: 'mobile' },
+]

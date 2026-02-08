@@ -1,59 +1,56 @@
 import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { Mail, Github, Linkedin, MapPin, FileText, User } from 'lucide-react'
-import { PROFILE } from '@/core/constants/profile'
+import { PROFILE, STATS, SECTORS, CV_PATH, CV_FILENAME } from '@/core/constants/profile'
 import { t } from '@/core/constants/translations'
-
-const stats = [
-  { label: t.stats.yearsExperience, value: '6+' },
-  { label: t.stats.appsInProduction, value: '10+' },
-  { label: t.stats.activeUsers, value: '10K+' },
-  { label: t.stats.githubRepos, value: '50+' },
-]
-
-const sectors = ['Fintech', 'Salud', 'Minería', 'Retail', 'Agroindustrial', 'Farmacéutico', 'Textil', 'Químico']
 
 const AboutContent = memo(() => {
   const handleDownloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
-    link.download = 'CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
+    link.href = CV_PATH
+    link.download = CV_FILENAME
     link.click()
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
-      <div className="flex items-start" style={{ gap: 'var(--spacing-lg)' }}>
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-          <User className="w-10 h-10 text-white" />
+      {/* Profile Header */}
+      <div className="flex items-start" style={{ gap: 'var(--space-4)' }}>
+        <div
+          className="rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center"
+          style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)' }}
+        >
+          <User style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }} className="text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white">{PROFILE.name.full}</h2>
-          <p className="text-purple-400 font-medium">{t.windows.about.role}</p>
-          <p className="text-gray-400 text-sm mt-1 flex items-center gap-1">
-            <MapPin className="w-3.5 h-3.5" />
+          <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
+          <p className="text-purple-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+          <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
+            <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
             {t.windows.about.location}
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-4" style={{ gap: 'var(--spacing-md)' }}>
-        {stats.map(({ label, value }) => (
+      {/* Stats Grid */}
+      <div className="grid grid-cols-3" style={{ gap: 'var(--space-3)' }}>
+        {STATS.map(({ id, label, value }) => (
           <div
-            key={label}
+            key={id}
             className="bg-white/5 text-center"
             style={{
               padding: 'var(--card-padding)',
-              borderRadius: 'var(--card-border-radius)'
+              borderRadius: 'var(--card-radius)'
             }}
           >
-            <div className="text-2xl font-bold text-white">{value}</div>
-            <div className="text-xs text-gray-400">{label}</div>
+            <div className="font-bold text-white" style={{ fontSize: 'var(--text-2xl)' }}>{value}</div>
+            <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{label}</div>
           </div>
         ))}
       </div>
 
-      <div className="text-gray-300 text-sm leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+      {/* Bio */}
+      <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
         <p>
           {t.windows.about.bioP1.split('Flutter')[0]}
           <span className="text-purple-400">Flutter</span>
@@ -74,61 +71,84 @@ const AboutContent = memo(() => {
         </p>
       </div>
 
+      {/* Sectors */}
       <div>
-        <h3 className="text-sm font-semibold text-white" style={{ marginBottom: 'var(--spacing-sm)' }}>
+        <h3 className="font-semibold text-white" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>
           {t.windows.about.sectorsTitle}
         </h3>
-        <div className="flex flex-wrap" style={{ gap: 'var(--spacing-sm)' }}>
-          {sectors.map((sector) => (
+        <div className="flex flex-wrap" style={{ gap: 'var(--space-2)' }}>
+          {SECTORS.map((sector) => (
             <span
               key={sector}
-              className="bg-purple-500/20 text-purple-300 text-xs font-medium"
+              className="bg-purple-500/20 text-purple-300 font-medium"
               style={{
+                fontSize: 'var(--text-xs)',
                 padding: 'var(--badge-padding-y) var(--badge-padding-x)',
-                borderRadius: 'var(--badge-border-radius)'
+                borderRadius: 'var(--badge-radius)'
               }}
             >
-              {sector}
+              {t.sectors[sector as keyof typeof t.sectors] || sector}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="flex flex-wrap" style={{ gap: 'var(--spacing-md)', paddingTop: 'var(--spacing-sm)' }}>
+      {/* Action Buttons */}
+      <div className="flex flex-wrap" style={{ gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
         <a
           href={`mailto:${PROFILE.contact.email}`}
-          className="flex items-center bg-purple-500 hover:bg-purple-600 rounded-lg text-white text-sm transition-colors"
-          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
+          className="flex items-center bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+          style={{
+            fontSize: 'var(--text-sm)',
+            padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+            gap: 'var(--btn-gap)',
+            borderRadius: 'var(--btn-radius)'
+          }}
         >
-          <Mail className="w-4 h-4" />
+          <Mail style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
           {t.actions.email}
         </a>
         <a
           href={PROFILE.contact.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-sm transition-colors"
-          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
+          className="flex items-center bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+          style={{
+            fontSize: 'var(--text-sm)',
+            padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+            gap: 'var(--btn-gap)',
+            borderRadius: 'var(--btn-radius)'
+          }}
         >
-          <Github className="w-4 h-4" />
+          <Github style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
           GitHub
         </a>
         <a
           href={PROFILE.contact.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm transition-colors"
-          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
+          className="flex items-center bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+          style={{
+            fontSize: 'var(--text-sm)',
+            padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+            gap: 'var(--btn-gap)',
+            borderRadius: 'var(--btn-radius)'
+          }}
         >
-          <Linkedin className="w-4 h-4" />
+          <Linkedin style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
           LinkedIn
         </a>
         <button
           onClick={handleDownloadResume}
-          className="flex items-center bg-green-600 hover:bg-green-700 rounded-lg text-white text-sm transition-colors"
-          style={{ padding: 'var(--spacing-sm) var(--spacing-lg)', gap: 'var(--spacing-sm)' }}
+          className="flex items-center bg-green-600 hover:bg-green-700 text-white transition-colors"
+          style={{
+            fontSize: 'var(--text-sm)',
+            padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+            gap: 'var(--btn-gap)',
+            borderRadius: 'var(--btn-radius)'
+          }}
         >
-          <FileText className="w-4 h-4" />
+          <FileText style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
           {t.actions.resume}
         </button>
       </div>

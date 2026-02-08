@@ -4,6 +4,8 @@ import { TerminalWindow } from '@/presentation/features/skills/components/Termin
 import { AboutWindow } from '@/presentation/features/about/components/AboutWindow'
 import { ProjectsWindow } from '@/presentation/features/projects/components/ProjectsWindow'
 import { ContactWindow } from '@/presentation/features/contact/components/ContactWindow'
+import { ExperienceWindow } from '@/presentation/features/experience/components/ExperienceWindow'
+import { GalleryWindow } from '@/presentation/features/gallery/components/GalleryWindow'
 import { useWindowStore } from '@/application/store/useWindowStore'
 import { DESKTOP_ICONS, SIDEBAR_ICONS, MENU_ITEMS, type DesktopIcon } from '@/core/constants/desktop'
 import { PROFILE } from '@/core/constants/profile'
@@ -31,44 +33,60 @@ const TopBar = memo(() => {
     date.toLocaleDateString('es-PE', { weekday: 'short', month: 'short', day: 'numeric' })
 
   return (
-    <header className="absolute top-0 left-0 right-0 h-[26px] bg-black/25 backdrop-blur-2xl backdrop-saturate-[1.8] flex items-center justify-between px-4 z-50">
-      <div className="flex items-center gap-5">
-        <button className="text-white/90 font-medium text-[13px] hover:bg-white/10 px-2 py-0.5 rounded transition-colors">
+    <header
+      className="absolute top-0 left-0 right-0 bg-black/25 backdrop-blur-2xl backdrop-saturate-[1.8] flex items-center justify-between z-50"
+      style={{ height: 'var(--macos-topbar-height)', padding: '0 var(--space-4)', fontSize: 'var(--macos-topbar-text)' }}
+    >
+      <div className="flex items-center" style={{ gap: 'var(--space-5)' }}>
+        <button
+          className="text-white/90 font-medium hover:bg-white/10 rounded transition-colors"
+          style={{ padding: 'var(--space-1) var(--space-2)' }}
+        >
 
         </button>
-        <span className="text-white/90 text-[13px] font-semibold">{PROFILE.name.first}</span>
-        <nav className="flex items-center gap-4 text-white/80 text-[13px]">
+        <span className="text-white/90 font-semibold">{PROFILE.name.first}</span>
+        <nav className="flex items-center text-white/80" style={{ gap: 'var(--space-4)' }}>
           {MENU_ITEMS.map((item) => (
-            <button key={item} className="hover:bg-white/10 px-1.5 py-0.5 rounded transition-colors">
+            <button
+              key={item}
+              className="hover:bg-white/10 rounded transition-colors"
+              style={{ padding: 'var(--space-1) var(--space-2)' }}
+            >
               {item}
             </button>
           ))}
         </nav>
       </div>
 
-      <div className="flex items-center gap-2 text-white/80 text-[13px]">
-        <button className="flex items-center gap-1 px-2 py-0.5 rounded hover:bg-white/10 transition-colors">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+      <div className="flex items-center text-white/80" style={{ gap: 'var(--space-2)' }}>
+        <button
+          className="flex items-center rounded hover:bg-white/10 transition-colors"
+          style={{ gap: 'var(--space-1)', padding: 'var(--space-1) var(--space-2)' }}
+        >
+          <svg style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} fill="currentColor" viewBox="0 0 24 24">
             <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zM13 18h-2v-2h2v2zm0-4h-2V9h2v5z"/>
           </svg>
           <span>100%</span>
         </button>
-        <button className="p-1 rounded hover:bg-white/10 transition-colors">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <button className="rounded hover:bg-white/10 transition-colors" style={{ padding: 'var(--space-1)' }}>
+          <svg style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} fill="currentColor" viewBox="0 0 24 24">
             <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
           </svg>
         </button>
-        <button className="p-1 rounded hover:bg-white/10 transition-colors">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <button className="rounded hover:bg-white/10 transition-colors" style={{ padding: 'var(--space-1)' }}>
+          <svg style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} fill="currentColor" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
           </svg>
         </button>
-        <button className="p-1 rounded hover:bg-white/10 transition-colors">
-          <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24">
+        <button className="rounded hover:bg-white/10 transition-colors" style={{ padding: 'var(--space-1)' }}>
+          <svg style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} fill="currentColor" viewBox="0 0 24 24">
             <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
           </svg>
         </button>
-        <div className="flex items-center gap-4 px-2 py-0.5 rounded hover:bg-white/10 cursor-pointer transition-colors">
+        <div
+          className="flex items-center rounded hover:bg-white/10 cursor-pointer transition-colors"
+          style={{ gap: 'var(--space-4)', padding: 'var(--space-1) var(--space-2)' }}
+        >
           <span>{formatDate(currentTime)}</span>
           <span>{formatTime(currentTime)}</span>
         </div>
@@ -223,6 +241,8 @@ export const DesktopView = memo(({ onBack }: DesktopViewProps) => {
       <AboutWindow />
       <ProjectsWindow />
       <ContactWindow />
+      <ExperienceWindow />
+      <GalleryWindow />
 
       <Dock />
 

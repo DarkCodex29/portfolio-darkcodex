@@ -12,34 +12,43 @@ const ProjectCard = memo(({ project }: ProjectCardProps) => (
     className="border transition-all duration-200 hover:scale-[1.01] cursor-pointer group"
     style={{
       padding: 'var(--card-padding)',
-      borderRadius: 'var(--card-border-radius)',
+      borderRadius: 'var(--card-radius)',
       background: `linear-gradient(135deg, ${project.color}10, transparent)`,
       borderColor: `${project.color}30`,
     }}
   >
-    <div className="flex items-start justify-between mb-3">
-      <div className="flex items-center gap-3">
+    <div className="flex items-start justify-between" style={{ marginBottom: 'var(--space-3)' }}>
+      <div className="flex items-center" style={{ gap: 'var(--space-3)' }}>
         <div
-          className="w-3.5 h-3.5 rounded-full"
-          style={{ backgroundColor: project.color }}
+          className="rounded-full"
+          style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)', backgroundColor: project.color }}
         />
-        <h3 className="font-semibold text-white group-hover:text-white/90">{project.name}</h3>
+        <h3 className="font-semibold text-white group-hover:text-white/90" style={{ fontSize: 'var(--text-base)' }}>{project.name}</h3>
       </div>
-      <span className="text-xs text-white/40 font-mono px-2 py-1 bg-white/5 rounded">{project.year}</span>
+      <span
+        className="text-white/40 font-mono bg-white/5"
+        style={{ fontSize: 'var(--text-xs)', padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)' }}
+      >
+        {project.year}
+      </span>
     </div>
 
-    <p className="text-white/60 text-sm leading-relaxed pl-6" style={{ marginBottom: 'var(--spacing-lg)' }}>
+    <p
+      className="text-white/60 leading-relaxed"
+      style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-4)', paddingLeft: 'var(--space-6)' }}
+    >
       {project.description}
     </p>
 
-    <div className="flex flex-wrap pl-6" style={{ gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-lg)' }}>
+    <div className="flex flex-wrap" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-4)', paddingLeft: 'var(--space-6)' }}>
       {project.techStack.map((tech) => (
         <span
           key={tech}
-          className="bg-white/10 text-white/70 text-xs font-medium"
+          className="bg-white/10 text-white/70 font-medium"
           style={{
+            fontSize: 'var(--text-xs)',
             padding: 'var(--badge-padding-y) var(--badge-padding-x)',
-            borderRadius: 'var(--badge-border-radius)'
+            borderRadius: 'var(--badge-radius)'
           }}
         >
           {tech}
@@ -47,12 +56,13 @@ const ProjectCard = memo(({ project }: ProjectCardProps) => (
       ))}
     </div>
 
-    <div className="flex flex-wrap pl-6" style={{ gap: 'var(--spacing-sm)' }}>
+    <div className="flex flex-wrap" style={{ gap: 'var(--space-2)', paddingLeft: 'var(--space-6)' }}>
       {project.highlights.map((highlight) => (
         <span
           key={highlight}
-          className="text-xs font-medium rounded-full"
+          className="font-medium rounded-full"
           style={{
+            fontSize: 'var(--text-xs)',
             padding: 'var(--badge-padding-y) var(--badge-padding-x)',
             backgroundColor: `${project.color}20`,
             color: project.color,
@@ -72,16 +82,19 @@ const ProjectsHeader = memo(() => {
   return (
     <div
       className="flex items-center border-b border-white/10 shrink-0"
-      style={{ gap: 'var(--spacing-lg)', paddingBottom: 'var(--window-gap)' }}
+      style={{ gap: 'var(--space-4)', paddingBottom: 'var(--window-gap)' }}
     >
-      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
-        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <div
+        className="rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg"
+        style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)' }}
+      >
+        <svg style={{ width: 'var(--icon-lg)', height: 'var(--icon-lg)' }} className="text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
         </svg>
       </div>
       <div>
-        <h2 className="text-lg font-semibold text-white">{t.windows.projects.header}</h2>
-        <p className="text-white/50 text-sm">{appsCount} {t.windows.projects.appsInProduction}</p>
+        <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{t.windows.projects.header}</h2>
+        <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{appsCount} {t.windows.projects.appsInProduction}</p>
       </div>
     </div>
   )
@@ -101,21 +114,26 @@ const ProjectsSidebar = memo(() => {
       style={{ paddingRight: 'var(--window-gap)', minHeight: 0 }}
     >
       <p
-        className="text-xs text-white/40 uppercase tracking-wider font-medium"
-        style={{ marginBottom: 'var(--spacing-lg)' }}
+        className="text-white/40 uppercase tracking-wider font-medium"
+        style={{ fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}
       >
         {t.windows.projects.sectors}
       </p>
-      <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
+      <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
         {uniqueSectors.map((sector) => (
           <li key={sector}>
             <button
-              className="w-full text-left rounded-lg text-sm text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center"
-              style={{ padding: 'var(--spacing-sm) var(--spacing-md)', gap: 'var(--spacing-md)' }}
+              className="w-full text-left text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center"
+              style={{
+                fontSize: 'var(--text-sm)',
+                padding: 'var(--sidebar-item-padding-y) var(--sidebar-item-padding-x)',
+                gap: 'var(--sidebar-item-gap)',
+                borderRadius: 'var(--sidebar-item-radius)'
+              }}
             >
               <div
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: sectorColors[sector] }}
+                className="rounded-full"
+                style={{ width: '10px', height: '10px', backgroundColor: sectorColors[sector] }}
               />
               {t.sectors[sector as keyof typeof t.sectors] || sector}
             </button>
@@ -133,7 +151,7 @@ const ProjectsGrid = memo(() => (
       flex: 1,
       minHeight: 0,
       overflowY: 'auto',
-      paddingLeft: 'var(--spacing-lg)',
+      paddingLeft: 'var(--space-4)',
     }}
   >
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--card-gap)' }}>
@@ -141,7 +159,7 @@ const ProjectsGrid = memo(() => (
         <ProjectCard key={project.id} project={project} />
       ))}
     </div>
-    <p className="text-white/40 text-xs text-center" style={{ padding: 'var(--window-gap) 0' }}>
+    <p className="text-white/40 text-center" style={{ fontSize: 'var(--text-xs)', padding: 'var(--window-gap) 0' }}>
       {t.windows.projects.additionalNDA}
     </p>
   </div>

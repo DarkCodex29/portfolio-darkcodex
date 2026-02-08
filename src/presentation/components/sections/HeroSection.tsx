@@ -6,8 +6,11 @@ const AvailableBadge = memo(() => {
   if (PROFILE.availability.status !== 'available') return null
 
   return (
-    <div className="mb-4">
-      <span className="inline-block px-4 py-1.5 text-xs font-medium text-primary-300 bg-primary-500/20 rounded-full border border-primary-500/30">
+    <div style={{ marginBottom: 'var(--space-4)' }}>
+      <span
+        className="inline-block font-medium text-primary-300 bg-primary-500/20 rounded-full border border-primary-500/30"
+        style={{ fontSize: 'var(--text-xs)', padding: 'var(--badge-padding-y) var(--badge-padding-x)' }}
+      >
         {PROFILE.availability.label}
       </span>
     </div>
@@ -17,10 +20,10 @@ AvailableBadge.displayName = 'AvailableBadge'
 
 const HeroTitle = memo(() => (
   <>
-    <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-1 tracking-tight">
+    <h1 className="font-bold text-text-primary tracking-tight" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-1)' }}>
       {PROFILE.name.first}
     </h1>
-    <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent mb-4 tracking-tight">
+    <h1 className="font-bold bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent tracking-tight" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-4)' }}>
       {PROFILE.name.last}
     </h1>
   </>
@@ -29,10 +32,10 @@ HeroTitle.displayName = 'HeroTitle'
 
 const HeroSubtitle = memo(() => (
   <>
-    <p className="text-lg lg:text-xl text-text-primary font-medium mb-1">
+    <p className="text-text-primary font-medium" style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-1)' }}>
       {PROFILE.title.primary}
     </p>
-    <p className="text-sm text-primary-300/80 mb-5">
+    <p className="text-primary-300/80" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-5)' }}>
       {PROFILE.title.secondary}
     </p>
   </>
@@ -40,22 +43,22 @@ const HeroSubtitle = memo(() => (
 HeroSubtitle.displayName = 'HeroSubtitle'
 
 const HeroDescription = memo(() => (
-  <p className="text-text-muted mb-8 leading-relaxed text-sm max-w-md mx-auto px-4">
+  <p className="text-text-muted leading-relaxed max-w-md mx-auto" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-8)', padding: '0 var(--space-4)' }}>
     {PROFILE.bio.short}
   </p>
 ))
 HeroDescription.displayName = 'HeroDescription'
 
 const StatCard = memo(({ value, label }: Pick<StatItem, 'value' | 'label'>) => (
-  <div className="text-center px-4 py-3">
-    <p className="text-2xl font-bold text-text-primary">{value}</p>
-    <p className="text-xs text-text-muted uppercase tracking-wider mt-1">{label}</p>
+  <div className="text-center" style={{ padding: 'var(--space-3) var(--space-4)' }}>
+    <p className="font-bold text-text-primary" style={{ fontSize: 'var(--text-2xl)' }}>{value}</p>
+    <p className="text-text-muted uppercase tracking-wider" style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>{label}</p>
   </div>
 ))
 StatCard.displayName = 'StatCard'
 
 const StatsSection = memo(() => (
-  <div className="flex justify-center gap-4 mb-8 px-4">
+  <div className="flex justify-center" style={{ gap: 'var(--space-4)', marginBottom: 'var(--space-8)', padding: '0 var(--space-4)' }}>
     {STATS.map((stat) => (
       <StatCard key={stat.id} value={stat.value} label={stat.label} />
     ))}
@@ -64,13 +67,13 @@ const StatsSection = memo(() => (
 StatsSection.displayName = 'StatsSection'
 
 export const HeroSection = memo(() => (
-  <section className="max-w-xl text-center py-6 px-4" aria-label="Hero section">
+  <section className="max-w-xl text-center" style={{ padding: 'var(--space-6) var(--space-4)' }} aria-label="Hero section">
     <AvailableBadge />
     <HeroTitle />
     <HeroSubtitle />
     <HeroDescription />
     <StatsSection />
-    <div className="px-2">
+    <div style={{ padding: '0 var(--space-2)' }}>
       <TechCarousel />
     </div>
   </section>

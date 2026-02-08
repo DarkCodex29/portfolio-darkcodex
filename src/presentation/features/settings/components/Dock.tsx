@@ -27,15 +27,30 @@ const DockItem = memo(({ app, isOpen, onToggle }: DockItemProps) => (
     <img
       src={app.icon}
       alt={app.name}
-      className="w-12 h-12 object-contain drop-shadow-lg"
+      className="object-contain drop-shadow-lg"
+      style={{ width: 'var(--macos-dock-icon)', height: 'var(--macos-dock-icon)' }}
       draggable={false}
     />
-    <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-gray-900/95 backdrop-blur-sm rounded-lg text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10 shadow-xl">
+    <div
+      className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-800/95 backdrop-blur-md text-white font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl border border-white/10"
+      style={{
+        padding: 'var(--tooltip-padding-y) var(--tooltip-padding-x)',
+        borderRadius: 'var(--tooltip-radius)',
+        fontSize: 'var(--text-sm)',
+      }}
+    >
       {app.name}
-      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900/95 rotate-45 border-r border-b border-white/10" />
+      <div
+        className="absolute left-1/2 -translate-x-1/2 -bottom-[6px] w-0 h-0"
+        style={{
+          borderLeft: '6px solid transparent',
+          borderRight: '6px solid transparent',
+          borderTop: '6px solid rgb(31 41 55 / 0.95)',
+        }}
+      />
     </div>
     {isOpen && (
-      <div className="absolute -bottom-1.5 w-1 h-1 bg-white/80 rounded-full" />
+      <div className="absolute -bottom-1.5 bg-white/80 rounded-full" style={{ width: '4px', height: '4px' }} />
     )}
   </button>
 ))

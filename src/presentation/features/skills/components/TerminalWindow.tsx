@@ -13,8 +13,8 @@ const techStack = [
 ]
 
 const TerminalContent = memo(() => (
-  <div className="font-mono text-sm">
-    <div className="text-green-400" style={{ marginBottom: 'var(--spacing-lg)' }}>
+  <div className="font-mono" style={{ fontSize: 'var(--text-sm)' }}>
+    <div className="text-green-400" style={{ marginBottom: 'var(--space-4)' }}>
       <span className="text-purple-400">gian@darkcodex</span>
       <span className="text-white">:</span>
       <span className="text-blue-400">~</span>
@@ -22,29 +22,29 @@ const TerminalContent = memo(() => (
       <span className="text-gray-300">{t.windows.terminal.command}</span>
     </div>
 
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
       {techStack.map(({ category, items }) => (
-        <div key={category} className="flex items-start" style={{ gap: 'var(--spacing-md)' }}>
-          <Check className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+        <div key={category} className="flex items-start" style={{ gap: 'var(--space-3)' }}>
+          <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} className="text-green-400 mt-0.5 flex-shrink-0" />
           <div>
             <span className="text-yellow-400 font-semibold">{category}:</span>
-            <span className="text-gray-300 ml-2">{items.join(' | ')}</span>
+            <span className="text-gray-300" style={{ marginLeft: 'var(--space-2)' }}>{items.join(' | ')}</span>
           </div>
         </div>
       ))}
     </div>
 
-    <div className="border-t border-white/10" style={{ marginTop: 'var(--window-gap)', paddingTop: 'var(--spacing-lg)' }}>
-      <div className="text-green-400 flex items-center" style={{ gap: 'var(--spacing-sm)' }}>
-        <Check className="w-4 h-4" />
+    <div className="border-t border-white/10" style={{ marginTop: 'var(--window-gap)', paddingTop: 'var(--space-4)' }}>
+      <div className="text-green-400 flex items-center" style={{ gap: 'var(--space-2)' }}>
+        <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
         <span>6 {t.windows.terminal.categoriesLoaded}</span>
       </div>
-      <div className="text-gray-500 text-xs" style={{ marginTop: 'var(--spacing-xs)' }}>
+      <div className="text-gray-500" style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
         {t.windows.terminal.renderTime}
       </div>
     </div>
 
-    <div className="text-green-400" style={{ marginTop: 'var(--spacing-lg)' }}>
+    <div className="text-green-400" style={{ marginTop: 'var(--space-4)' }}>
       <span className="text-purple-400">gian@darkcodex</span>
       <span className="text-white">:</span>
       <span className="text-blue-400">~</span>

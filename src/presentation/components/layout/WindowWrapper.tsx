@@ -111,31 +111,34 @@ export const WindowWrapper = ({
         className="window-drag-handle flex items-center justify-between bg-gray-800/50 border-b border-white/10 shrink-0 rounded-t-lg"
         style={{ padding: 'var(--window-header-padding-y) var(--window-header-padding-x)' }}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center" style={{ gap: 'var(--space-2)' }}>
           <button
             onClick={(e) => {
               e.stopPropagation()
               closeWindow(windowKey)
             }}
-            className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+            className="rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+            style={{ width: 'var(--macos-control-size)', height: 'var(--macos-control-size)' }}
           />
           <button
             onClick={(e) => {
               e.stopPropagation()
               minimizeWindow(windowKey)
             }}
-            className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
+            className="rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
+            style={{ width: 'var(--macos-control-size)', height: 'var(--macos-control-size)' }}
           />
           <button
             onClick={(e) => {
               e.stopPropagation()
               toggleMaximizeWindow(windowKey)
             }}
-            className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors"
+            className="rounded-full bg-green-500 hover:bg-green-600 transition-colors"
+            style={{ width: 'var(--macos-control-size)', height: 'var(--macos-control-size)' }}
           />
         </div>
-        <h2 className="text-sm font-medium text-white/80">{title}</h2>
-        <div className="w-14" />
+        <h2 className="font-medium text-white/80" style={{ fontSize: 'var(--text-sm)' }}>{title}</h2>
+        <div style={{ width: '3.5rem' }} />
       </div>
 
       <div

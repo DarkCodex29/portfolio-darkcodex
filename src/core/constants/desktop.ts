@@ -1,4 +1,5 @@
 import { t } from './translations'
+import { CV_PATH } from './profile'
 
 export interface DesktopIcon {
   id: string
@@ -21,7 +22,7 @@ export interface DockApp {
 export const DESKTOP_ICONS: DesktopIcon[] = [
   { id: 'projects', name: t.desktop.projects, icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'finder' },
   { id: 'about', name: t.desktop.aboutMe, icon: '/images/txt.png', type: 'file', action: 'window', windowId: 'about' },
-  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: '/CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf' },
+  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
   { id: 'github', name: 'GitHub', icon: '/icons/github.svg', type: 'link', action: 'link', url: 'https://github.com/DarkCodex29' },
   { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
 ]
@@ -35,14 +36,9 @@ export const SIDEBAR_ICONS: DesktopIcon[] = [
 
 export const DOCK_APPS: DockApp[] = [
   { id: 'finder', name: t.desktop.projects, icon: '/images/finder.png', windowId: 'finder' },
-  { id: 'terminal', name: t.desktop.skills, icon: '/images/terminal.png', windowId: 'terminal' },
-  { id: 'about', name: t.desktop.aboutMe, icon: '/images/contact.png', windowId: 'about' },
   { id: 'safari', name: t.desktop.experience, icon: '/images/safari.png', windowId: 'safari' },
-  { id: 'contact', name: t.desktop.contact, icon: '/images/contact.png', windowId: 'contact' },
-  { id: 'vscode', name: 'VS Code', icon: '/images/code2.png', windowId: 'vscode' },
-  { id: 'photos', name: 'Galería', icon: '/images/photos.png', windowId: 'photos' },
-  { id: 'music', name: 'Música', icon: '/images/music.png' },
-  { id: 'trash', name: 'Papelera', icon: '/images/trash.png' },
+  { id: 'photos', name: t.desktop.gallery, icon: '/images/photos.png', windowId: 'photos' },
+  { id: 'trash', name: t.desktop.trash, icon: '/images/trash.png' },
 ]
 
 export const MENU_ITEMS = t.menu

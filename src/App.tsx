@@ -144,24 +144,28 @@ function App() {
 
       <section className="absolute left-0 top-0 w-[50%] h-full z-10 pointer-events-auto">
         <SetupCanvas onClick={handleWorkspaceClick} />
-        <button
-          onClick={handleWorkspaceClick}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 group flex items-center bg-primary-600 hover:bg-primary-500 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/30"
-          style={{ padding: 'var(--spacing-lg) var(--spacing-2xl)', gap: 'var(--spacing-md)' }}
-        >
-          <span className="text-white font-semibold text-lg">{t.hero.cta}</span>
-          <svg
-            viewBox={ICONS.arrow.viewBox}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1"
+        {/* CTA Button - Centered overlay on setup */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <button
+            onClick={handleWorkspaceClick}
+            className="pointer-events-auto group flex items-center bg-primary-600/90 hover:bg-primary-500 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary-500/40 border border-primary-400/30"
+            style={{ padding: 'var(--space-4) var(--space-8)', gap: 'var(--space-3)' }}
           >
-            <path d={ICONS.arrow.path} />
-          </svg>
-        </button>
+            <span className="text-white font-semibold" style={{ fontSize: 'var(--text-lg)' }}>{t.hero.cta}</span>
+            <svg
+              viewBox={ICONS.arrow.viewBox}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-white transition-transform duration-300 group-hover:translate-x-1"
+              style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }}
+            >
+              <path d={ICONS.arrow.path} />
+            </svg>
+          </button>
+        </div>
       </section>
 
       <section className="absolute left-[58%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
