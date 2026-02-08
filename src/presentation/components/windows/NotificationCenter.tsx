@@ -18,7 +18,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: '1',
     app: 'VS Code',
-    icon: '💙',
+    icon: '/icons/win11/vscode.png',
     title: 'Extensión actualizada',
     message: 'Prettier se actualizó a la versión 9.0.0',
     time: 'Hace 5 min',
@@ -26,7 +26,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: '2',
     app: 'Chrome',
-    icon: '🌈',
+    icon: '/icons/win11/chrome.png',
     title: 'Nueva descarga',
     message: 'proyecto-final.zip se descargó correctamente',
     time: 'Hace 1 hora',
@@ -131,7 +131,9 @@ export const NotificationCenter = memo(({ isOpen, onClose }: NotificationCenterP
                   className="bg-white/10 rounded-lg p-3 hover:bg-white/15 transition-colors cursor-pointer"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl">{notif.icon}</span>
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                      <img src={notif.icon} alt={notif.app} className="w-full h-full object-contain" />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
                         <p className="text-white text-xs font-medium">{notif.app}</p>

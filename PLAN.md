@@ -484,20 +484,41 @@ const skills = {
 - [x] Keyboard shortcuts (Cmd+Space para Spotlight)
 - [x] Responsive design tokens
 
-### Fase 6: Windows 11 Mode 🚧 EN PROGRESO
+### Fase 6: Windows 11 Mode ✅ COMPLETADO
 - [x] OS Toggle Store (useOSStore) con persistencia
 - [x] Windows 11 Desktop View base
 - [x] Taskbar con Start, Search, System Tray, Clock
-- [x] Start Menu con apps grid y recommended section
-- [x] Action Center (equivalente a Control Center)
-- [x] NotificationCenter (calendario + notificaciones)
+- [x] Start Menu con apps grid y recommended section (iconos PNG)
+- [x] Action Center con iconos SVG (WiFi, Bluetooth, Brightness, Volume)
+- [x] NotificationCenter con iconos PNG (VS Code, Chrome)
 - [x] WindowsSearch (equivalente a Spotlight)
 - [x] WindowsContextMenu (click derecho)
 - [x] OS Toggle en Dock (macOS) y Taskbar (Windows 11)
-- [ ] Trasladar Desktop Icons a Windows 11
-- [ ] Trasladar Window components (Terminal, About, Projects, etc.)
-- [ ] Integrar Start Menu con ventanas
-- [ ] Widgets panel lateral
+- [x] Desktop Icons (Volver, Projects, About, Resume, GitHub, LinkedIn, Skills, Contact, Experience)
+- [x] Window components (Terminal, About, Projects, Contact, Experience, Gallery)
+- [x] Start Menu integrado con ventanas (6 apps funcionales)
+- [x] Iconos Windows 11 (27 iconos PNG de repos oficiales)
+- [x] Eliminación de emojis - reemplazados por iconos SVG/PNG en todos los componentes
+  - [x] Start Menu (PNG icons)
+  - [x] NotificationCenter (PNG icons: VS Code, Chrome)
+  - [x] ActionCenter (SVG icons: WiFi, Bluetooth, Brightness, Volume, Theme)
+  - [x] WindowsSearch (PNG icons: Settings, Explorer, Terminal, VS Code, Chrome, PDF, Folder)
+  - [x] WindowsContextMenu (SVG icons: View, Sort, Refresh, Paste, New, Display, Personalize, Theme)
+- [x] Coherencia de iconos Windows vs macOS (iconos específicos por OS)
+- [x] WindowsWindowWrapper - Modal de Windows 11 con estilo nativo
+  - [x] Title bar con botones de control en la esquina superior derecha
+  - [x] Botones minimize, maximize, close con estilo Windows 11
+  - [x] Hover effect en close button (fondo rojo)
+  - [x] Soporte para iconos de aplicación en title bar
+  - [x] Draggable y animaciones con GSAP
+- [x] Ventanas de Windows 11 con contenido específico
+  - [x] Terminal Window (Skills con notepad icon)
+  - [x] About Window (Perfil con file icon)
+  - [x] Projects Window (Proyectos con projects icon)
+  - [x] Contact Window (Contacto con user-folder icon)
+  - [x] Experience Window (Experiencia con chrome icon)
+  - [x] Gallery Window (Galería con folder-pictures icon)
+- [ ] Widgets panel lateral (opcional)
 
 ### Fase 7: Polish & Optimización
 - [ ] Performance optimization (LOD, lazy loading)
@@ -828,38 +849,77 @@ src/application/store/
 
 #### 📋 Próximo a Implementar:
 
-#### Features a Implementar:
-1. **Start Menu**
-   - Apps grid con íconos
-   - Búsqueda integrada
-   - Pinned apps
-   - Recommended section
-   - User profile en footer
+#### ✅ Features Implementadas:
+1. **Start Menu** ✅
+   - Apps grid 6x2 (12 apps: Edge, Explorer, Settings, Store, Terminal, Photos, Mail, Calendar, Music, VS Code, Chrome, Spotify)
+   - Recommended section (2 items)
+   - User profile con avatar en footer
+   - Animación fade-in
 
-2. **Taskbar**
+2. **Taskbar** ✅
    - Centrado estilo Windows 11
-   - Start button
+   - Start button (4 cuadrados)
    - Search button
-   - Task view
-   - Widgets button
-   - Running apps indicators
-   - System tray (WiFi, Volume, Battery, Clock)
+   - OS Toggle (Apple icon)
+   - System tray (WiFi, Volume, Battery)
+   - Clock con fecha y hora en tiempo real
 
-3. **Widgets Panel**
-   - Clima
-   - Calendario
-   - Noticias/Proyectos destacados
-   - Tareas
+3. **Action Center** ✅
+   - Quick settings (WiFi, Bluetooth, Airplane Mode, Dark Mode, Battery, Focus)
+   - Sliders (Brightness, Volume)
+   - User profile + Settings button
 
-4. **Snap Layouts**
-   - Arrastrar ventana a bordes
-   - Layouts: 2 cols, 3 cols, grid
-   - Preview de snap zones
+4. **NotificationCenter** ✅
+   - Notificaciones con mock data
+   - Calendario con navegación de meses
+   - Reloj en tiempo real
+   - Highlight del día actual
 
-5. **OS Toggle**
-   - Button en TopBar/Taskbar
-   - Smooth transition
-   - Persistir preferencia
+5. **WindowsSearch** ✅
+   - Búsqueda de apps/archivos
+   - Navegación con ↑↓ Enter
+   - Sugerencias cuando vacío
+   - Keyboard shortcut: Ctrl/Cmd+Space
+
+6. **WindowsContextMenu** ✅
+   - Ver, Ordenar, Actualizar, Pegar
+   - Nuevo (submenu)
+   - Configuración de pantalla, Personalizar
+   - Toggle de tema integrado
+
+7. **OS Toggle** ✅
+   - En Dock (macOS): Ícono Windows azul
+   - En Taskbar (Windows 11): Ícono Apple
+   - Persistencia con localStorage
+
+#### ✅ Features Completadas (Windows 11):
+1. **Desktop Icons** ✅
+   - 9 iconos en escritorio (Volver, Projects, About, Resume, GitHub, LinkedIn, Skills, Contact, Experience)
+   - Double-click para abrir ventanas o enlaces
+   - Selección con click simple
+   - Descarga de CV funcional
+
+2. **Window Components** ✅
+   - Terminal (Skills)
+   - About (Profile)
+   - Projects (Finder-style)
+   - Contact (Información)
+   - Experience (Safari-style)
+   - Gallery (Photos-style)
+
+3. **Start Menu Integration** ✅
+   - 6 apps funcionales: Experiencia, Proyectos, Sobre Mí, Contacto, Skills, Galería
+   - Click en app → abre ventana correspondiente
+   - Cierra Start Menu automáticamente
+
+#### 🔜 Opcional (Futuras Mejoras):
+1. **Widgets Panel**
+   - Panel lateral deslizable
+   - Widgets de clima, calendario, proyectos destacados
+
+2. **Snap Layouts**
+   - Arrastrar ventanas a bordes
+   - Layouts predefinidos (2 cols, 3 cols, grid)
 
 #### Repos de Referencia:
 - [programming-with-ia/windows-11](https://github.com/programming-with-ia/windows-11)

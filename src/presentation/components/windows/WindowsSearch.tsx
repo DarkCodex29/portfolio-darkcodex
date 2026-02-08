@@ -37,7 +37,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'settings',
       title: 'Configuración',
       subtitle: 'Aplicación del sistema',
-      icon: '⚙️',
+      icon: '/icons/win11/settings.png',
       category: 'Aplicaciones',
       action: () => console.log('Abrir Configuración'),
     },
@@ -45,7 +45,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'explorer',
       title: 'Explorador de archivos',
       subtitle: 'Aplicación del sistema',
-      icon: '📁',
+      icon: '/icons/win11/explorer.png',
       category: 'Aplicaciones',
       action: () => console.log('Abrir Explorador'),
     },
@@ -53,7 +53,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'terminal',
       title: 'Terminal',
       subtitle: 'Aplicación del sistema',
-      icon: '💻',
+      icon: '/icons/win11/notepad.png',
       category: 'Aplicaciones',
       action: () => console.log('Abrir Terminal'),
     },
@@ -61,7 +61,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'vscode',
       title: 'Visual Studio Code',
       subtitle: 'Aplicación',
-      icon: '💙',
+      icon: '/icons/win11/vscode.png',
       category: 'Aplicaciones',
       action: () => console.log('Abrir VS Code'),
     },
@@ -69,7 +69,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'chrome',
       title: 'Google Chrome',
       subtitle: 'Aplicación',
-      icon: '🌈',
+      icon: '/icons/win11/chrome.png',
       category: 'Aplicaciones',
       action: () => console.log('Abrir Chrome'),
     },
@@ -77,7 +77,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'doc1',
       title: 'CV_Gianpierre.pdf',
       subtitle: 'Documentos',
-      icon: '📄',
+      icon: '/images/pdf.png',
       category: 'Archivos',
       action: () => console.log('Abrir CV'),
     },
@@ -85,7 +85,7 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
       id: 'folder1',
       title: 'Proyectos',
       subtitle: 'Carpeta',
-      icon: '🗂️',
+      icon: '/icons/win11/folder.png',
       category: 'Archivos',
       action: () => console.log('Abrir Proyectos'),
     },
@@ -168,7 +168,9 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
                     index === selectedIndex ? 'bg-white/20' : 'hover:bg-white/10'
                   }`}
                 >
-                  <span className="text-2xl">{result.icon}</span>
+                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <img src={result.icon} alt={result.title} className="w-full h-full object-contain" />
+                  </div>
                   <div className="flex-1 text-left">
                     <p className="text-white text-sm font-medium">{result.title}</p>
                     <p className="text-white/60 text-xs">{result.subtitle}</p>

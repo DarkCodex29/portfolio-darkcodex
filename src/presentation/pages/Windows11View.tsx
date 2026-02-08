@@ -6,7 +6,12 @@ import { ActionCenter } from '@/presentation/components/windows/ActionCenter'
 import { NotificationCenter } from '@/presentation/components/windows/NotificationCenter'
 import { WindowsSearch } from '@/presentation/components/windows/WindowsSearch'
 import { WindowsContextMenu } from '@/presentation/components/windows/WindowsContextMenu'
-import { PROFILE } from '@/core/constants/profile'
+import { DesktopIcon, BackButton } from '@/presentation/components/windows/DesktopIcon'
+import { WindowsWindowWrapper } from '@/presentation/components/windows/WindowsWindowWrapper'
+import { Mail, Github, Linkedin, MapPin, FileText, User, Check } from 'lucide-react'
+import { PROFILE, STATS, SECTORS, CV_PATH, CV_FILENAME, PROJECTS, EXPERIENCE, type Project, type Experience } from '@/core/constants/profile'
+import { t } from '@/core/constants/translations'
+import { DESKTOP_ICONS_WIN11, SIDEBAR_ICONS_WIN11, type DesktopIcon as DesktopIconType } from '@/core/constants/desktop'
 
 interface Windows11ViewProps {
   onBack?: () => void
@@ -101,23 +106,36 @@ const Taskbar = memo(({ onStartClick, isStartOpen, onSearchClick, onActionCenter
 })
 Taskbar.displayName = 'Taskbar'
 
-const StartMenu = memo(({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+interface StartMenuProps {
+  isOpen: boolean
+  onClose: () => void
+  onAppClick: (windowId: string) => void
+}
+
+const StartMenu = memo(({ isOpen, onClose, onAppClick }: StartMenuProps) => {
   if (!isOpen) return null
 
   const apps = [
-    { id: 'edge', name: 'Edge', icon: '🌐', color: 'from-blue-400 to-blue-600' },
-    { id: 'explorer', name: 'Explorador', icon: '📁', color: 'from-yellow-400 to-yellow-600' },
-    { id: 'settings', name: 'Configuración', icon: '⚙️', color: 'from-gray-400 to-gray-600' },
-    { id: 'store', name: 'Tienda', icon: '🛍️', color: 'from-blue-400 to-blue-500' },
-    { id: 'terminal', name: 'Terminal', icon: '💻', color: 'from-gray-700 to-gray-900' },
-    { id: 'photos', name: 'Fotos', icon: '📷', color: 'from-pink-400 to-pink-600' },
-    { id: 'mail', name: 'Correo', icon: '✉️', color: 'from-blue-400 to-blue-600' },
-    { id: 'calendar', name: 'Calendario', icon: '📅', color: 'from-red-400 to-red-600' },
-    { id: 'music', name: 'Música', icon: '🎵', color: 'from-purple-400 to-purple-600' },
-    { id: 'vscode', name: 'VS Code', icon: '💙', color: 'from-blue-500 to-blue-700' },
-    { id: 'chrome', name: 'Chrome', icon: '🌈', color: 'from-red-400 to-yellow-400' },
-    { id: 'spotify', name: 'Spotify', icon: '🎧', color: 'from-green-400 to-green-600' },
+    { id: 'chrome', name: 'Experiencia', icon: '/icons/win11/chrome.png', windowId: 'safari' },
+    { id: 'finder', name: 'Proyectos', icon: '/icons/win11/projects.png', windowId: 'finder' },
+    { id: 'about', name: 'Sobre Mí', icon: '/icons/win11/file.png', windowId: 'about' },
+    { id: 'contact', name: 'Contacto', icon: '/icons/win11/user-folder.png', windowId: 'contact' },
+    { id: 'terminal', name: 'Skills', icon: '/icons/win11/notepad.png', windowId: 'terminal' },
+    { id: 'photos', name: 'Galería', icon: '/icons/win11/folder-pictures.png', windowId: 'photos' },
+    { id: 'explorer', name: 'Explorador', icon: '/icons/win11/explorer.png' },
+    { id: 'settings', name: 'Configuración', icon: '/icons/win11/settings.png' },
+    { id: 'edge', name: 'Edge', icon: '/icons/win11/chrome.png' },
+    { id: 'vscode', name: 'VS Code', icon: '/icons/win11/vscode.png' },
+    { id: 'network', name: 'Red', icon: '/icons/win11/network.png' },
+    { id: 'calculator', name: 'Calculadora', icon: '/icons/win11/calculator.png' },
   ]
+
+  const handleAppClick = (app: typeof apps[0]) => {
+    if (app.windowId) {
+      onAppClick(app.windowId)
+      onClose()
+    }
+  }
 
   return (
     <>
@@ -135,10 +153,16 @@ const StartMenu = memo(({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             {apps.map((app) => (
               <button
                 key={app.id}
+                onClick={() => handleAppClick(app)}
                 className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-white/10 transition-all group"
               >
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${app.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform`}>
-                  {app.icon}
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <img
+                    src={app.icon}
+                    alt={app.name}
+                    className="w-full h-full object-contain"
+                    draggable={false}
+                  />
                 </div>
                 <span className="text-white text-[10px] text-center leading-tight">{app.name}</span>
               </button>
@@ -149,8 +173,8 @@ const StartMenu = memo(({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             <h3 className="text-white font-semibold text-sm mb-3">Recomendadas</h3>
             <div className="space-y-2">
               <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors">
-                <div className="w-8 h-8 rounded bg-primary-500/30 flex items-center justify-center">
-                  <span className="text-white text-lg">📄</span>
+                <div className="w-8 h-8 rounded flex items-center justify-center">
+                  <img src="/images/pdf.png" alt="PDF" className="w-7 h-7 object-contain" />
                 </div>
                 <div className="flex-1 text-left">
                   <p className="text-white text-xs">CV_Gianpierre.pdf</p>
@@ -158,8 +182,8 @@ const StartMenu = memo(({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                 </div>
               </button>
               <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors">
-                <div className="w-8 h-8 rounded bg-blue-500/30 flex items-center justify-center">
-                  <span className="text-white text-lg">🗂️</span>
+                <div className="w-8 h-8 rounded flex items-center justify-center">
+                  <img src="/icons/win11/folder.png" alt="Folder" className="w-7 h-7 object-contain" />
                 </div>
                 <div className="flex-1 text-left">
                   <p className="text-white text-xs">Proyectos</p>
@@ -203,8 +227,10 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
   const [isActionCenterOpen, setIsActionCenterOpen] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null)
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null)
   const { goToHome } = useSceneStore()
   const { toggleOS } = useOSStore()
+  const { openWindow } = useWindowStore()
 
   const handleStartClick = useCallback(() => {
     setIsStartOpen(prev => !prev)
@@ -268,6 +294,27 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
     if (onBack) onBack()
   }, [goToHome, onBack])
 
+  const handleDesktopClick = useCallback(() => {
+    setSelectedIcon(null)
+  }, [])
+
+  const handleDownload = useCallback((url: string) => {
+    const link = document.createElement('a')
+    link.href = url
+    link.download = url.split('/').pop() || 'download'
+    link.click()
+  }, [])
+
+  const handleIconAction = useCallback((icon: DesktopIconType) => {
+    if (icon.action === 'window' && icon.windowId) {
+      openWindow(icon.windowId)
+    } else if (icon.action === 'link' && icon.url) {
+      window.open(icon.url, '_blank', 'noopener,noreferrer')
+    } else if (icon.action === 'download' && icon.downloadUrl) {
+      handleDownload(icon.downloadUrl)
+    }
+  }, [openWindow, handleDownload])
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.code === 'Space') {
@@ -279,6 +326,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
         setIsActionCenterOpen(false)
         setIsNotificationOpen(false)
         setContextMenu(null)
+        setSelectedIcon(null)
       }
     }
 
@@ -293,20 +341,39 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
     >
       <DesktopBackground />
 
-      {onBack && (
-        <button
-          onClick={handleBack}
-          className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-xl rounded-lg border border-white/10 text-white hover:bg-black/60 transition-all z-10"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          <span className="text-sm font-medium">Volver</span>
-        </button>
-      )}
+      <div className="absolute top-4 left-4 flex flex-col gap-0.5 z-10 pointer-events-auto">
+        {onBack && (
+          <BackButton
+            isSelected={selectedIcon === 'back'}
+            onClick={() => setSelectedIcon('back')}
+            onDoubleClick={handleBack}
+          />
+        )}
+        {DESKTOP_ICONS_WIN11.map((icon) => (
+          <DesktopIcon
+            key={icon.id}
+            icon={icon}
+            isSelected={selectedIcon === icon.id}
+            onClick={() => setSelectedIcon(icon.id)}
+            onDoubleClick={() => handleIconAction(icon)}
+          />
+        ))}
+        {SIDEBAR_ICONS_WIN11.map((icon) => (
+          <DesktopIcon
+            key={icon.id}
+            icon={icon}
+            isSelected={selectedIcon === icon.id}
+            onClick={() => setSelectedIcon(icon.id)}
+            onDoubleClick={() => handleIconAction(icon)}
+          />
+        ))}
+      </div>
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="text-center">
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+        onClick={handleDesktopClick}
+      >
+        <div className="text-center pointer-events-none">
           <div className="w-32 h-32 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-2xl">
             <span className="text-white text-6xl font-bold">{PROFILE.name.first[0]}</span>
           </div>
@@ -323,7 +390,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
         onNotificationClick={handleNotificationClick}
         onOSToggle={toggleOS}
       />
-      <StartMenu isOpen={isStartOpen} onClose={handleCloseStart} />
+      <StartMenu isOpen={isStartOpen} onClose={handleCloseStart} onAppClick={openWindow} />
       <WindowsSearch isOpen={isSearchOpen} onClose={handleCloseSearch} />
       <ActionCenter isOpen={isActionCenterOpen} onClose={handleCloseActionCenter} />
       <NotificationCenter isOpen={isNotificationOpen} onClose={handleCloseNotification} />
@@ -332,6 +399,331 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
         position={contextMenu || { x: 0, y: 0 }}
         onClose={handleCloseContextMenu}
       />
+
+      {/* Terminal Window - Skills */}
+      <WindowsWindowWrapper windowKey="terminal" title="Skills - Terminal" icon="/icons/win11/notepad.png" className="w-[600px]">
+        <div className="font-mono" style={{ fontSize: 'var(--text-sm)' }}>
+          <div className="text-green-400" style={{ marginBottom: 'var(--space-4)' }}>
+            <span className="text-purple-400">gian@darkcodex</span>
+            <span className="text-white">:</span>
+            <span className="text-blue-400">~</span>
+            <span className="text-white">$ </span>
+            <span className="text-gray-300">{t.windows.terminal.command}</span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            {[
+              { category: 'Mobile', items: ['Flutter (6y)', 'Kotlin (7y)', 'Swift (5y)', 'React Native (3y)'] },
+              { category: 'Frontend', items: ['React (4y)', 'Angular (4y)', 'Next.js (2y)', 'TypeScript (6y)'] },
+              { category: 'Backend', items: ['NestJS (3y)', '.NET/C# (4y)', 'Node.js (5y)', 'Java/Spring (6y)'] },
+              { category: 'Database', items: ['PostgreSQL (5y)', 'Firebase (6y)', 'Redis (3y)', 'SQL Server (4y)'] },
+              { category: 'DevOps', items: ['Docker (4y)', 'AWS (3y)', 'CI/CD (5y)', 'GitHub Actions'] },
+              { category: 'AI & Tools', items: ['Claude AI', 'OpenAI SDK', 'Prisma ORM', 'Clean Architecture'] },
+            ].map(({ category, items }) => (
+              <div key={category} className="flex items-start" style={{ gap: 'var(--space-3)' }}>
+                <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-yellow-400 font-semibold">{category}:</span>
+                  <span className="text-gray-300" style={{ marginLeft: 'var(--space-2)' }}>{items.join(' | ')}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-white/10" style={{ marginTop: 'var(--window-gap)', paddingTop: 'var(--space-4)' }}>
+            <div className="text-green-400 flex items-center" style={{ gap: 'var(--space-2)' }}>
+              <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
+              <span>6 {t.windows.terminal.categoriesLoaded}</span>
+            </div>
+            <div className="text-gray-500" style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
+              {t.windows.terminal.renderTime}
+            </div>
+          </div>
+
+          <div className="text-green-400" style={{ marginTop: 'var(--space-4)' }}>
+            <span className="text-purple-400">gian@darkcodex</span>
+            <span className="text-white">:</span>
+            <span className="text-blue-400">~</span>
+            <span className="text-white">$ </span>
+            <span className="animate-pulse">▊</span>
+          </div>
+        </div>
+      </WindowsWindowWrapper>
+
+      {/* About Window */}
+      <WindowsWindowWrapper windowKey="about" title={t.windows.about.title} icon="/icons/win11/file.png" className="w-[580px]">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
+          <div className="flex items-start" style={{ gap: 'var(--space-4)' }}>
+            <div
+              className="rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center"
+              style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)' }}
+            >
+              <User style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }} className="text-white" />
+            </div>
+            <div>
+              <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
+              <p className="text-purple-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+              <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
+                <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
+                {t.windows.about.location}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3" style={{ gap: 'var(--space-3)' }}>
+            {STATS.map(({ id, label, value }) => (
+              <div key={id} className="bg-white/5 text-center" style={{ padding: 'var(--card-padding)', borderRadius: 'var(--card-radius)' }}>
+                <div className="font-bold text-white" style={{ fontSize: 'var(--text-2xl)' }}>{value}</div>
+                <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
+            <p>
+              {t.windows.about.bioP1.split('Flutter')[0]}
+              <span className="text-purple-400">Flutter</span>
+              {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
+              <span className="text-purple-400">Kotlin</span>
+              {t.windows.about.bioP1.split('Kotlin')[1]}
+            </p>
+            <p>
+              {t.windows.about.bioP2.split('.NET')[0]}
+              <span className="text-blue-400">.NET, NestJS, Angular, React, Laravel</span>.
+            </p>
+            <p>
+              {t.windows.about.bioP3.split('Keola Networks')[0]}
+              <span className="text-green-400">Keola Networks (fintech)</span>,{' '}
+              <span className="text-green-400">Software Engineering LATAM</span>,{' '}
+              <span className="text-green-400">Grupo EBIM</span>
+              {t.windows.about.bioP3.split('Grupo EBIM')[1]}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-white" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>
+              {t.windows.about.sectorsTitle}
+            </h3>
+            <div className="flex flex-wrap" style={{ gap: 'var(--space-2)' }}>
+              {SECTORS.map((sector) => (
+                <span
+                  key={sector}
+                  className="bg-purple-500/20 text-purple-300 font-medium"
+                  style={{
+                    fontSize: 'var(--text-xs)',
+                    padding: 'var(--badge-padding-y) var(--badge-padding-x)',
+                    borderRadius: 'var(--badge-radius)'
+                  }}
+                >
+                  {t.sectors[sector as keyof typeof t.sectors] || sector}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap" style={{ gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
+            <a
+              href={`mailto:${PROFILE.contact.email}`}
+              className="flex items-center bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+              style={{
+                fontSize: 'var(--text-sm)',
+                padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+                gap: 'var(--btn-gap)',
+                borderRadius: 'var(--btn-radius)'
+              }}
+            >
+              <Mail style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
+              {t.actions.email}
+            </a>
+            <a
+              href={PROFILE.contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+              style={{
+                fontSize: 'var(--text-sm)',
+                padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+                gap: 'var(--btn-gap)',
+                borderRadius: 'var(--btn-radius)'
+              }}
+            >
+              <Github style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
+              GitHub
+            </a>
+            <a
+              href={PROFILE.contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+              style={{
+                fontSize: 'var(--text-sm)',
+                padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+                gap: 'var(--btn-gap)',
+                borderRadius: 'var(--btn-radius)'
+              }}
+            >
+              <Linkedin style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
+              LinkedIn
+            </a>
+            <button
+              onClick={() => {
+                const link = document.createElement('a')
+                link.href = CV_PATH
+                link.download = CV_FILENAME
+                link.click()
+              }}
+              className="flex items-center bg-green-600 hover:bg-green-700 text-white transition-colors"
+              style={{
+                fontSize: 'var(--text-sm)',
+                padding: 'var(--btn-padding-y) var(--btn-padding-x)',
+                gap: 'var(--btn-gap)',
+                borderRadius: 'var(--btn-radius)'
+              }}
+            >
+              <FileText style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
+              {t.actions.resume}
+            </button>
+          </div>
+        </div>
+      </WindowsWindowWrapper>
+
+      {/* Projects Window */}
+      <WindowsWindowWrapper windowKey="finder" title={t.windows.projects.title} icon="/icons/win11/projects.png" className="w-[800px] max-h-[80vh]">
+        <div className="grid grid-cols-2" style={{ gap: 'var(--grid-gap)' }}>
+          {PROJECTS.map((project: Project) => (
+            <div
+              key={project.id}
+              className="border transition-all duration-200 hover:scale-[1.01] rounded-lg overflow-hidden"
+              style={{
+                padding: 'var(--card-padding)',
+                background: `linear-gradient(135deg, ${project.color}10, transparent)`,
+                borderColor: `${project.color}30`,
+              }}
+            >
+              <div style={{ marginBottom: 'var(--space-3)' }}>
+                <div className="flex items-start justify-between" style={{ marginBottom: 'var(--space-2)' }}>
+                  <h3 className="font-bold text-white" style={{ fontSize: 'var(--text-base)' }}>{project.name}</h3>
+                  <span
+                    className="text-white/60"
+                    style={{ fontSize: 'var(--text-xs)', padding: 'var(--badge-padding-y) var(--badge-padding-x)' }}
+                  >
+                    {project.year}
+                  </span>
+                </div>
+                <p className="text-white/60" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>{project.description}</p>
+                <span
+                  className="inline-block"
+                  style={{
+                    fontSize: 'var(--text-xs)',
+                    padding: 'var(--badge-padding-y) var(--badge-padding-x)',
+                    borderRadius: 'var(--badge-radius)',
+                    backgroundColor: `${project.color}20`,
+                    color: project.color,
+                  }}
+                >
+                  {project.sector}
+                </span>
+              </div>
+              <div className="flex flex-wrap" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
+                {project.techStack.slice(0, 5).map((tech: string) => (
+                  <span key={tech} className="bg-white/10 text-white/70" style={{ fontSize: 'var(--text-xs)', padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)' }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </WindowsWindowWrapper>
+
+      {/* Contact Window */}
+      <WindowsWindowWrapper windowKey="contact" title={t.windows.contact.title} icon="/icons/win11/user-folder.png" className="w-[500px]">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
+          <p className="text-gray-300" style={{ fontSize: 'var(--text-base)' }}>{t.windows.contact.subtitle}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <a href={`mailto:${PROFILE.contact.email}`} className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+              <div className="bg-purple-500/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
+                <Mail style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-purple-400" />
+              </div>
+              <div>
+                <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.contact.email}</div>
+                <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{PROFILE.contact.email}</div>
+              </div>
+            </a>
+            <a href={PROFILE.contact.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+              <div className="bg-gray-700/50 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
+                <Github style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-white" />
+              </div>
+              <div>
+                <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>GitHub</div>
+                <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>@DarkCodex29</div>
+              </div>
+            </a>
+            <a href={PROFILE.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+              <div className="bg-blue-600/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
+                <Linkedin style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-blue-400" />
+              </div>
+              <div>
+                <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>LinkedIn</div>
+                <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>gianpierre-mio</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </WindowsWindowWrapper>
+
+      {/* Experience Window */}
+      <WindowsWindowWrapper windowKey="safari" title={t.windows.experience.title} icon="/icons/win11/chrome.png" className="w-[700px] max-h-[80vh]">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
+          {EXPERIENCE.map((exp: Experience) => (
+            <div
+              key={exp.id}
+              className="border transition-all duration-200"
+              style={{
+                padding: 'var(--card-padding)',
+                borderRadius: 'var(--card-radius)',
+                background: `linear-gradient(135deg, ${exp.color}10, transparent)`,
+                borderColor: `${exp.color}30`,
+              }}
+            >
+              <div className="flex items-start justify-between" style={{ marginBottom: 'var(--space-2)' }}>
+                <div>
+                  <h3 className="font-bold text-white" style={{ fontSize: 'var(--text-base)' }}>{exp.role}</h3>
+                  <p className="font-medium" style={{ fontSize: 'var(--text-sm)', color: exp.color }}>{exp.company}</p>
+                </div>
+                <span className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{exp.period}</span>
+              </div>
+              <p className="text-white/60" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-3)' }}>{exp.description}</p>
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', marginBottom: 'var(--space-3)' }}>
+                {exp.achievements.slice(0, 3).map((achievement: string, idx: number) => (
+                  <li key={idx} className="text-white/50 flex items-start" style={{ fontSize: 'var(--text-xs)', gap: 'var(--space-2)' }}>
+                    <span style={{ color: exp.color }}>•</span>
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap" style={{ gap: 'var(--space-2)' }}>
+                {exp.techStack.slice(0, 6).map((tech: string) => (
+                  <span
+                    key={tech}
+                    className="bg-white/10 text-white/70"
+                    style={{ fontSize: 'var(--text-xs)', padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)' }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </WindowsWindowWrapper>
+
+      {/* Gallery Window - Placeholder */}
+      <WindowsWindowWrapper windowKey="photos" title="Galería" icon="/icons/win11/folder-pictures.png" className="w-[600px]">
+        <div className="flex items-center justify-center" style={{ minHeight: '300px' }}>
+          <p className="text-gray-400 text-center">Galería de proyectos próximamente</p>
+        </div>
+      </WindowsWindowWrapper>
     </div>
   )
 })

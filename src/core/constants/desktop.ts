@@ -27,11 +27,26 @@ export const DESKTOP_ICONS: DesktopIcon[] = [
   { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
 ]
 
+export const DESKTOP_ICONS_WIN11: DesktopIcon[] = [
+  { id: 'projects', name: t.desktop.projects, icon: '/icons/win11/projects.png', type: 'folder', action: 'window', windowId: 'finder' },
+  { id: 'about', name: t.desktop.aboutMe, icon: '/icons/win11/file.png', type: 'file', action: 'window', windowId: 'about' },
+  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
+  { id: 'github', name: 'GitHub', icon: '/icons/win11/github-icon.png', type: 'link', action: 'link', url: 'https://github.com/DarkCodex29' },
+  { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
+]
+
 export const SIDEBAR_ICONS: DesktopIcon[] = [
   { id: 'macintosh', name: 'Macintosh HD', icon: 'hdd', type: 'app' },
   { id: 'experience', name: t.desktop.experience, icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'safari' },
   { id: 'skills', name: t.desktop.skills, icon: '/images/terminal.png', type: 'app', action: 'window', windowId: 'terminal' },
   { id: 'contact', name: t.desktop.contact, icon: '/images/contact.png', type: 'app', action: 'window', windowId: 'contact' },
+]
+
+export const SIDEBAR_ICONS_WIN11: DesktopIcon[] = [
+  { id: 'pc', name: 'Este equipo', icon: 'pc', type: 'app' },
+  { id: 'experience', name: t.desktop.experience, icon: '/icons/win11/folder-documents.png', type: 'folder', action: 'window', windowId: 'safari' },
+  { id: 'skills', name: t.desktop.skills, icon: '/icons/win11/notepad.png', type: 'app', action: 'window', windowId: 'terminal' },
+  { id: 'contact', name: t.desktop.contact, icon: '/icons/win11/user-folder.png', type: 'app', action: 'window', windowId: 'contact' },
 ]
 
 export const DOCK_APPS: DockApp[] = [
