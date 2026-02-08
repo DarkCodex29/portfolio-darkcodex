@@ -29,66 +29,54 @@ export const colors = {
     900: '#18181b',
     950: '#09090b',
   },
-  surface: {
-    dark: {
-      base: '#0a0a0f',
-      elevated: '#12121a',
-      overlay: '#1a1a24',
-      border: 'rgba(255, 255, 255, 0.08)',
-    },
-    light: {
-      base: '#ffffff',
-      elevated: '#f4f4f5',
-      overlay: '#e4e4e7',
-      border: 'rgba(0, 0, 0, 0.08)',
-    },
-  },
-  text: {
-    dark: {
-      primary: '#ffffff',
-      secondary: 'rgba(255, 255, 255, 0.7)',
-      muted: 'rgba(255, 255, 255, 0.5)',
-    },
-    light: {
-      primary: '#18181b',
-      secondary: 'rgba(24, 24, 27, 0.7)',
-      muted: 'rgba(24, 24, 27, 0.5)',
-    },
-  },
   status: {
     success: '#22c55e',
     warning: '#f59e0b',
     error: '#ef4444',
     info: '#3b82f6',
   },
-  gradient: {
-    primary: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 50%, #a78bfa 100%)',
-    dark: 'linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%)',
-    glow: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
+} as const
+
+export const surfaces = {
+  dark: {
+    base: '#0a0a0f',
+    elevated: '#12121a',
+    overlay: '#1a1a24',
+    border: 'rgba(255, 255, 255, 0.08)',
+  },
+  light: {
+    base: '#ffffff',
+    elevated: '#f4f4f5',
+    overlay: '#e4e4e7',
+    border: 'rgba(0, 0, 0, 0.08)',
+  },
+} as const
+
+export const typography = {
+  fonts: {
+    sans: "'Inter', system-ui, -apple-system, sans-serif",
+    mono: "'JetBrains Mono', ui-monospace, monospace",
+  },
+  sizes: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    base: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
+    '2xl': '1.5rem',
+    '3xl': '1.875rem',
+    '4xl': '2.25rem',
+    '5xl': '3rem',
   },
 } as const
 
 export const spacing = {
-  section: {
-    padding: {
-      mobile: '1.5rem',
-      tablet: '3rem',
-      desktop: '4rem',
-    },
-  },
-  container: {
-    maxWidth: '1280px',
-    padding: '1rem',
-  },
+  section: { mobile: '1.5rem', tablet: '3rem', desktop: '4rem' },
+  container: { maxWidth: '1280px', padding: '1rem' },
 } as const
 
 export const animation = {
-  duration: {
-    fast: 150,
-    normal: 300,
-    slow: 500,
-    slower: 800,
-  },
+  duration: { fast: 150, normal: 300, slow: 500, slower: 800 },
   easing: {
     default: 'cubic-bezier(0.4, 0, 0.2, 1)',
     in: 'cubic-bezier(0.4, 0, 1, 1)',
@@ -106,5 +94,15 @@ export const breakpoints = {
   '2xl': 1536,
 } as const
 
+export const zIndex = {
+  background: 0,
+  base: 10,
+  content: 20,
+  overlay: 30,
+  modal: 40,
+  tooltip: 50,
+} as const
+
 export type Theme = 'dark' | 'light'
-export type Colors = typeof colors
+export type ColorScale = keyof typeof colors.primary
+export type BreakpointKey = keyof typeof breakpoints
