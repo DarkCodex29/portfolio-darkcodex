@@ -16,8 +16,8 @@ const sectors = ['Fintech', 'Salud', 'Minería', 'Retail', 'Agroindustrial', 'Fa
 const AboutContent = memo(() => {
   const handleDownloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/CV_Gianpierre_Collazos.pdf'
-    link.download = 'CV_Gianpierre_Collazos.pdf'
+    link.href = '/CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
+    link.download = 'CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
     link.click()
   }
 

@@ -68,9 +68,9 @@ const TopBar = memo(() => {
             <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
           </svg>
         </button>
-        <div className="px-2 py-0.5 rounded hover:bg-white/10 cursor-pointer transition-colors">
+        <div className="flex items-center gap-4 px-2 py-0.5 rounded hover:bg-white/10 cursor-pointer transition-colors">
           <span>{formatDate(currentTime)}</span>
-          <span className="ml-2">{formatTime(currentTime)}</span>
+          <span>{formatTime(currentTime)}</span>
         </div>
       </div>
     </header>

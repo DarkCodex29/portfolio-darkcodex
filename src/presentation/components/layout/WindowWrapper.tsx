@@ -21,23 +21,27 @@ export const WindowWrapper = ({
   className = '',
 }: WindowWrapperProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { windows, focusWindow, closeWindow, toggleMaximizeWindow } = useWindowStore()
+  const { windows, focusWindow, closeWindow, toggleMaximizeWindow, minimizeWindow } = useWindowStore()
   const windowState = windows[windowKey]
 
   if (!windowState) return null
 
-  const { isOpen, isMaximized, zIndex } = windowState
+  const { isOpen, isMinimized, isMaximized, zIndex } = windowState
 
   useEffect(() => {
     const el = ref.current
     if (!el || !isOpen) return
 
-    el.style.display = 'block'
+    el.style.display = 'flex'
+    el.style.position = 'absolute'
+    el.style.top = '50%'
+    el.style.left = '50%'
+    el.style.transform = 'translate(-50%, -50%)'
 
     gsap.fromTo(
       el,
-      { scale: 0.8, opacity: 0, y: 40 },
-      { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out' }
     )
   }, [isOpen])
 
@@ -67,7 +71,7 @@ export const WindowWrapper = ({
     const el = ref.current
     if (!el) return
 
-    el.style.display = isOpen ? 'block' : 'none'
+    el.style.display = isOpen ? 'flex' : 'none'
 
     if (isMaximized) {
       el.style.position = 'fixed'
@@ -81,13 +85,16 @@ export const WindowWrapper = ({
       el.style.borderRadius = '0'
     } else {
       el.style.position = 'absolute'
-      el.style.width = ''
-      el.style.height = ''
+      el.style.top = '50%'
+      el.style.left = '50%'
+      el.style.right = ''
+      el.style.bottom = ''
+      el.style.transform = 'translate(-50%, -50%)'
       el.style.borderRadius = 'var(--window-border-radius)'
     }
   }, [isOpen, isMaximized])
 
-  if (!isOpen) return null
+  if (!isOpen || isMinimized) return null
 
   return (
     <div
@@ -96,13 +103,12 @@ export const WindowWrapper = ({
         zIndex,
         borderRadius: 'var(--window-border-radius)'
       }}
-      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        bg-gray-900/95 backdrop-blur-xl border border-white/10
-        shadow-2xl overflow-hidden min-w-[400px] flex flex-col ${className}`}
+      className={`bg-gray-900/95 backdrop-blur-xl border border-white/10
+        shadow-2xl min-w-[400px] flex flex-col overflow-hidden ${className}`}
       onClick={() => focusWindow(windowKey)}
     >
       <div
-        className="window-drag-handle flex items-center justify-between bg-gray-800/50 border-b border-white/10 shrink-0"
+        className="window-drag-handle flex items-center justify-between bg-gray-800/50 border-b border-white/10 shrink-0 rounded-t-lg"
         style={{ padding: 'var(--window-header-padding-y) var(--window-header-padding-x)' }}
       >
         <div className="flex items-center gap-2">
@@ -114,7 +120,10 @@ export const WindowWrapper = ({
             className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
           />
           <button
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation()
+              minimizeWindow(windowKey)
+            }}
             className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
           />
           <button
@@ -130,7 +139,7 @@ export const WindowWrapper = ({
       </div>
 
       <div
-        className="overflow-auto flex-1"
+        className="flex-1 flex flex-col min-h-0"
         style={{ padding: 'var(--window-padding)' }}
       >
         {children}

@@ -48,7 +48,7 @@ DockDivider.displayName = 'DockDivider'
 
 export const Dock = memo(() => {
   const dockRef = useRef<HTMLDivElement>(null)
-  const { openWindow, closeWindow, windows } = useWindowStore()
+  const { toggleWindow, windows } = useWindowStore()
 
   useEffect(() => {
     const dock = dockRef.current
@@ -100,10 +100,8 @@ export const Dock = memo(() => {
 
   const toggleApp = useCallback((app: DockApp) => {
     if (!app.windowId) return
-    const win = windows[app.windowId]
-    if (!win) return
-    win.isOpen ? closeWindow(app.windowId) : openWindow(app.windowId)
-  }, [windows, openWindow, closeWindow])
+    toggleWindow(app.windowId)
+  }, [toggleWindow])
 
   return (
     <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50">
@@ -115,7 +113,7 @@ export const Dock = memo(() => {
           <div key={app.id} className="flex items-end">
             <DockItem
               app={app}
-              isOpen={app.windowId ? windows[app.windowId]?.isOpen ?? false : false}
+              isOpen={app.windowId ? (windows[app.windowId]?.isOpen && !windows[app.windowId]?.isMinimized) ?? false : false}
               onToggle={() => toggleApp(app)}
             />
             {index === DOCK_APPS.length - 2 && <DockDivider />}

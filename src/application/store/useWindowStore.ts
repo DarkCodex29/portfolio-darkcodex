@@ -36,6 +36,8 @@ interface WindowStoreState {
   focusWindow: (windowKey: string) => void
   toggleMaximizeWindow: (windowKey: string) => void
   minimizeWindow: (windowKey: string) => void
+  restoreWindow: (windowKey: string) => void
+  toggleWindow: (windowKey: string) => void
 }
 
 export const useWindowStore = create<WindowStoreState>()(
@@ -84,6 +86,31 @@ export const useWindowStore = create<WindowStoreState>()(
         const win = state.windows[windowKey]
         if (!win) return
         win.isMinimized = true
+      }),
+
+    restoreWindow: (windowKey) =>
+      set((state) => {
+        const win = state.windows[windowKey]
+        if (!win) return
+        win.isMinimized = false
+        win.zIndex = state.nextZIndex++
+      }),
+
+    toggleWindow: (windowKey) =>
+      set((state) => {
+        const win = state.windows[windowKey]
+        if (!win) return
+
+        if (!win.isOpen) {
+          win.isOpen = true
+          win.isMinimized = false
+          win.zIndex = state.nextZIndex++
+        } else if (win.isMinimized) {
+          win.isMinimized = false
+          win.zIndex = state.nextZIndex++
+        } else {
+          win.isMinimized = true
+        }
       }),
   }))
 )

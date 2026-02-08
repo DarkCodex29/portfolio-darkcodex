@@ -88,40 +88,55 @@ const ProjectsHeader = memo(() => {
 })
 ProjectsHeader.displayName = 'ProjectsHeader'
 
-const ProjectsSidebar = memo(() => (
-  <div
-    className="w-48 shrink-0 border-r border-white/10"
-    style={{ paddingRight: 'var(--window-gap)' }}
-  >
-    <p
-      className="text-xs text-white/40 uppercase tracking-wider font-medium"
-      style={{ marginBottom: 'var(--spacing-lg)' }}
+const ProjectsSidebar = memo(() => {
+  const uniqueSectors = [...new Set(PROJECTS.map(p => p.sector))]
+  const sectorColors: Record<string, string> = {}
+  PROJECTS.forEach(p => {
+    if (!sectorColors[p.sector]) sectorColors[p.sector] = p.color
+  })
+
+  return (
+    <div
+      className="w-48 shrink-0 border-r border-white/10 overflow-y-auto"
+      style={{ paddingRight: 'var(--window-gap)', minHeight: 0 }}
     >
-      {t.windows.projects.sectors}
-    </p>
-    <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
-      {PROJECTS.map((project) => (
-        <li key={project.id}>
-          <button
-            className="w-full text-left rounded-lg text-sm text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center"
-            style={{ padding: 'var(--spacing-sm) var(--spacing-md)', gap: 'var(--spacing-md)' }}
-          >
-            <div
-              className="w-2.5 h-2.5 rounded-full"
-              style={{ backgroundColor: project.color }}
-            />
-            {t.sectors[project.sector as keyof typeof t.sectors] || project.sector}
-          </button>
-        </li>
-      ))}
-    </ul>
-  </div>
-))
+      <p
+        className="text-xs text-white/40 uppercase tracking-wider font-medium"
+        style={{ marginBottom: 'var(--spacing-lg)' }}
+      >
+        {t.windows.projects.sectors}
+      </p>
+      <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
+        {uniqueSectors.map((sector) => (
+          <li key={sector}>
+            <button
+              className="w-full text-left rounded-lg text-sm text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center"
+              style={{ padding: 'var(--spacing-sm) var(--spacing-md)', gap: 'var(--spacing-md)' }}
+            >
+              <div
+                className="w-2.5 h-2.5 rounded-full"
+                style={{ backgroundColor: sectorColors[sector] }}
+              />
+              {t.sectors[sector as keyof typeof t.sectors] || sector}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+})
 ProjectsSidebar.displayName = 'ProjectsSidebar'
 
 const ProjectsGrid = memo(() => (
-  <div className="flex-1 overflow-y-auto scrollbar-hide" style={{ paddingLeft: 'var(--spacing-lg)' }}>
-    <div className="grid" style={{ gap: 'var(--card-gap)' }}>
+  <div
+    style={{
+      flex: 1,
+      minHeight: 0,
+      overflowY: 'auto',
+      paddingLeft: 'var(--spacing-lg)',
+    }}
+  >
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--card-gap)' }}>
       {PROJECTS.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
@@ -134,9 +149,9 @@ const ProjectsGrid = memo(() => (
 ProjectsGrid.displayName = 'ProjectsGrid'
 
 const ProjectsContent = memo(() => (
-  <div className="h-full flex flex-col" style={{ gap: 'var(--window-gap)' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, gap: 'var(--window-gap)' }}>
     <ProjectsHeader />
-    <div className="flex flex-1 min-h-0" style={{ gap: 'var(--window-gap)' }}>
+    <div style={{ display: 'flex', flex: 1, gap: 'var(--window-gap)', minHeight: 0 }}>
       <ProjectsSidebar />
       <ProjectsGrid />
     </div>

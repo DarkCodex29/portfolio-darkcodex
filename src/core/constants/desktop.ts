@@ -21,9 +21,9 @@ export interface DockApp {
 export const DESKTOP_ICONS: DesktopIcon[] = [
   { id: 'projects', name: t.desktop.projects, icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'finder' },
   { id: 'about', name: t.desktop.aboutMe, icon: '/images/txt.png', type: 'file', action: 'window', windowId: 'about' },
-  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: '/CV_Gianpierre_Collazos.pdf' },
-  { id: 'github', name: 'GitHub', icon: '/icons/github.svg', type: 'link', action: 'link', url: 'https://github.com/gianxs' },
-  { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-collazos' },
+  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: '/CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf' },
+  { id: 'github', name: 'GitHub', icon: '/icons/github.svg', type: 'link', action: 'link', url: 'https://github.com/DarkCodex29' },
+  { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
 ]
 
 export const SIDEBAR_ICONS: DesktopIcon[] = [
