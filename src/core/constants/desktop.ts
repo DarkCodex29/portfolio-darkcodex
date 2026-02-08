@@ -57,4 +57,5 @@ export const DESKTOP_CONFIG = {
     size: 56,
     labelMaxWidth: 70,
   },
+  wallpaper: 'https://raw.githubusercontent.com/aboredvaro/codepen_resources/main/macOS/img/bg/abstract/macOS-Big-Sur-Vector-Wave-Wallpaper.jpg',
 } as const

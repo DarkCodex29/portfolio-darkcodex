@@ -12,7 +12,7 @@ interface GamingSetupProps {
 
 export function GamingSetup({ onClick }: GamingSetupProps) {
   const groupRef = useRef<THREE.Group>(null)
-  const buttonGroupRef = useRef<THREE.Group>(null)
+  const buttonRef = useRef<HTMLDivElement>(null)
   const { scene } = useGLTF('/models/gaming-setup.glb')
 
   useFrame((state) => {
@@ -20,9 +20,9 @@ export function GamingSetup({ onClick }: GamingSetupProps) {
     if (groupRef.current) {
       groupRef.current.rotation.y = rotation
     }
-    // Sync button rotation with setup
-    if (buttonGroupRef.current) {
-      buttonGroupRef.current.rotation.y = rotation
+    if (buttonRef.current) {
+      const degrees = (rotation - 0.5) * (180 / Math.PI) * 3
+      buttonRef.current.style.transform = `perspective(500px) rotateY(${degrees}deg)`
     }
   })
 
@@ -41,20 +41,20 @@ export function GamingSetup({ onClick }: GamingSetupProps) {
         </Bounds>
       </group>
 
-      {/* CTA Button - separate group with synced rotation */}
-      <group ref={buttonGroupRef} position={[-100, 60, 2.5]}>
-        <Html
-          center
-          style={{
-            pointerEvents: 'auto',
-          }}
-        >
+      <Html
+        position={[-100, 60, 2.5]}
+        center
+        style={{
+          pointerEvents: 'auto',
+        }}
+      >
+        <div ref={buttonRef} style={{ transformStyle: 'preserve-3d' }}>
           <button
             onClick={(e) => {
               e.stopPropagation()
               onClick?.()
             }}
-            className="group flex items-center bg-primary-600 hover:bg-primary-500 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/50 border border-primary-400/30 whitespace-nowrap"
+            className="group flex items-center bg-primary-600 hover:bg-primary-500 rounded-full transition-colors duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/50 border border-primary-400/30 whitespace-nowrap"
             style={{
               padding: '6px 14px',
               gap: '6px',
@@ -75,8 +75,8 @@ export function GamingSetup({ onClick }: GamingSetupProps) {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
-        </Html>
-      </group>
+        </div>
+      </Html>
     </>
   )
 }
