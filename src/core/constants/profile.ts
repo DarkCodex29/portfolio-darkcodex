@@ -108,7 +108,7 @@ export const PROJECTS: Project[] = [
     techStack: ['Flutter 3.32', 'web3dart', 'Drift ORM', 'BLoC', 'FFI', 'Melos'],
     highlights: ['+32K LOC', '7 paquetes monorepo', 'CI/CD -70%'],
     year: 'Ene-Oct 2025',
-    color: '#8b5cf6',
+    color: '#3b82f6',
   },
   {
     id: 'inclub-fintech',
@@ -228,7 +228,7 @@ export const EXPERIENCE: Experience[] = [
       'InClub Backoffice: 2,456 tests automatizados',
     ],
     techStack: ['Flutter 3.32', 'BLoC', 'web3dart', 'Melos', 'Shorebird'],
-    color: '#8b5cf6',
+    color: '#3b82f6',
   },
   {
     id: 'freelance-senior',

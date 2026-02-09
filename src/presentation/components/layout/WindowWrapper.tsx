@@ -151,7 +151,6 @@ export const WindowWrapper = ({
   )
 }
 
-// HOC version for easier usage
 export const withWindow = <P extends object>(
   Component: ComponentType<P>,
   windowKey: string,

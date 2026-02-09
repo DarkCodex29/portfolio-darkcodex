@@ -17,14 +17,14 @@ const AboutContent = memo(() => {
       {/* Profile Header */}
       <div className="flex items-start" style={{ gap: 'var(--space-4)' }}>
         <div
-          className="rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center"
+          className="rounded-full bg-gradient-to-br from-primary-500 to-accent-sky flex items-center justify-center"
           style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)' }}
         >
           <User style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }} className="text-white" />
         </div>
         <div>
           <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
-          <p className="text-purple-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+          <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
           <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
             <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
             {t.windows.about.location}
@@ -53,9 +53,9 @@ const AboutContent = memo(() => {
       <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
         <p>
           {t.windows.about.bioP1.split('Flutter')[0]}
-          <span className="text-purple-400">Flutter</span>
+          <span className="text-primary-400">Flutter</span>
           {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
-          <span className="text-purple-400">Kotlin</span>
+          <span className="text-primary-400">Kotlin</span>
           {t.windows.about.bioP1.split('Kotlin')[1]}
         </p>
         <p>
@@ -80,7 +80,7 @@ const AboutContent = memo(() => {
           {SECTORS.map((sector) => (
             <span
               key={sector}
-              className="bg-purple-500/20 text-purple-300 font-medium"
+              className="bg-primary-500/20 text-primary-300 font-medium"
               style={{
                 fontSize: 'var(--text-xs)',
                 padding: 'var(--badge-padding-y) var(--badge-padding-x)',
@@ -97,7 +97,7 @@ const AboutContent = memo(() => {
       <div className="flex flex-wrap" style={{ gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
         <a
           href={`mailto:${PROFILE.contact.email}`}
-          className="flex items-center bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+          className="flex items-center bg-primary-500 hover:bg-primary-600 text-white transition-colors"
           style={{
             fontSize: 'var(--text-sm)',
             padding: 'var(--btn-padding-y) var(--btn-padding-x)',

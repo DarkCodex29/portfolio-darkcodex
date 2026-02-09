@@ -29,8 +29,6 @@ const WINDOW_CONFIG: WindowConfig = {
 interface WindowStoreState {
   windows: WindowConfig
   nextZIndex: number
-
-  // Actions
   openWindow: (windowKey: string, data?: any) => void
   closeWindow: (windowKey: string) => void
   focusWindow: (windowKey: string) => void

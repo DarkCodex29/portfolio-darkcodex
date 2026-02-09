@@ -149,10 +149,10 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
           </div>
         </div>
 
-        <div className="max-h-[400px] overflow-y-auto" style={{ padding: 'var(--space-2)' }}>
+        <div className="max-h-[400px] overflow-y-auto" style={{ padding: 'var(--space-3)' }}>
           {results.length > 0 ? (
             <>
-              <div className="px-3 py-2">
+              <div style={{ padding: 'var(--space-2) var(--space-3)', marginBottom: 'var(--space-1)' }}>
                 <p className="text-white/50 text-xs font-medium">
                   {query ? 'Resultados de búsqueda' : 'Sugerencias'}
                 </p>
@@ -164,9 +164,14 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
                     result.action()
                     onClose()
                   }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                  className={`w-full flex items-center rounded-lg transition-colors ${
                     index === selectedIndex ? 'bg-white/20' : 'hover:bg-white/10'
                   }`}
+                  style={{
+                    padding: 'var(--space-2-5) var(--space-3)',
+                    gap: 'var(--space-3)',
+                    marginBottom: 'var(--space-1)'
+                  }}
                 >
                   <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                     <img src={result.icon} alt={result.title} className="w-full h-full object-contain" />
@@ -180,16 +185,16 @@ export const WindowsSearch = memo(({ isOpen, onClose }: WindowsSearchProps) => {
               ))}
             </>
           ) : (
-            <div className="text-center py-8">
+            <div className="text-center" style={{ padding: 'var(--space-8) 0' }}>
               <p className="text-white/50 text-sm">No se encontraron resultados</p>
             </div>
           )}
         </div>
 
-        <div className="border-t border-white/10 bg-white/5 px-4 py-2">
+        <div className="border-t border-white/10 bg-white/5" style={{ padding: 'var(--space-2-5) var(--space-4)' }}>
           <p className="text-white/40 text-xs">
-            Usa <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-white/60">↑↓</kbd> para navegar,{' '}
-            <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-white/60">Enter</kbd> para abrir
+            Usa <kbd className="bg-white/10 rounded text-white/60" style={{ padding: 'var(--space-1) var(--space-1-5)' }}>↑↓</kbd> para navegar,{' '}
+            <kbd className="bg-white/10 rounded text-white/60" style={{ padding: 'var(--space-1) var(--space-1-5)' }}>Enter</kbd> para abrir
           </p>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { GamingSetup } from '@/presentation/three/models/GamingSetup'
 import { DesktopView } from '@/presentation/pages/DesktopView'
 import { Windows11View } from '@/presentation/pages/Windows11View'
 import { HeroSection } from '@/presentation/components/sections/HeroSection'
+import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
 import { useSceneStore } from '@/application/store/useSceneStore'
 import { useOSStore } from '@/application/store/useOSStore'
 import { CAMERA, PHYSICS, LIGHTS, GL_CONFIG, TRANSITION } from '@/core/constants/scene'
@@ -169,6 +170,8 @@ function App() {
         style={{ transform: 'translate(-50%, -50%) scale(0)' }}
         aria-hidden="true"
       />
+
+      <ThemeToggle />
     </main>
   )
 }

@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin or private routes (if any in the future)
+# Disallow: /admin/
+
+# Sitemap
+Sitemap: https://giancodex.com/sitemap.xml

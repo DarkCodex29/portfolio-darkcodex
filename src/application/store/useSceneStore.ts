@@ -7,13 +7,9 @@ interface SceneState {
   currentView: SceneView
   isTransitioning: boolean
   isMobile: boolean
-
-  // Actions
   setView: (view: SceneView) => void
   setTransitioning: (value: boolean) => void
   setIsMobile: (value: boolean) => void
-
-  // Navigation
   goToBadge: () => void
   goToRoom: () => void
   goToDesktop: () => void

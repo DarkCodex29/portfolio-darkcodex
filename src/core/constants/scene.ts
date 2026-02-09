@@ -21,7 +21,7 @@ export const LIGHTS = {
     fill: { position: [-5, 3, -5] as [number, number, number], intensity: 0.5 },
   },
   point: {
-    primary: { position: [-2, 2, 3] as [number, number, number], intensity: 1, color: '#8b5cf6' },
+    primary: { position: [-2, 2, 3] as [number, number, number], intensity: 1, color: '#3b82f6' },
     accent: { position: [2, 0, 2] as [number, number, number], intensity: 0.5, color: '#06b6d4' },
   },
   formers: [

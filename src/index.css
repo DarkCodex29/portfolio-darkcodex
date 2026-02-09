@@ -6,15 +6,17 @@
      SPACING SCALE (4px base, 1rem = 16px)
      Usar consistentemente en toda la app
      ======================================== */
-  --space-1: 0.25rem;   /* 4px - micro spacing */
-  --space-2: 0.5rem;    /* 8px - tight spacing */
-  --space-3: 0.75rem;   /* 12px - compact spacing */
-  --space-4: 1rem;      /* 16px - default spacing */
-  --space-5: 1.25rem;   /* 20px - comfortable spacing */
-  --space-6: 1.5rem;    /* 24px - relaxed spacing */
-  --space-8: 2rem;      /* 32px - section spacing */
-  --space-10: 2.5rem;   /* 40px - large spacing */
-  --space-12: 3rem;     /* 48px - extra large spacing */
+  --space-1: 0.25rem;    /* 4px - micro spacing */
+  --space-1-5: 0.375rem; /* 6px - between micro and tight */
+  --space-2: 0.5rem;     /* 8px - tight spacing */
+  --space-2-5: 0.625rem; /* 10px - between tight and compact */
+  --space-3: 0.75rem;    /* 12px - compact spacing */
+  --space-4: 1rem;       /* 16px - default spacing */
+  --space-5: 1.25rem;    /* 20px - comfortable spacing */
+  --space-6: 1.5rem;     /* 24px - relaxed spacing */
+  --space-8: 2rem;       /* 32px - section spacing */
+  --space-10: 2.5rem;    /* 40px - large spacing */
+  --space-12: 3rem;      /* 48px - extra large spacing */
 
   /* ========================================
      TYPOGRAPHY SCALE
@@ -69,6 +71,11 @@
   --card-radius: var(--radius-lg);
 
   /* ========================================
+     COMPONENT TOKENS - Grid
+     ======================================== */
+  --grid-gap: var(--space-4);
+
+  /* ========================================
      COMPONENT TOKENS - Badges
      ======================================== */
   --badge-padding-x: var(--space-3);
@@ -107,33 +114,52 @@
   --macos-dock-icon: 3rem;
 
   /* ========================================
-     COLORS - Primary
+     COLORS - Primary (Blue Professional)
+     Paleta principal moderna y profesional
      ======================================== */
-  --color-primary-50: #f5f3ff;
-  --color-primary-100: #ede9fe;
-  --color-primary-200: #ddd6fe;
-  --color-primary-300: #c4b5fd;
-  --color-primary-400: #a78bfa;
-  --color-primary-500: #8b5cf6;
-  --color-primary-600: #7c3aed;
-  --color-primary-700: #6d28d9;
-  --color-primary-800: #5b21b6;
-  --color-primary-900: #4c1d95;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
 
   /* ========================================
-     COLORS - Accent
+     COLORS - Accent (Cyan Vibrant)
+     Acentos vibrantes para highlights
      ======================================== */
-  --color-accent-cyan: #22d3ee;
-  --color-accent-teal: #2dd4bf;
-  --color-accent-emerald: #34d399;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-teal: #14b8a6;
+  --color-accent-sky: #0ea5e9;
+  --color-accent-indigo: #6366f1;
 
   /* ========================================
      COLORS - Status
+     Colores semánticos para estados
      ======================================== */
-  --color-status-success: #22c55e;
+  --color-status-success: #10b981;
   --color-status-warning: #f59e0b;
   --color-status-error: #ef4444;
   --color-status-info: #3b82f6;
+
+  /* ========================================
+     COLORS - Neutral (Grays)
+     Escala de grises profesional
+     ======================================== */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
 
   /* ========================================
      FONTS
@@ -176,7 +202,7 @@
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-muted: rgba(255, 255, 255, 0.5);
 
-  --glow-color: rgba(139, 92, 246, 0.3);
+  --glow-color: rgba(59, 130, 246, 0.3);
   --scrollbar-track: rgba(255, 255, 255, 0.02);
   --scrollbar-thumb: rgba(255, 255, 255, 0.1);
   --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
@@ -184,18 +210,18 @@
 
 [data-theme="light"] {
   --surface-base: #ffffff;
-  --surface-elevated: #f4f4f5;
-  --surface-overlay: #e4e4e7;
-  --surface-border: rgba(0, 0, 0, 0.08);
+  --surface-elevated: #f8fafc;
+  --surface-overlay: #f1f5f9;
+  --surface-border: rgba(15, 23, 42, 0.12);
 
-  --text-primary: #18181b;
-  --text-secondary: rgba(24, 24, 27, 0.7);
-  --text-muted: rgba(24, 24, 27, 0.5);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
 
-  --glow-color: rgba(139, 92, 246, 0.2);
-  --scrollbar-track: rgba(0, 0, 0, 0.02);
-  --scrollbar-thumb: rgba(0, 0, 0, 0.1);
-  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.2);
+  --glow-color: rgba(59, 130, 246, 0.4);
+  --scrollbar-track: rgba(15, 23, 42, 0.04);
+  --scrollbar-thumb: rgba(15, 23, 42, 0.15);
+  --scrollbar-thumb-hover: rgba(15, 23, 42, 0.25);
 }
 
 @theme {
@@ -280,7 +306,8 @@ body {
 }
 
 [data-theme="light"] .glass {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.12);
 }
 
 .glow-primary {
@@ -301,6 +328,71 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Theme-aware backdrop overlays */
+.backdrop-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="light"] .backdrop-overlay {
+  background: rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+/* Theme-aware modal backgrounds */
+.modal-bg {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .modal-bg {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* Theme-aware panel backgrounds */
+.panel-bg {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .panel-bg {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+}
+
+/* Theme-aware text colors */
+.text-adaptive-primary {
+  color: var(--text-primary);
+}
+
+.text-adaptive-secondary {
+  color: var(--text-secondary);
+}
+
+.text-adaptive-muted {
+  color: var(--text-muted);
+}
+
+/* Theme-aware hover states */
+.hover-adaptive {
+  transition: background-color 0.2s ease;
+}
+
+.hover-adaptive:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .hover-adaptive:hover {
+  background: rgba(15, 23, 42, 0.06);
 }
 
 @keyframes float {

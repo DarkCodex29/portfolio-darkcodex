@@ -15,7 +15,7 @@ const techStack = [
 const TerminalContent = memo(() => (
   <div className="font-mono" style={{ fontSize: 'var(--text-sm)' }}>
     <div className="text-green-400" style={{ marginBottom: 'var(--space-4)' }}>
-      <span className="text-purple-400">gian@darkcodex</span>
+      <span className="text-primary-400">gian@darkcodex</span>
       <span className="text-white">:</span>
       <span className="text-blue-400">~</span>
       <span className="text-white">$ </span>
@@ -45,7 +45,7 @@ const TerminalContent = memo(() => (
     </div>
 
     <div className="text-green-400" style={{ marginTop: 'var(--space-4)' }}>
-      <span className="text-purple-400">gian@darkcodex</span>
+      <span className="text-primary-400">gian@darkcodex</span>
       <span className="text-white">:</span>
       <span className="text-blue-400">~</span>
       <span className="text-white">$ </span>

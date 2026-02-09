@@ -10,6 +10,7 @@ import { ControlCenter } from '@/presentation/components/desktop/ControlCenter'
 import { CalendarDropdown } from '@/presentation/components/desktop/CalendarDropdown'
 import { SpotlightSearch } from '@/presentation/components/desktop/SpotlightSearch'
 import { ContextMenu } from '@/presentation/components/desktop/ContextMenu'
+import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
 import { useWindowStore } from '@/application/store/useWindowStore'
 import { DESKTOP_ICONS, SIDEBAR_ICONS, MENU_ITEMS, DESKTOP_CONFIG, type DesktopIcon } from '@/core/constants/desktop'
 import { PROFILE } from '@/core/constants/profile'
@@ -355,6 +356,9 @@ export const DesktopView = memo(({ onBack }: DesktopViewProps) => {
         onClose={handleCloseContextMenu}
         onAction={handleContextMenuAction}
       />
+
+      {/* Global Theme Toggle */}
+      <ThemeToggle />
     </div>
   )
 })

@@ -8,6 +8,7 @@ import { WindowsSearch } from '@/presentation/components/windows/WindowsSearch'
 import { WindowsContextMenu } from '@/presentation/components/windows/WindowsContextMenu'
 import { DesktopIcon, BackButton } from '@/presentation/components/windows/DesktopIcon'
 import { WindowsWindowWrapper } from '@/presentation/components/windows/WindowsWindowWrapper'
+import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
 import { Mail, Github, Linkedin, MapPin, FileText, User, Check } from 'lucide-react'
 import { PROFILE, STATS, SECTORS, CV_PATH, CV_FILENAME, PROJECTS, EXPERIENCE, type Project, type Experience } from '@/core/constants/profile'
 import { t } from '@/core/constants/translations'
@@ -370,17 +371,9 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       </div>
 
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+        className="absolute inset-0 pointer-events-auto"
         onClick={handleDesktopClick}
-      >
-        <div className="text-center pointer-events-none">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-2xl">
-            <span className="text-white text-6xl font-bold">{PROFILE.name.first[0]}</span>
-          </div>
-          <h1 className="text-white text-4xl font-light mb-2">{PROFILE.name.first} {PROFILE.name.last}</h1>
-          <p className="text-white/80 text-lg">{PROFILE.title.primary}</p>
-        </div>
-      </div>
+      />
 
       <Taskbar
         onStartClick={handleStartClick}
@@ -404,7 +397,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       <WindowsWindowWrapper windowKey="terminal" title="Skills - Terminal" icon="/icons/win11/notepad.png" className="w-[600px]">
         <div className="font-mono" style={{ fontSize: 'var(--text-sm)' }}>
           <div className="text-green-400" style={{ marginBottom: 'var(--space-4)' }}>
-            <span className="text-purple-400">gian@darkcodex</span>
+            <span className="text-primary-400">gian@darkcodex</span>
             <span className="text-white">:</span>
             <span className="text-blue-400">~</span>
             <span className="text-white">$ </span>
@@ -441,7 +434,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
           </div>
 
           <div className="text-green-400" style={{ marginTop: 'var(--space-4)' }}>
-            <span className="text-purple-400">gian@darkcodex</span>
+            <span className="text-primary-400">gian@darkcodex</span>
             <span className="text-white">:</span>
             <span className="text-blue-400">~</span>
             <span className="text-white">$ </span>
@@ -455,14 +448,14 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
           <div className="flex items-start" style={{ gap: 'var(--space-4)' }}>
             <div
-              className="rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center"
+              className="rounded-full bg-gradient-to-br from-primary-500 to-accent-sky flex items-center justify-center"
               style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)' }}
             >
               <User style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }} className="text-white" />
             </div>
             <div>
               <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
-              <p className="text-purple-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+              <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
               <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
                 <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
                 {t.windows.about.location}
@@ -482,9 +475,9 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
           <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
             <p>
               {t.windows.about.bioP1.split('Flutter')[0]}
-              <span className="text-purple-400">Flutter</span>
+              <span className="text-primary-400">Flutter</span>
               {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
-              <span className="text-purple-400">Kotlin</span>
+              <span className="text-primary-400">Kotlin</span>
               {t.windows.about.bioP1.split('Kotlin')[1]}
             </p>
             <p>
@@ -508,7 +501,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
               {SECTORS.map((sector) => (
                 <span
                   key={sector}
-                  className="bg-purple-500/20 text-purple-300 font-medium"
+                  className="bg-primary-500/20 text-primary-300 font-medium"
                   style={{
                     fontSize: 'var(--text-xs)',
                     padding: 'var(--badge-padding-y) var(--badge-padding-x)',
@@ -524,7 +517,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
           <div className="flex flex-wrap" style={{ gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
             <a
               href={`mailto:${PROFILE.contact.email}`}
-              className="flex items-center bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+              className="flex items-center bg-primary-500 hover:bg-primary-600 text-white transition-colors"
               style={{
                 fontSize: 'var(--text-sm)',
                 padding: 'var(--btn-padding-y) var(--btn-padding-x)',
@@ -641,16 +634,16 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
           <p className="text-gray-300" style={{ fontSize: 'var(--text-base)' }}>{t.windows.contact.subtitle}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            <a href={`mailto:${PROFILE.contact.email}`} className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
-              <div className="bg-purple-500/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
-                <Mail style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-purple-400" />
+            <a href={`mailto:${PROFILE.contact.email}`} className="flex items-center text-white hover:text-primary-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+              <div className="bg-primary-500/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
+                <Mail style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-primary-400" />
               </div>
               <div>
                 <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.contact.email}</div>
                 <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{PROFILE.contact.email}</div>
               </div>
             </a>
-            <a href={PROFILE.contact.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+            <a href={PROFILE.contact.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-primary-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
               <div className="bg-gray-700/50 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
                 <Github style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-white" />
               </div>
@@ -659,7 +652,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
                 <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>@DarkCodex29</div>
               </div>
             </a>
-            <a href={PROFILE.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-purple-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
+            <a href={PROFILE.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-primary-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
               <div className="bg-blue-600/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
                 <Linkedin style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-blue-400" />
               </div>
@@ -724,6 +717,9 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
           <p className="text-gray-400 text-center">Galería de proyectos próximamente</p>
         </div>
       </WindowsWindowWrapper>
+
+      {/* Global Theme Toggle */}
+      <ThemeToggle />
     </div>
   )
 })

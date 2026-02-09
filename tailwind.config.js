@@ -12,7 +12,23 @@ export default {
           800: '#111118',
           700: '#1a1a24',
         },
+        'primary': {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        },
         'accent': {
+          cyan: '#06b6d4',
+          teal: '#14b8a6',
+          sky: '#0ea5e9',
+          indigo: '#6366f1',
           purple: '#8b5cf6',
           blue: '#3b82f6',
           green: '#10b981',
@@ -32,8 +48,8 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.5)' },
-          '100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.8)' },
+          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
+          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' },
         }
       }
     },

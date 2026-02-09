@@ -24,14 +24,14 @@ const ContactContent = memo(() => (
         }}
       >
         <div
-          className="bg-purple-500/20 flex items-center justify-center"
+          className="bg-primary-500/20 flex items-center justify-center"
           style={{ width: 'var(--icon-2xl)', height: 'var(--icon-2xl)', borderRadius: 'var(--radius-md)' }}
         >
-          <Mail style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} className="text-purple-400" />
+          <Mail style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} className="text-primary-400" />
         </div>
         <div>
           <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{t.windows.contact.email}</p>
-          <p className="text-white group-hover:text-purple-400 transition-colors" style={{ fontSize: 'var(--text-base)' }}>
+          <p className="text-white group-hover:text-primary-400 transition-colors" style={{ fontSize: 'var(--text-base)' }}>
             {PROFILE.contact.email}
           </p>
         </div>
