@@ -9,7 +9,7 @@ import { GamingSetup } from '@/presentation/three/models/GamingSetup'
 import { DesktopView } from '@/presentation/pages/DesktopView'
 import { Windows11View } from '@/presentation/pages/Windows11View'
 import { HeroSection } from '@/presentation/components/sections/HeroSection'
-import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
+import { GlobalControls } from '@/presentation/components/shared/GlobalControls'
 import { useSceneStore } from '@/application/store/useSceneStore'
 import { useOSStore } from '@/application/store/useOSStore'
 import { CAMERA, PHYSICS, LIGHTS, GL_CONFIG, TRANSITION } from '@/core/constants/scene'
@@ -171,7 +171,7 @@ function App() {
         aria-hidden="true"
       />
 
-      <ThemeToggle />
+      <GlobalControls />
     </main>
   )
 }

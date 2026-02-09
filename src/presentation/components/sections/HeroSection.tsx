@@ -1,8 +1,11 @@
 import { memo } from 'react'
-import { PROFILE, STATS, type StatItem } from '@/core/constants/profile'
+import { PROFILE, type StatItem } from '@/core/constants/profile'
 import { TechCarousel } from '@/presentation/components/ui/TechCarousel'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
 const AvailableBadge = memo(() => {
+  const { translations } = useLanguageStore()
+
   if (PROFILE.availability.status !== 'available') return null
 
   return (
@@ -11,7 +14,7 @@ const AvailableBadge = memo(() => {
         className="inline-block font-medium text-primary-300 bg-primary-500/20 rounded-full border border-primary-500/30"
         style={{ fontSize: 'var(--text-xs)', padding: 'var(--badge-padding-y) var(--badge-padding-x)' }}
       >
-        {PROFILE.availability.label}
+        {translations.hero.availableForHire}
       </span>
     </div>
   )
@@ -57,13 +60,23 @@ const StatCard = memo(({ value, label }: Pick<StatItem, 'value' | 'label'>) => (
 ))
 StatCard.displayName = 'StatCard'
 
-const StatsSection = memo(() => (
-  <div className="flex justify-center" style={{ gap: 'var(--space-4)', marginBottom: 'var(--space-8)', padding: '0 var(--space-4)' }}>
-    {STATS.map((stat) => (
-      <StatCard key={stat.id} value={stat.value} label={stat.label} />
-    ))}
-  </div>
-))
+const StatsSection = memo(() => {
+  const { translations } = useLanguageStore()
+
+  const stats = [
+    { id: 'years', value: '6+', label: translations.stats.years },
+    { id: 'apps', value: '10+', label: translations.stats.apps },
+    { id: 'users', value: '10K+', label: translations.stats.users },
+  ]
+
+  return (
+    <div className="flex justify-center" style={{ gap: 'var(--space-4)', marginBottom: 'var(--space-8)', padding: '0 var(--space-4)' }}>
+      {stats.map((stat) => (
+        <StatCard key={stat.id} value={stat.value} label={stat.label} />
+      ))}
+    </div>
+  )
+})
 StatsSection.displayName = 'StatsSection'
 
 export const HeroSection = memo(() => (

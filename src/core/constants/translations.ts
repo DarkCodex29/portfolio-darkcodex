@@ -210,7 +210,7 @@ export const TRANSLATIONS = {
 } as const
 
 export type Language = keyof typeof TRANSLATIONS
-export type TranslationKeys = typeof TRANSLATIONS.es
+export type TranslationKeys = typeof TRANSLATIONS[Language]
 
 export const DEFAULT_LANGUAGE: Language = 'es'
 
