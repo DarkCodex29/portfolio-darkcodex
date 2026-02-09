@@ -1,7 +1,7 @@
-import { memo, useState, useCallback } from 'react'
+import { memo, useState, useCallback, useMemo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { GALLERY, PROJECTS, type GalleryImage } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 import { Search, Grid, LayoutGrid, Image, Smartphone, Globe, Building2 } from 'lucide-react'
 
 type Category = 'all' | 'mobile' | 'web' | 'enterprise'
@@ -12,14 +12,10 @@ interface CategoryItem {
   label: string
 }
 
-const CATEGORIES: CategoryItem[] = [
-  { id: 'all', icon: <LayoutGrid style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: t.windows.gallery.all },
-  { id: 'mobile', icon: <Smartphone style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: t.windows.gallery.mobile },
-  { id: 'web', icon: <Globe style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: t.windows.gallery.web },
-  { id: 'enterprise', icon: <Building2 style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: t.windows.gallery.enterprise },
-]
+const GalleryToolbar = memo(() => {
+  const { translations } = useLanguageStore()
 
-const GalleryToolbar = memo(() => (
+  return (
   <div
     className="flex items-center justify-between bg-gray-800/30 border-b border-white/10"
     style={{ padding: 'var(--space-2) var(--space-4)' }}
@@ -29,12 +25,13 @@ const GalleryToolbar = memo(() => (
         <Grid style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
       </button>
     </div>
-    <h2 className="font-medium text-white/80" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.gallery.header}</h2>
+    <h2 className="font-medium text-white/80" style={{ fontSize: 'var(--text-sm)' }}>{translations.windows.gallery.header}</h2>
     <div className="flex items-center" style={{ gap: 'var(--space-2)' }}>
       <Search style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} className="text-white/40" />
     </div>
   </div>
-))
+  )
+})
 GalleryToolbar.displayName = 'GalleryToolbar'
 
 interface GallerySidebarProps {
@@ -42,7 +39,17 @@ interface GallerySidebarProps {
   onCategoryChange: (category: Category) => void
 }
 
-const GallerySidebar = memo(({ selectedCategory, onCategoryChange }: GallerySidebarProps) => (
+const GallerySidebar = memo(({ selectedCategory, onCategoryChange }: GallerySidebarProps) => {
+  const { translations } = useLanguageStore()
+
+  const categories: CategoryItem[] = useMemo(() => [
+    { id: 'all', icon: <LayoutGrid style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: translations.windows.gallery.all },
+    { id: 'mobile', icon: <Smartphone style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: translations.windows.gallery.mobile },
+    { id: 'web', icon: <Globe style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: translations.windows.gallery.web },
+    { id: 'enterprise', icon: <Building2 style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />, label: translations.windows.gallery.enterprise },
+  ], [translations])
+
+  return (
   <div
     className="w-40 shrink-0 border-r border-white/10 overflow-y-auto"
     style={{ paddingRight: 'var(--space-4)', minHeight: 0 }}
@@ -51,10 +58,10 @@ const GallerySidebar = memo(({ selectedCategory, onCategoryChange }: GallerySide
       className="text-white/40 uppercase tracking-wider font-medium"
       style={{ fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}
     >
-      {t.windows.gallery.categories}
+      {translations.windows.gallery.categories}
     </p>
     <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-      {CATEGORIES.map((category) => (
+      {categories.map((category) => (
         <li key={category.id}>
           <button
             onClick={() => onCategoryChange(category.id)}
@@ -77,7 +84,8 @@ const GallerySidebar = memo(({ selectedCategory, onCategoryChange }: GallerySide
       ))}
     </ul>
   </div>
-))
+  )
+})
 GallerySidebar.displayName = 'GallerySidebar'
 
 interface GalleryItemProps {
@@ -120,7 +128,10 @@ interface GalleryGridProps {
   onImageClick: (image: GalleryImage) => void
 }
 
-const GalleryGrid = memo(({ images, onImageClick }: GalleryGridProps) => (
+const GalleryGrid = memo(({ images, onImageClick }: GalleryGridProps) => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div
     style={{
       flex: 1,
@@ -141,14 +152,18 @@ const GalleryGrid = memo(({ images, onImageClick }: GalleryGridProps) => (
     {images.length === 0 && (
       <div className="flex flex-col items-center justify-center h-full text-white/40">
         <Image style={{ width: 'var(--icon-3xl)', height: 'var(--icon-3xl)', marginBottom: 'var(--space-3)' }} />
-        <p style={{ fontSize: 'var(--text-sm)' }}>{t.windows.gallery.noImages}</p>
+        <p style={{ fontSize: 'var(--text-sm)' }}>{translations.windows.gallery.noImages}</p>
       </div>
     )}
   </div>
-))
+  )
+})
 GalleryGrid.displayName = 'GalleryGrid'
 
-const GalleryHeader = memo(() => (
+const GalleryHeader = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div
     className="flex items-center border-b border-white/10 shrink-0"
     style={{ gap: 'var(--space-4)', paddingBottom: 'var(--window-gap)' }}
@@ -162,11 +177,12 @@ const GalleryHeader = memo(() => (
       </svg>
     </div>
     <div>
-      <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{t.windows.gallery.header}</h2>
-      <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{GALLERY.length} {t.windows.gallery.screenshotsCount}</p>
+      <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{translations.windows.gallery.header}</h2>
+      <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{GALLERY.length} {translations.windows.gallery.screenshotsCount}</p>
     </div>
   </div>
-))
+  )
+})
 GalleryHeader.displayName = 'GalleryHeader'
 
 const GalleryContent = memo(() => {
@@ -206,11 +222,15 @@ const GalleryContent = memo(() => {
 })
 GalleryContent.displayName = 'GalleryContent'
 
-export const GalleryWindow = memo(() => (
-  <WindowWrapper windowKey="photos" title={t.windows.gallery.title} className="w-[700px] h-[500px]">
-    <GalleryContent />
-  </WindowWrapper>
-))
+export const GalleryWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="photos" title={translations.windows.gallery.title} className="w-[700px] h-[500px]">
+      <GalleryContent />
+    </WindowWrapper>
+  )
+})
 GalleryWindow.displayName = 'GalleryWindow'
 
 export default GalleryWindow

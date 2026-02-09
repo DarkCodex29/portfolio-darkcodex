@@ -14,7 +14,6 @@ import { useSceneStore } from '@/application/store/useSceneStore'
 import { useOSStore } from '@/application/store/useOSStore'
 import { CAMERA, PHYSICS, LIGHTS, GL_CONFIG, TRANSITION } from '@/core/constants/scene'
 import { ICONS } from '@/core/constants/ui'
-import { t } from '@/core/constants/translations'
 
 const Loader = memo(() => {
   const { progress } = useProgress()

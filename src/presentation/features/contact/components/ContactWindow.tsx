@@ -2,15 +2,18 @@ import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react'
 import { PROFILE } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
-const ContactContent = memo(() => (
+const ContactContent = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
     <div className="text-center">
       <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-2)' }}>
-        {t.windows.contact.header}
+        {translations.windows.contact.header}
       </h2>
-      <p className="text-gray-400" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.contact.subtitle}</p>
+      <p className="text-gray-400" style={{ fontSize: 'var(--text-sm)' }}>{translations.windows.contact.subtitle}</p>
     </div>
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
@@ -30,7 +33,7 @@ const ContactContent = memo(() => (
           <Mail style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} className="text-primary-400" />
         </div>
         <div>
-          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{t.windows.contact.email}</p>
+          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{translations.windows.contact.email}</p>
           <p className="text-white group-hover:text-primary-400 transition-colors" style={{ fontSize: 'var(--text-base)' }}>
             {PROFILE.contact.email}
           </p>
@@ -53,7 +56,7 @@ const ContactContent = memo(() => (
           <Phone style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} className="text-green-400" />
         </div>
         <div>
-          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{t.windows.contact.phone}</p>
+          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{translations.windows.contact.phone}</p>
           <p className="text-white group-hover:text-green-400 transition-colors" style={{ fontSize: 'var(--text-base)' }}>
             {PROFILE.contact.phone}
           </p>
@@ -75,8 +78,8 @@ const ContactContent = memo(() => (
           <MapPin style={{ width: 'var(--icon-md)', height: 'var(--icon-md)' }} className="text-blue-400" />
         </div>
         <div>
-          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{t.windows.contact.location}</p>
-          <p className="text-white" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.location}</p>
+          <p className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{translations.windows.contact.location}</p>
+          <p className="text-white" style={{ fontSize: 'var(--text-base)' }}>{translations.windows.about.location}</p>
         </div>
       </div>
     </div>
@@ -103,17 +106,22 @@ const ContactContent = memo(() => (
     </div>
 
     <div className="border-t border-white/10" style={{ paddingTop: 'var(--space-4)' }}>
-      <p className="text-gray-400 text-center" style={{ fontSize: 'var(--text-xs)' }}>{t.windows.contact.languages}</p>
+      <p className="text-gray-400 text-center" style={{ fontSize: 'var(--text-xs)' }}>{translations.windows.contact.languages}</p>
     </div>
   </div>
-))
+  )
+})
 ContactContent.displayName = 'ContactContent'
 
-export const ContactWindow = memo(() => (
-  <WindowWrapper windowKey="contact" title={t.windows.contact.title} className="w-[400px]">
-    <ContactContent />
-  </WindowWrapper>
-))
+export const ContactWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="contact" title={translations.windows.contact.title} className="w-[400px]">
+      <ContactContent />
+    </WindowWrapper>
+  )
+})
 ContactWindow.displayName = 'ContactWindow'
 
 export default ContactWindow

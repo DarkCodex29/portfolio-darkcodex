@@ -1,9 +1,9 @@
-import { t } from './translations'
 import { CV_PATH } from './profile'
 
 export interface DesktopIcon {
   id: string
   name: string
+  nameKey?: string
   icon: string
   type: 'folder' | 'file' | 'link' | 'app'
   action?: 'window' | 'link' | 'back' | 'download'
@@ -15,48 +15,47 @@ export interface DesktopIcon {
 export interface DockApp {
   id: string
   name: string
+  nameKey?: string
   icon: string
   windowId?: string
 }
 
 export const DESKTOP_ICONS: DesktopIcon[] = [
-  { id: 'projects', name: t.desktop.projects, icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'finder' },
-  { id: 'about', name: t.desktop.aboutMe, icon: '/images/txt.png', type: 'file', action: 'window', windowId: 'about' },
-  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
+  { id: 'projects', name: 'Projects', nameKey: 'desktop.projects', icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'finder' },
+  { id: 'about', name: 'About Me', nameKey: 'desktop.aboutMe', icon: '/images/txt.png', type: 'file', action: 'window', windowId: 'about' },
+  { id: 'resume', name: 'CV.pdf', nameKey: 'desktop.resume', icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
   { id: 'github', name: 'GitHub', icon: '/icons/github.svg', type: 'link', action: 'link', url: 'https://github.com/DarkCodex29' },
   { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
 ]
 
 export const DESKTOP_ICONS_WIN11: DesktopIcon[] = [
-  { id: 'projects', name: t.desktop.projects, icon: '/icons/win11/projects.png', type: 'folder', action: 'window', windowId: 'finder' },
-  { id: 'about', name: t.desktop.aboutMe, icon: '/icons/win11/file.png', type: 'file', action: 'window', windowId: 'about' },
-  { id: 'resume', name: t.desktop.resume, icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
+  { id: 'projects', name: 'Projects', nameKey: 'desktop.projects', icon: '/icons/win11/projects.png', type: 'folder', action: 'window', windowId: 'finder' },
+  { id: 'about', name: 'About Me', nameKey: 'desktop.aboutMe', icon: '/icons/win11/file.png', type: 'file', action: 'window', windowId: 'about' },
+  { id: 'resume', name: 'Resume.pdf', nameKey: 'desktop.resume', icon: '/images/pdf.png', type: 'file', action: 'download', downloadUrl: CV_PATH },
   { id: 'github', name: 'GitHub', icon: '/icons/win11/github-icon.png', type: 'link', action: 'link', url: 'https://github.com/DarkCodex29' },
   { id: 'linkedin', name: 'LinkedIn', icon: '/icons/linkedin.svg', type: 'link', action: 'link', url: 'https://linkedin.com/in/gianpierre-mio' },
 ]
 
 export const SIDEBAR_ICONS: DesktopIcon[] = [
   { id: 'macintosh', name: 'Macintosh HD', icon: 'hdd', type: 'app' },
-  { id: 'experience', name: t.desktop.experience, icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'safari' },
-  { id: 'skills', name: t.desktop.skills, icon: '/images/terminal.png', type: 'app', action: 'window', windowId: 'terminal' },
-  { id: 'contact', name: t.desktop.contact, icon: '/images/contact.png', type: 'app', action: 'window', windowId: 'contact' },
+  { id: 'experience', name: 'Experience', nameKey: 'desktop.experience', icon: '/images/folder.png', type: 'folder', action: 'window', windowId: 'safari' },
+  { id: 'skills', name: 'Skills', nameKey: 'desktop.skills', icon: '/images/terminal.png', type: 'app', action: 'window', windowId: 'terminal' },
+  { id: 'contact', name: 'Contact', nameKey: 'desktop.contact', icon: '/images/contact.png', type: 'app', action: 'window', windowId: 'contact' },
 ]
 
 export const SIDEBAR_ICONS_WIN11: DesktopIcon[] = [
   { id: 'pc', name: 'Este equipo', icon: 'pc', type: 'app' },
-  { id: 'experience', name: t.desktop.experience, icon: '/icons/win11/folder-documents.png', type: 'folder', action: 'window', windowId: 'safari' },
-  { id: 'skills', name: t.desktop.skills, icon: '/icons/win11/notepad.png', type: 'app', action: 'window', windowId: 'terminal' },
-  { id: 'contact', name: t.desktop.contact, icon: '/icons/win11/user-folder.png', type: 'app', action: 'window', windowId: 'contact' },
+  { id: 'experience', name: 'Experience', nameKey: 'desktop.experience', icon: '/icons/win11/folder-documents.png', type: 'folder', action: 'window', windowId: 'safari' },
+  { id: 'skills', name: 'Skills', nameKey: 'desktop.skills', icon: '/icons/win11/notepad.png', type: 'app', action: 'window', windowId: 'terminal' },
+  { id: 'contact', name: 'Contact', nameKey: 'desktop.contact', icon: '/icons/win11/user-folder.png', type: 'app', action: 'window', windowId: 'contact' },
 ]
 
 export const DOCK_APPS: DockApp[] = [
-  { id: 'finder', name: t.desktop.projects, icon: '/images/finder.png', windowId: 'finder' },
-  { id: 'safari', name: t.desktop.experience, icon: '/images/safari.png', windowId: 'safari' },
-  { id: 'photos', name: t.desktop.gallery, icon: '/images/photos.png', windowId: 'photos' },
-  { id: 'trash', name: t.desktop.trash, icon: '/images/trash.png' },
+  { id: 'finder', name: 'Projects', nameKey: 'desktop.projects', icon: '/images/finder.png', windowId: 'finder' },
+  { id: 'safari', name: 'Experience', nameKey: 'desktop.experience', icon: '/images/safari.png', windowId: 'safari' },
+  { id: 'photos', name: 'Gallery', nameKey: 'desktop.gallery', icon: '/images/photos.png', windowId: 'photos' },
+  { id: 'trash', name: 'Trash', nameKey: 'desktop.trash', icon: '/images/trash.png' },
 ]
-
-export const MENU_ITEMS = t.menu
 
 export const DESKTOP_CONFIG = {
   topBar: {

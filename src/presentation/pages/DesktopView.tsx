@@ -10,11 +10,11 @@ import { ControlCenter } from '@/presentation/components/desktop/ControlCenter'
 import { CalendarDropdown } from '@/presentation/components/desktop/CalendarDropdown'
 import { SpotlightSearch } from '@/presentation/components/desktop/SpotlightSearch'
 import { ContextMenu } from '@/presentation/components/desktop/ContextMenu'
-import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
+import { GlobalControls } from '@/presentation/components/shared/GlobalControls'
 import { useWindowStore } from '@/application/store/useWindowStore'
-import { DESKTOP_ICONS, SIDEBAR_ICONS, MENU_ITEMS, DESKTOP_CONFIG, type DesktopIcon } from '@/core/constants/desktop'
+import { DESKTOP_ICONS, SIDEBAR_ICONS, DESKTOP_CONFIG, type DesktopIcon } from '@/core/constants/desktop'
 import { PROFILE } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 import { useSceneStore } from '@/application/store/useSceneStore'
 
 interface DesktopViewProps {
@@ -31,6 +31,7 @@ interface TopBarProps {
 }
 
 const TopBar = memo(({ isControlCenterOpen, onToggleControlCenter, isCalendarOpen, onToggleCalendar, isSpotlightOpen, onToggleSpotlight }: TopBarProps) => {
+  const { translations } = useLanguageStore()
   const [currentTime, setCurrentTime] = useState(new Date())
 
   useState(() => {
@@ -60,7 +61,7 @@ const TopBar = memo(({ isControlCenterOpen, onToggleControlCenter, isCalendarOpe
         </button>
         <span className="text-white/90 font-semibold">{PROFILE.name.first}</span>
         <nav className="flex items-center text-white/80" style={{ gap: 'var(--space-4)' }}>
-          {MENU_ITEMS.map((item) => (
+          {translations.menu.map((item: string) => (
             <button
               key={item}
               className="hover:bg-white/10 rounded transition-colors"
@@ -172,7 +173,10 @@ interface BackButtonProps {
   onDoubleClick: () => void
 }
 
-const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButtonProps) => (
+const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButtonProps) => {
+  const { translations } = useLanguageStore()
+
+  return (
   <button
     className={`flex flex-col items-center gap-1 p-2 rounded-md transition-all cursor-default select-none ${
       isSelected ? 'bg-white/25' : 'hover:bg-white/10'
@@ -188,10 +192,11 @@ const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButtonProps
       </div>
     </div>
     <span className="text-[11px] text-white font-medium text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-      {t.desktop.back}
+      {translations.desktop.back}
     </span>
   </button>
-))
+  )
+})
 BackButton.displayName = 'BackButton'
 
 const DesktopBackground = memo(() => (
@@ -358,7 +363,7 @@ export const DesktopView = memo(({ onBack }: DesktopViewProps) => {
       />
 
       {/* Global Theme Toggle */}
-      <ThemeToggle />
+      <GlobalControls />
     </div>
   )
 })

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
-import { PROJECTS, STATS, type Project } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { PROJECTS, type Project } from '@/core/constants/profile'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
 interface ProjectCardProps {
   project: Project
@@ -77,7 +77,8 @@ const ProjectCard = memo(({ project }: ProjectCardProps) => (
 ProjectCard.displayName = 'ProjectCard'
 
 const ProjectsHeader = memo(() => {
-  const appsCount = STATS.find((s) => s.id === 'apps')?.value ?? '10+'
+  const { translations } = useLanguageStore()
+  const appsCount = '10+'
 
   return (
     <div
@@ -93,8 +94,8 @@ const ProjectsHeader = memo(() => {
         </svg>
       </div>
       <div>
-        <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{t.windows.projects.header}</h2>
-        <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{appsCount} {t.windows.projects.appsInProduction}</p>
+        <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{translations.windows.projects.header}</h2>
+        <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{appsCount} {translations.windows.projects.appsInProduction}</p>
       </div>
     </div>
   )
@@ -102,6 +103,7 @@ const ProjectsHeader = memo(() => {
 ProjectsHeader.displayName = 'ProjectsHeader'
 
 const ProjectsSidebar = memo(() => {
+  const { translations } = useLanguageStore()
   const uniqueSectors = [...new Set(PROJECTS.map(p => p.sector))]
   const sectorColors: Record<string, string> = {}
   PROJECTS.forEach(p => {
@@ -117,7 +119,7 @@ const ProjectsSidebar = memo(() => {
         className="text-white/40 uppercase tracking-wider font-medium"
         style={{ fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}
       >
-        {t.windows.projects.sectors}
+        {translations.windows.projects.sectors}
       </p>
       <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
         {uniqueSectors.map((sector) => (
@@ -135,7 +137,7 @@ const ProjectsSidebar = memo(() => {
                 className="rounded-full"
                 style={{ width: '10px', height: '10px', backgroundColor: sectorColors[sector] }}
               />
-              {t.sectors[sector as keyof typeof t.sectors] || sector}
+              {translations.sectors[sector as keyof typeof translations.sectors] || sector}
             </button>
           </li>
         ))}
@@ -145,7 +147,10 @@ const ProjectsSidebar = memo(() => {
 })
 ProjectsSidebar.displayName = 'ProjectsSidebar'
 
-const ProjectsGrid = memo(() => (
+const ProjectsGrid = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div
     style={{
       flex: 1,
@@ -160,10 +165,11 @@ const ProjectsGrid = memo(() => (
       ))}
     </div>
     <p className="text-white/40 text-center" style={{ fontSize: 'var(--text-xs)', padding: 'var(--window-gap) 0' }}>
-      {t.windows.projects.additionalNDA}
+      {translations.windows.projects.additionalNDA}
     </p>
   </div>
-))
+  )
+})
 ProjectsGrid.displayName = 'ProjectsGrid'
 
 const ProjectsContent = memo(() => (
@@ -177,11 +183,15 @@ const ProjectsContent = memo(() => (
 ))
 ProjectsContent.displayName = 'ProjectsContent'
 
-export const ProjectsWindow = memo(() => (
-  <WindowWrapper windowKey="finder" title={t.windows.projects.title} className="w-[750px] h-[550px]">
-    <ProjectsContent />
-  </WindowWrapper>
-))
+export const ProjectsWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="finder" title={translations.windows.projects.title} className="w-[750px] h-[550px]">
+      <ProjectsContent />
+    </WindowWrapper>
+  )
+})
 ProjectsWindow.displayName = 'ProjectsWindow'
 
 export default ProjectsWindow

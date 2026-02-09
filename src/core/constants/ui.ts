@@ -1,19 +1,3 @@
-import { t } from './translations'
-
-export const UI_TEXT = {
-  hero: {
-    cta: t.hero.cta,
-    scrollHint: t.hero.scrollHint,
-  },
-  navigation: {
-    back: t.navigation.back,
-    home: t.navigation.home,
-  },
-  loading: {
-    default: t.loading.default,
-  },
-} as const
-
 export const LAYOUT = {
   hero: {
     position: 'left-[58%]',

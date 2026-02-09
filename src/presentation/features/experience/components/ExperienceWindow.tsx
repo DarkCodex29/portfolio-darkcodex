@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { EXPERIENCE, PROFILE, type Experience } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 import { ChevronLeft, ChevronRight, Globe, Shield, Search, Share, Plus, Layers } from 'lucide-react'
 
 const SafariToolbar = memo(() => (
@@ -50,7 +50,10 @@ interface TimelineItemProps {
   isLast: boolean
 }
 
-const TimelineItem = memo(({ experience, isFirst, isLast }: TimelineItemProps) => (
+const TimelineItem = memo(({ experience, isFirst, isLast }: TimelineItemProps) => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div className="relative flex" style={{ gap: 'var(--space-4)' }}>
     <div className="flex flex-col items-center">
       <div
@@ -96,7 +99,7 @@ const TimelineItem = memo(({ experience, isFirst, isLast }: TimelineItemProps) =
               color: experience.color,
             }}
           >
-            {experience.endDate === null ? t.windows.experience.present : experience.period.split(' - ')[1]}
+            {experience.endDate === null ? translations.windows.experience.present : experience.period.split(' - ')[1]}
           </span>
         </div>
         <p className="text-white/50" style={{ fontSize: 'var(--text-xs)', marginBottom: 'var(--space-3)' }}>{experience.period}</p>
@@ -123,10 +126,14 @@ const TimelineItem = memo(({ experience, isFirst, isLast }: TimelineItemProps) =
       </div>
     </div>
   </div>
-))
+  )
+})
 TimelineItem.displayName = 'TimelineItem'
 
-const ExperienceSidebar = memo(() => (
+const ExperienceSidebar = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div
     className="w-44 shrink-0 border-r border-white/10 overflow-y-auto"
     style={{ paddingRight: 'var(--space-4)', minHeight: 0 }}
@@ -135,7 +142,7 @@ const ExperienceSidebar = memo(() => (
       className="text-white/40 uppercase tracking-wider font-medium"
       style={{ fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}
     >
-      {t.windows.experience.companies}
+      {translations.windows.experience.companies}
     </p>
     <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
       {EXPERIENCE.map((exp) => (
@@ -159,7 +166,8 @@ const ExperienceSidebar = memo(() => (
       ))}
     </ul>
   </div>
-))
+  )
+})
 ExperienceSidebar.displayName = 'ExperienceSidebar'
 
 const ExperienceTimeline = memo(() => (
@@ -185,7 +193,10 @@ const ExperienceTimeline = memo(() => (
 ))
 ExperienceTimeline.displayName = 'ExperienceTimeline'
 
-const ExperienceHeader = memo(() => (
+const ExperienceHeader = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div
     className="flex items-center border-b border-white/10 shrink-0"
     style={{ gap: 'var(--space-4)', paddingBottom: 'var(--window-gap)' }}
@@ -199,11 +210,12 @@ const ExperienceHeader = memo(() => (
       </svg>
     </div>
     <div>
-      <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{t.windows.experience.header}</h2>
-      <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.experience.yearsInEnterprise}</p>
+      <h2 className="font-semibold text-white" style={{ fontSize: 'var(--text-lg)' }}>{translations.windows.experience.header}</h2>
+      <p className="text-white/50" style={{ fontSize: 'var(--text-sm)' }}>{translations.windows.experience.yearsInEnterprise}</p>
     </div>
   </div>
-))
+  )
+})
 ExperienceHeader.displayName = 'ExperienceHeader'
 
 const ExperienceContent = memo(() => (
@@ -220,11 +232,15 @@ const ExperienceContent = memo(() => (
 ))
 ExperienceContent.displayName = 'ExperienceContent'
 
-export const ExperienceWindow = memo(() => (
-  <WindowWrapper windowKey="safari" title={t.windows.experience.title} className="w-[800px] h-[600px]">
-    <ExperienceContent />
-  </WindowWrapper>
-))
+export const ExperienceWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="safari" title={translations.windows.experience.title} className="w-[800px] h-[600px]">
+      <ExperienceContent />
+    </WindowWrapper>
+  )
+})
 ExperienceWindow.displayName = 'ExperienceWindow'
 
 export default ExperienceWindow

@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useGLTF, Center, Bounds, Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
 useGLTF.preload('/models/gaming-setup.glb')
 
@@ -11,6 +11,7 @@ interface GamingSetupProps {
 }
 
 export function GamingSetup({ onClick }: GamingSetupProps) {
+  const { translations } = useLanguageStore()
   const groupRef = useRef<THREE.Group>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
   const { scene } = useGLTF('/models/gaming-setup.glb')
@@ -61,7 +62,7 @@ export function GamingSetup({ onClick }: GamingSetupProps) {
               fontSize: '12px',
             }}
           >
-            <span className="text-white font-semibold">{t.hero.cta}</span>
+            <span className="text-white font-semibold">{translations.hero.cta}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"

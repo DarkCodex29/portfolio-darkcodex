@@ -1,10 +1,18 @@
 import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { Mail, Github, Linkedin, MapPin, FileText, User } from 'lucide-react'
-import { PROFILE, STATS, SECTORS, CV_PATH, CV_FILENAME } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { PROFILE, SECTORS, CV_PATH, CV_FILENAME } from '@/core/constants/profile'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
 const AboutContent = memo(() => {
+  const { translations } = useLanguageStore()
+
+  const stats = [
+    { id: 'years', value: '6+', label: translations.stats.years },
+    { id: 'apps', value: '10+', label: translations.stats.apps },
+    { id: 'users', value: '10K+', label: translations.stats.users },
+  ]
+
   const handleDownloadResume = () => {
     const link = document.createElement('a')
     link.href = CV_PATH
@@ -24,17 +32,17 @@ const AboutContent = memo(() => {
         </div>
         <div>
           <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
-          <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+          <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{translations.windows.about.role}</p>
           <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
             <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
-            {t.windows.about.location}
+            {translations.windows.about.location}
           </p>
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-3" style={{ gap: 'var(--space-3)' }}>
-        {STATS.map(({ id, label, value }) => (
+        {stats.map(({ id, label, value }) => (
           <div
             key={id}
             className="bg-white/5 text-center"
@@ -52,29 +60,29 @@ const AboutContent = memo(() => {
       {/* Bio */}
       <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
         <p>
-          {t.windows.about.bioP1.split('Flutter')[0]}
+          {translations.windows.about.bioP1.split('Flutter')[0]}
           <span className="text-primary-400">Flutter</span>
-          {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
+          {translations.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
           <span className="text-primary-400">Kotlin</span>
-          {t.windows.about.bioP1.split('Kotlin')[1]}
+          {translations.windows.about.bioP1.split('Kotlin')[1]}
         </p>
         <p>
-          {t.windows.about.bioP2.split('.NET')[0]}
+          {translations.windows.about.bioP2.split('.NET')[0]}
           <span className="text-blue-400">.NET, NestJS, Angular, React, Laravel</span>.
         </p>
         <p>
-          {t.windows.about.bioP3.split('Keola Networks')[0]}
+          {translations.windows.about.bioP3.split('Keola Networks')[0]}
           <span className="text-green-400">Keola Networks (fintech)</span>,{' '}
           <span className="text-green-400">Software Engineering LATAM</span>,{' '}
           <span className="text-green-400">Grupo EBIM</span>
-          {t.windows.about.bioP3.split('Grupo EBIM')[1]}
+          {translations.windows.about.bioP3.split('Grupo EBIM')[1]}
         </p>
       </div>
 
       {/* Sectors */}
       <div>
         <h3 className="font-semibold text-white" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>
-          {t.windows.about.sectorsTitle}
+          {translations.windows.about.sectorsTitle}
         </h3>
         <div className="flex flex-wrap" style={{ gap: 'var(--space-2)' }}>
           {SECTORS.map((sector) => (
@@ -87,7 +95,7 @@ const AboutContent = memo(() => {
                 borderRadius: 'var(--badge-radius)'
               }}
             >
-              {t.sectors[sector as keyof typeof t.sectors] || sector}
+              {translations.sectors[sector as keyof typeof translations.sectors] || sector}
             </span>
           ))}
         </div>
@@ -106,7 +114,7 @@ const AboutContent = memo(() => {
           }}
         >
           <Mail style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-          {t.actions.email}
+          {translations.actions.email}
         </a>
         <a
           href={PROFILE.contact.github}
@@ -149,7 +157,7 @@ const AboutContent = memo(() => {
           }}
         >
           <FileText style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-          {t.actions.resume}
+          {translations.actions.resume}
         </button>
       </div>
     </div>
@@ -157,11 +165,15 @@ const AboutContent = memo(() => {
 })
 AboutContent.displayName = 'AboutContent'
 
-export const AboutWindow = memo(() => (
-  <WindowWrapper windowKey="about" title={t.windows.about.title} className="w-[580px]">
-    <AboutContent />
-  </WindowWrapper>
-))
+export const AboutWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="about" title={translations.windows.about.title} className="w-[580px]">
+      <AboutContent />
+    </WindowWrapper>
+  )
+})
 AboutWindow.displayName = 'AboutWindow'
 
 export default AboutWindow

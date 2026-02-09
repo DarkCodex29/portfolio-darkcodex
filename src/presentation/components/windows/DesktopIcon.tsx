@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 import type { DesktopIcon as DesktopIconType } from '@/core/constants/desktop'
 
 interface DesktopIconProps {
@@ -8,7 +9,20 @@ interface DesktopIconProps {
   onDoubleClick: () => void
 }
 
-export const DesktopIcon = memo(({ icon, isSelected, onClick, onDoubleClick }: DesktopIconProps) => (
+export const DesktopIcon = memo(({ icon, isSelected, onClick, onDoubleClick }: DesktopIconProps) => {
+  const { translations } = useLanguageStore()
+
+  const getTranslatedName = () => {
+    if (!icon.nameKey) return icon.name
+    const keys = icon.nameKey.split('.')
+    let value: any = translations
+    for (const key of keys) {
+      value = value[key]
+    }
+    return value || icon.name
+  }
+
+  return (
   <button
     className={`flex flex-col items-center gap-1 p-2 rounded transition-all cursor-default select-none ${
       isSelected ? 'bg-primary-500/30 border border-primary-400/50' : 'hover:bg-white/10'
@@ -33,10 +47,11 @@ export const DesktopIcon = memo(({ icon, isSelected, onClick, onDoubleClick }: D
       )}
     </div>
     <span className="text-[11px] text-white font-medium text-center max-w-[70px] leading-tight drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-      {icon.name}
+      {getTranslatedName()}
     </span>
   </button>
-))
+  )
+})
 DesktopIcon.displayName = 'DesktopIcon'
 
 interface BackButtonProps {
@@ -45,7 +60,10 @@ interface BackButtonProps {
   onDoubleClick: () => void
 }
 
-export const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButtonProps) => (
+export const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButtonProps) => {
+  const { translations } = useLanguageStore()
+
+  return (
   <button
     className={`flex flex-col items-center gap-1 p-2 rounded transition-all cursor-default select-none ${
       isSelected ? 'bg-primary-500/30 border border-primary-400/50' : 'hover:bg-white/10'
@@ -61,10 +79,11 @@ export const BackButton = memo(({ isSelected, onClick, onDoubleClick }: BackButt
       </div>
     </div>
     <span className="text-[11px] text-white font-medium text-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-      Volver
+      {translations.desktop.back}
     </span>
   </button>
-))
+  )
+})
 BackButton.displayName = 'BackButton'
 
 export default DesktopIcon

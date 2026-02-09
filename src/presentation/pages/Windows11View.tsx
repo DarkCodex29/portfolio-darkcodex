@@ -8,10 +8,10 @@ import { WindowsSearch } from '@/presentation/components/windows/WindowsSearch'
 import { WindowsContextMenu } from '@/presentation/components/windows/WindowsContextMenu'
 import { DesktopIcon, BackButton } from '@/presentation/components/windows/DesktopIcon'
 import { WindowsWindowWrapper } from '@/presentation/components/windows/WindowsWindowWrapper'
-import { ThemeToggle } from '@/presentation/components/shared/ThemeToggle'
+import { GlobalControls } from '@/presentation/components/shared/GlobalControls'
 import { Mail, Github, Linkedin, MapPin, FileText, User, Check } from 'lucide-react'
-import { PROFILE, STATS, SECTORS, CV_PATH, CV_FILENAME, PROJECTS, EXPERIENCE, type Project, type Experience } from '@/core/constants/profile'
-import { t } from '@/core/constants/translations'
+import { PROFILE, SECTORS, CV_PATH, CV_FILENAME, PROJECTS, EXPERIENCE, type Project, type Experience } from '@/core/constants/profile'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 import { DESKTOP_ICONS_WIN11, SIDEBAR_ICONS_WIN11, type DesktopIcon as DesktopIconType } from '@/core/constants/desktop'
 
 interface Windows11ViewProps {
@@ -232,6 +232,13 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
   const { goToHome } = useSceneStore()
   const { toggleOS } = useOSStore()
   const { openWindow } = useWindowStore()
+  const { translations } = useLanguageStore()
+
+  const stats = [
+    { id: 'years', value: '6+', label: translations.stats.years },
+    { id: 'apps', value: '10+', label: translations.stats.apps },
+    { id: 'users', value: '10K+', label: translations.stats.users },
+  ]
 
   const handleStartClick = useCallback(() => {
     setIsStartOpen(prev => !prev)
@@ -401,7 +408,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
             <span className="text-white">:</span>
             <span className="text-blue-400">~</span>
             <span className="text-white">$ </span>
-            <span className="text-gray-300">{t.windows.terminal.command}</span>
+            <span className="text-gray-300">{translations.windows.terminal.command}</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
@@ -426,10 +433,10 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
           <div className="border-t border-white/10" style={{ marginTop: 'var(--window-gap)', paddingTop: 'var(--space-4)' }}>
             <div className="text-green-400 flex items-center" style={{ gap: 'var(--space-2)' }}>
               <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-              <span>6 {t.windows.terminal.categoriesLoaded}</span>
+              <span>6 {translations.windows.terminal.categoriesLoaded}</span>
             </div>
             <div className="text-gray-500" style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
-              {t.windows.terminal.renderTime}
+              {translations.windows.terminal.renderTime}
             </div>
           </div>
 
@@ -444,7 +451,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       </WindowsWindowWrapper>
 
       {/* About Window */}
-      <WindowsWindowWrapper windowKey="about" title={t.windows.about.title} icon="/icons/win11/file.png" className="w-[580px]">
+      <WindowsWindowWrapper windowKey="about" title={translations.windows.about.title} icon="/icons/win11/file.png" className="w-[580px]">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
           <div className="flex items-start" style={{ gap: 'var(--space-4)' }}>
             <div
@@ -455,16 +462,16 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
             </div>
             <div>
               <h2 className="font-bold text-white" style={{ fontSize: 'var(--text-xl)' }}>{PROFILE.name.full}</h2>
-              <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{t.windows.about.role}</p>
+              <p className="text-primary-400 font-medium" style={{ fontSize: 'var(--text-base)' }}>{translations.windows.about.role}</p>
               <p className="text-gray-400 flex items-center" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)', gap: 'var(--space-1)' }}>
                 <MapPin style={{ width: 'var(--icon-xs)', height: 'var(--icon-xs)' }} />
-                {t.windows.about.location}
+                {translations.windows.about.location}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-3" style={{ gap: 'var(--space-3)' }}>
-            {STATS.map(({ id, label, value }) => (
+            {stats.map(({ id, label, value }) => (
               <div key={id} className="bg-white/5 text-center" style={{ padding: 'var(--card-padding)', borderRadius: 'var(--card-radius)' }}>
                 <div className="font-bold text-white" style={{ fontSize: 'var(--text-2xl)' }}>{value}</div>
                 <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{label}</div>
@@ -474,28 +481,28 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
 
           <div className="text-gray-300 leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
             <p>
-              {t.windows.about.bioP1.split('Flutter')[0]}
+              {translations.windows.about.bioP1.split('Flutter')[0]}
               <span className="text-primary-400">Flutter</span>
-              {t.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
+              {translations.windows.about.bioP1.split('Flutter')[1].split('Kotlin')[0]}
               <span className="text-primary-400">Kotlin</span>
-              {t.windows.about.bioP1.split('Kotlin')[1]}
+              {translations.windows.about.bioP1.split('Kotlin')[1]}
             </p>
             <p>
-              {t.windows.about.bioP2.split('.NET')[0]}
+              {translations.windows.about.bioP2.split('.NET')[0]}
               <span className="text-blue-400">.NET, NestJS, Angular, React, Laravel</span>.
             </p>
             <p>
-              {t.windows.about.bioP3.split('Keola Networks')[0]}
+              {translations.windows.about.bioP3.split('Keola Networks')[0]}
               <span className="text-green-400">Keola Networks (fintech)</span>,{' '}
               <span className="text-green-400">Software Engineering LATAM</span>,{' '}
               <span className="text-green-400">Grupo EBIM</span>
-              {t.windows.about.bioP3.split('Grupo EBIM')[1]}
+              {translations.windows.about.bioP3.split('Grupo EBIM')[1]}
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-white" style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>
-              {t.windows.about.sectorsTitle}
+              {translations.windows.about.sectorsTitle}
             </h3>
             <div className="flex flex-wrap" style={{ gap: 'var(--space-2)' }}>
               {SECTORS.map((sector) => (
@@ -508,7 +515,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
                     borderRadius: 'var(--badge-radius)'
                   }}
                 >
-                  {t.sectors[sector as keyof typeof t.sectors] || sector}
+                  {translations.sectors[sector as keyof typeof translations.sectors] || sector}
                 </span>
               ))}
             </div>
@@ -526,7 +533,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
               }}
             >
               <Mail style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-              {t.actions.email}
+              {translations.actions.email}
             </a>
             <a
               href={PROFILE.contact.github}
@@ -574,14 +581,14 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
               }}
             >
               <FileText style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-              {t.actions.resume}
+              {translations.actions.resume}
             </button>
           </div>
         </div>
       </WindowsWindowWrapper>
 
       {/* Projects Window */}
-      <WindowsWindowWrapper windowKey="finder" title={t.windows.projects.title} icon="/icons/win11/projects.png" className="w-[800px] max-h-[80vh]">
+      <WindowsWindowWrapper windowKey="finder" title={translations.windows.projects.title} icon="/icons/win11/projects.png" className="w-[800px] max-h-[80vh]">
         <div className="grid grid-cols-2" style={{ gap: 'var(--grid-gap)' }}>
           {PROJECTS.map((project: Project) => (
             <div
@@ -630,16 +637,16 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       </WindowsWindowWrapper>
 
       {/* Contact Window */}
-      <WindowsWindowWrapper windowKey="contact" title={t.windows.contact.title} icon="/icons/win11/user-folder.png" className="w-[500px]">
+      <WindowsWindowWrapper windowKey="contact" title={translations.windows.contact.title} icon="/icons/win11/user-folder.png" className="w-[500px]">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
-          <p className="text-gray-300" style={{ fontSize: 'var(--text-base)' }}>{t.windows.contact.subtitle}</p>
+          <p className="text-gray-300" style={{ fontSize: 'var(--text-base)' }}>{translations.windows.contact.subtitle}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <a href={`mailto:${PROFILE.contact.email}`} className="flex items-center text-white hover:text-primary-400 transition-colors" style={{ gap: 'var(--space-3)' }}>
               <div className="bg-primary-500/20 rounded-lg flex items-center justify-center" style={{ width: 'var(--icon-xl)', height: 'var(--icon-xl)' }}>
                 <Mail style={{ width: 'var(--icon-base)', height: 'var(--icon-base)' }} className="text-primary-400" />
               </div>
               <div>
-                <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>{t.windows.contact.email}</div>
+                <div className="font-medium" style={{ fontSize: 'var(--text-sm)' }}>{translations.windows.contact.email}</div>
                 <div className="text-gray-400" style={{ fontSize: 'var(--text-xs)' }}>{PROFILE.contact.email}</div>
               </div>
             </a>
@@ -666,7 +673,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       </WindowsWindowWrapper>
 
       {/* Experience Window */}
-      <WindowsWindowWrapper windowKey="safari" title={t.windows.experience.title} icon="/icons/win11/chrome.png" className="w-[700px] max-h-[80vh]">
+      <WindowsWindowWrapper windowKey="safari" title={translations.windows.experience.title} icon="/icons/win11/chrome.png" className="w-[700px] max-h-[80vh]">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--window-gap)' }}>
           {EXPERIENCE.map((exp: Experience) => (
             <div
@@ -719,7 +726,7 @@ export const Windows11View = memo(({ onBack }: Windows11ViewProps) => {
       </WindowsWindowWrapper>
 
       {/* Global Theme Toggle */}
-      <ThemeToggle />
+      <GlobalControls />
     </div>
   )
 })

@@ -1,5 +1,3 @@
-import { t } from './translations'
-
 export const CV_FILENAME = 'CV_GIANPIERRE_SAIR_COLLAZOS_MIO.pdf'
 export const CV_PATH = `/${CV_FILENAME}`
 
@@ -46,15 +44,8 @@ export const PROFILE = {
   },
   availability: {
     status: 'available' as AvailabilityStatus,
-    label: t.hero.availableForHire,
   },
 } as const
-
-export const STATS: StatItem[] = [
-  { id: 'years', value: '6+', label: t.stats.years, description: t.stats.yearsExperience },
-  { id: 'apps', value: '10+', label: t.stats.apps, description: t.stats.appsInProduction },
-  { id: 'users', value: '10K+', label: t.stats.users, description: t.stats.activeUsers },
-]
 
 export const ACHIEVEMENTS: Achievement[] = [
   { id: 'records', value: '17.8M+', label: 'Records processed', highlight: true },

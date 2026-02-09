@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { WindowWrapper } from '@/presentation/components/layout/WindowWrapper'
 import { Check } from 'lucide-react'
-import { t } from '@/core/constants/translations'
+import { useLanguageStore } from '@/application/store/useLanguageStore'
 
 const techStack = [
   { category: 'Mobile', items: ['Flutter (6y)', 'Kotlin (7y)', 'Swift (5y)', 'React Native (3y)'] },
@@ -12,14 +12,17 @@ const techStack = [
   { category: 'AI & Tools', items: ['Claude AI', 'OpenAI SDK', 'Prisma ORM', 'Clean Architecture'] },
 ]
 
-const TerminalContent = memo(() => (
+const TerminalContent = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
   <div className="font-mono" style={{ fontSize: 'var(--text-sm)' }}>
     <div className="text-green-400" style={{ marginBottom: 'var(--space-4)' }}>
       <span className="text-primary-400">gian@darkcodex</span>
       <span className="text-white">:</span>
       <span className="text-blue-400">~</span>
       <span className="text-white">$ </span>
-      <span className="text-gray-300">{t.windows.terminal.command}</span>
+      <span className="text-gray-300">{translations.windows.terminal.command}</span>
     </div>
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
@@ -37,10 +40,10 @@ const TerminalContent = memo(() => (
     <div className="border-t border-white/10" style={{ marginTop: 'var(--window-gap)', paddingTop: 'var(--space-4)' }}>
       <div className="text-green-400 flex items-center" style={{ gap: 'var(--space-2)' }}>
         <Check style={{ width: 'var(--icon-sm)', height: 'var(--icon-sm)' }} />
-        <span>6 {t.windows.terminal.categoriesLoaded}</span>
+        <span>6 {translations.windows.terminal.categoriesLoaded}</span>
       </div>
       <div className="text-gray-500" style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
-        {t.windows.terminal.renderTime}
+        {translations.windows.terminal.renderTime}
       </div>
     </div>
 
@@ -52,14 +55,19 @@ const TerminalContent = memo(() => (
       <span className="animate-pulse">▊</span>
     </div>
   </div>
-))
+  )
+})
 TerminalContent.displayName = 'TerminalContent'
 
-export const TerminalWindow = memo(() => (
-  <WindowWrapper windowKey="terminal" title={t.windows.terminal.title} className="w-[600px]">
-    <TerminalContent />
-  </WindowWrapper>
-))
+export const TerminalWindow = memo(() => {
+  const { translations } = useLanguageStore()
+
+  return (
+    <WindowWrapper windowKey="terminal" title={translations.windows.terminal.title} className="w-[600px]">
+      <TerminalContent />
+    </WindowWrapper>
+  )
+})
 TerminalWindow.displayName = 'TerminalWindow'
 
 export default TerminalWindow
